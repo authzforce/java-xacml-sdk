@@ -6,7 +6,7 @@
 		<artifactId>attributeFinder</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.thalesgroup.authzforce.attributefinder</groupId>
+	<groupId>com.thalesgroup.authzforce.attributeFinder</groupId>
 	<artifactId>sql</artifactId>
 	<name>AuthZForce :: Attribute Finder :: SQL</name>
 	<dependencies>

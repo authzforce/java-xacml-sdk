@@ -30,28 +30,29 @@
 					<attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-assembly-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>distro-assembly</id> -->
-<!-- 						<phase>package</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>single</goal> -->
-<!-- 						</goals> -->
-<!-- 						<configuration> -->
-<!-- 							<archive> -->
-<!-- 								<manifest> -->
-<!-- 									<mainClass>com.thalesgroup.pdp.core.AuthZForceImpl</mainClass> -->
-<!-- 								</manifest> -->
-<!-- 							</archive> -->
-<!-- 							<descriptors> -->
-<!-- 								<descriptor>${basedir}/bin.xml</descriptor> -->
-<!-- 							</descriptors> -->
-<!-- 						</configuration> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>distro-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>com.thalesgroup.pdp.core.AuthZForceImpl</mainClass>
+								</manifest>
+							</archive>
+							<descriptors>
+								<descriptor>${basedir}/bin.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

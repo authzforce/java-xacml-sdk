@@ -5,7 +5,7 @@
     <artifactId>policyFinder</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>com.thalesgroup.authzforce.policyfinder</groupId>
+  <groupId>com.thalesgroup.authzforce.policyFinder</groupId>
   <artifactId>filePolicyFinder</artifactId>
   <name>AuthZForce :: Policy Finder :: File Policy Finder</name>
   <dependencies>

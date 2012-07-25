@@ -11,6 +11,8 @@
 		<project>com.thalesgroup.authzforce.core.tazs-0.0.1-SNAPSHOT</project>
 		<project>com.thalesgroup.authzforce.attributeFinder.ldap-0.0.1-SNAPSHOT</project>
 		<project>com.thalesgroup.authzforce.attributefinder.sql-0.0.1-SNAPSHOT</project>
+		<project>com.thalesgroup.authzforce.core.model-0.0.1-SNAPSHOT</project>
+		<project>com.thalesgroup.authzforce.attributeFinder.certificate-0.0.1-SNAPSHOT</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
