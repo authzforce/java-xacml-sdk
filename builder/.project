@@ -3,16 +3,6 @@
 	<name>com.thalesgroup.authzforce.builder-0.0.1-SNAPSHOT</name>
 	<comment></comment>
 	<projects>
-		<project>com.thalesgroup.authzforce.policyfinder.file-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.interface.rest-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.core.authzforce-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.interface.soap-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.policyFinder.directory-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.core.tazs-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.attributeFinder.ldap-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.attributefinder.sql-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.core.model-0.0.1-SNAPSHOT</project>
-		<project>com.thalesgroup.authzforce.attributeFinder.certificate-0.0.1-SNAPSHOT</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -66,6 +66,18 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>com.thalesgroup.authzforce.core</groupId>
+			<artifactId>authzforce</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>com.thalesgroup.authzforce.core</groupId>
+			<artifactId>tazs</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		-->
+		<dependency>
 			<groupId>com.thalesgroup.authzforce</groupId>
 			<artifactId>attributeFinder</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -86,6 +98,42 @@
 		<dependency>
 			<groupId>com.thalesgroup.authzforce.core</groupId>
 			<artifactId>model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>
+				com.thalesgroup.authzforce.attributeFinder
+			</groupId>
+			<artifactId>certificate</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>
+				com.thalesgroup.authzforce.attributeFinder
+			</groupId>
+			<artifactId>ldap</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>
+				com.thalesgroup.authzforce.attributeFinder
+			</groupId>
+			<artifactId>sql</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>		
+		<dependency>
+			<groupId>com.thalesgroup.authzforce.interface</groupId>
+			<artifactId>rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thalesgroup.authzforce.policyFinder</groupId>
+			<artifactId>directoryPolicyFinder</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thalesgroup.authzforce.policyFinder</groupId>
+			<artifactId>filePolicyFinder</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

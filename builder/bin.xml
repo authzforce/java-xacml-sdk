@@ -20,7 +20,7 @@
 				<include>com.thalesgroup.authzforce.attributeFinder:sql</include>
 				<include>com.thalesgroup.authzforce.attributeFinder:certificate</include>
 				<include>com.thalesgroup.authzforce.core:authzforce</include>
-				<include>com.thalesgroup.authzforce.core:tazs</include>
+				<!-- <include>com.thalesgroup.authzforce.core:tazs</include> -->
 				<include>com.thalesgroup.authzforce.core:model</include>
 				<include>com.thalesgroup.authzforce.interface:rest</include>
 				<include>com.thalesgroup.authzforce.interface:soap</include>
@@ -30,7 +30,7 @@
 			<sources>
 				<includes>
 					<include>*.*</include>
-				</includes>
+				</includes>				
 			</sources>
 			<binaries>
 				<outputDirectory>modules/${artifactId}-${project.version}</outputDirectory>

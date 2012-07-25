@@ -6,10 +6,31 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="authzforce-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.core.authzforce-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.core.authzforce-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.core.model-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.core.model-0.0.1-SNAPSHOT">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="authzforce-builder-0.0.1-SNAPSHOT"/>
+        <dependent-module archiveName="certificate-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.attributeFinder.certificate-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.attributeFinder.certificate-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ldap-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.attributeFinder.ldap-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.attributeFinder.ldap-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="sql-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.attributefinder.sql-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.attributefinder.sql-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="rest-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.interface.rest-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.interface.rest-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="directoryPolicyFinder-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.policyFinder.directory-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.policyFinder.directory-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="filePolicyFinder-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.policyfinder.file-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.policyfinder.file-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/com.thalesgroup.authzforce.builder-0.0.1-SNAPSHOT/target/classes"/>
+        <property name="context-root" value="authzforce-0.0.1"/>
     </wb-module>
 </project-modules>
