@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://authzforce.thalesgroup.com/schema"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:config="http://authzforce.thalesgroup.com/schema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:element name="config">
+		<xsd:complexType>
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="pdp" type="config:PDPType" />
+				<xsd:element name="attributeFactory" type="config:AttributeFactoryType" />
+				<xsd:element name="combiningAlgFactory" type="config:CombiningFactoryType" />
+				<xsd:element name="functionFactory" type="config:FunctionFactoryType" />				
+			</xsd:choice>
+			<xsd:attribute name="defaultPDP" type="xsd:string" use="required" />
+			<xsd:attribute name="defaultAttributeFactory" type="xsd:string"
+				use="required" />
+			<xsd:attribute name="defaultCombiningAlgFactory" type="xsd:string"
+				use="required" />
+			<xsd:attribute name="defaultFunctionFactory" type="xsd:string"
+				use="required" />				
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="PDPType">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="attributeFinderModule" type="config:AttributeFinderType" />
+			<xsd:element name="resourceFinderModule" type="config:ClassType" />
+			<xsd:element name="policyFinderModule" type="config:ClassType" />
+		</xsd:choice>
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="AttributeFactoryType">
+		<xsd:sequence>
+			<xsd:element name="datatype" type="config:IdentifiedType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="useStandardDatatypes" type="xsd:boolean"
+			use="optional" default="true" />
+	</xsd:complexType>
+
+	<xsd:complexType name="CombiningFactoryType">
+		<xsd:sequence>
+			<xsd:element name="algorithm" type="config:ClassType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="useStandardAlgorithms" type="xsd:boolean"
+			use="optional" default="true" />
+	</xsd:complexType>
+
+	<xsd:complexType name="FunctionFactoryType">
+		<xsd:sequence>
+			<xsd:element name="target" type="config:FunctionCollectionType"
+				minOccurs="0" />
+			<xsd:element name="condition" type="config:FunctionCollectionType"
+				minOccurs="0" />
+			<xsd:element name="general" type="config:FunctionCollectionType"
+				minOccurs="0" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="useStandardFunctions" type="xsd:boolean"
+			use="optional" default="true" />
+	</xsd:complexType>
+
+	<xsd:complexType name="FunctionCollectionType">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="function" type="config:ClassType" />
+			<xsd:element name="abstractFunction" type="config:IdentifiedType" />
+			<xsd:element name="functionCluster" type="config:ClassType" />
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="IdentifiedType" mixed="true">
+		<xsd:complexContent mixed="true">
+			<xsd:extension base="config:ClassType">
+				<xsd:attribute name="identifier" type="xsd:anyURI"
+					use="required" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="ClassType" mixed="true">
+		<xsd:complexContent mixed="true">
+			<xsd:extension base="config:ClassParametersType">
+				<xsd:attribute name="class" type="xsd:string" use="required" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="AttributeFinderType" mixed="true">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="config:OptionType">
+				<xsd:attribute name="class" type="xsd:string" use="required" />				
+			</xsd:extension>			
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="OptionType">
+		<xsd:choice>			
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element name="AttributeDbFinder" type="config:AttributeDbFinderType" minOccurs="0" />
+				<xsd:element name="AttributeLdapFinder" type="config:AttributeLdapFinderType" minOccurs="0" />
+			</xsd:choice>
+		</xsd:choice>
+	</xsd:complexType>
+	
+	<xsd:complexType name="AttributeDbFinderType">
+		<xsd:choice minOccurs="1" maxOccurs="unbounded">	
+			<xsd:element name="url" type="xsd:string" minOccurs="1" />
+			<xsd:element name="username" type="xsd:string" minOccurs="1" />
+			<xsd:element name="password" type="xsd:string" minOccurs="1" />
+			<xsd:element name="attributeSupportedId" type="xsd:string" minOccurs="1" />
+			<xsd:element name="substituteValue" type="xsd:string" minOccurs="1" />				
+			<xsd:element name="dbName" type="xsd:string" minOccurs="1" />
+			<xsd:element name="driver" type="xsd:string" minOccurs="1" />				
+			<xsd:element name="sqlRequest" type="xsd:string" minOccurs="1" />								
+		</xsd:choice>
+	</xsd:complexType>
+	
+	<xsd:complexType name="AttributeLdapFinderType">
+		<xsd:choice minOccurs="1" maxOccurs="unbounded">
+			<xsd:element name="url" type="xsd:string" minOccurs="1" />
+			<xsd:element name="username" type="xsd:string" minOccurs="1" />
+			<xsd:element name="password" type="xsd:string" minOccurs="1" />
+			<xsd:element name="attributeSupportedId" type="xsd:string" minOccurs="1" />
+			<xsd:element name="substituteValue" type="xsd:string" minOccurs="1" />						
+			<xsd:element name="baseDn" type="xsd:string" minOccurs="1" />
+			<xsd:element name="ldapAttribute" type="xsd:string" minOccurs="1" />			
+		</xsd:choice>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="ClassParametersType" mixed="true">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="string" type="xsd:string" />
+			<xsd:element name="list" type="config:ClassParametersType" />
+		</xsd:choice>
+	</xsd:complexType>
+
+</xsd:schema>

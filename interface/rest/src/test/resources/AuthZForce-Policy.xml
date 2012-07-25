@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides"
+	Version="2.0" PolicyId="ExamplePolicy">
+	<!--Target> <Resources> <Resource> <ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal"> 
+		<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">t0101841-VirtualBox</AttributeValue> 
+		<ResourceAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" 
+		AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"/> </ResourceMatch> 
+		</Resource> </Resources> </Target -->
+	<Target>
+		<Actions>
+			<Action>
+				<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</AttributeValue>
+					<ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" />
+				</ActionMatch>
+			</Action>
+		</Actions>
+	</Target>
+	<Rule Effect="Permit" RuleId="PermitRule">
+		<Target>
+			<Actions>
+				<Action>
+					<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</AttributeValue>
+						<ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" />
+					</ActionMatch>
+				</Action>
+			</Actions>
+		</Target>
+	<Condition>
+		<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+			<Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">tcmanager</AttributeValue>
+			<SubjectAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string" />
+		</Apply>
+	</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="DenyRule">
+		<Target>
+			<Resources>
+				<Resource>
+					<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">deny</AttributeValue>
+						<ResourceAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" />
+					</ResourceMatch>
+				</Resource>
+			</Resources>
+		</Target>
+		<Condition>
+			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+				 <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">T0101841</AttributeValue>
+				<SubjectAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string" />
+			</Apply>
+		</Condition>
+	</Rule>
+	<!-- 
+	<Rule Effect="Permit" RuleId="IndeterminateRule">
+		<Target>
+			<Resources>
+				<Resource>
+					<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">INDETERMINATE</AttributeValue>
+						<ResourceAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" />
+					</ResourceMatch>
+				</Resource>
+			</Resources>
+		</Target>
+		<Condition>
+		<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+					 <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">T0101841</AttributeValue>
+					<SubjectAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string" />
+				</Apply>
+				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+					 <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">manager</AttributeValue>
+					<SubjectAttributeDesignator AttributeId="tenantMember" DataType="http://www.w3.org/2001/XMLSchema#string" />
+				</Apply>
+			</Apply>
+		</Condition>
+	</Rule>
+	 -->
+	<Rule Effect="Deny" RuleId="Default" />
+</Policy>

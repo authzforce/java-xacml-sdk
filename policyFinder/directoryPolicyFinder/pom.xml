@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.thalesgroup.authzforce</groupId>
+    <artifactId>policyFinder</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.thalesgroup.authzforce.policyFinder</groupId>
+  <artifactId>directoryPolicyFinder</artifactId>
+  <name>AuthZForce :: Policy Finder :: Directory Policy Finder</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.thalesgroup.authzforce.core</groupId>
+  		<artifactId>authzforce</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<!-- 
+  	<dependency>
+  		<groupId>com.thalesgroup.authzforce.core</groupId>
+  		<artifactId>tazs</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	-->
+  	<dependency>
+  		<groupId>com.thalesgroup.authzforce.policyfinder</groupId>
+  		<artifactId>filePolicyFinder</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+</project>

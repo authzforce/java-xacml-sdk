@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<Request xmlns:ns2='urn:oasis:names:tc:xacml:2.0:policy:schema:os'
+	xmlns='urn:oasis:names:tc:xacml:2.0:context:schema:os'>
+	<Subject>
+		<Attribute AttributeId='urn:oasis:names:tc:xacml:1.0:subject:subject-id'
+			DataType='http://www.w3.org/2001/XMLSchema#string'>
+			<AttributeValue>tcmanager</AttributeValue>
+		</Attribute>
+	</Subject>
+	<Resource>
+		<Attribute AttributeId='urn:oasis:names:tc:xacml:1.0:resource:resource-id'
+			DataType='http://www.w3.org/2001/XMLSchema#string'>
+			<AttributeValue>t0101841-Virtualbox</AttributeValue>
+		</Attribute>
+	</Resource>
+	<Action>
+		<Attribute AttributeId='urn:oasis:names:tc:xacml:1.0:action:action-id'
+			DataType='http://www.w3.org/2001/XMLSchema#string'>
+			<AttributeValue>POST</AttributeValue>
+		</Attribute>
+	</Action>
+	<Environment />
+</Request>

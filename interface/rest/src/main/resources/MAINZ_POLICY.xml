@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides"
+	Version="2.0" PolicyId="MAINZ_DEMO_POLICY">
+	<Target>
+		<Subjects>
+			<Subject>
+				<SubjectMatch
+					MatchId="urn:oasis:names:tc:xacml:1.0:function:regexp-string-match">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">[0-9]</AttributeValue>
+					<SubjectAttributeDesignator
+						DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" />
+				</SubjectMatch>
+			</Subject>
+		</Subjects>
+	</Target>
+	<Rule Effect="Permit" RuleId="ViewRule">
+		<Target>
+			<Actions>
+				<Action>
+					<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<ActionAttributeDesignator
+							DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-type" />
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">GET</AttributeValue>
+					</ActionMatch>
+				</Action>
+			</Actions>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				<SubjectAttributeDesignator	AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id-role_0" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />				
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">viewer</AttributeValue>				
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule Effect="Permit" RuleId="CreateRule">
+		<Target>
+			<Actions>
+				<Action>
+					<ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</AttributeValue>
+						<ActionAttributeDesignator
+							DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-type" />
+					</ActionMatch>
+				</Action>
+			</Actions>
+		</Target>
+		<Condition>
+			<Apply
+				FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+				<SubjectAttributeDesignator	AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id-role_1" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />				
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">manager</AttributeValue>				
+			</Apply>
+		</Condition>
+	</Rule>
+	<Rule Effect="Deny" RuleId="Default" />
+</Policy>

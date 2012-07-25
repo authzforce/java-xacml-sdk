@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Policy xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" 
+    RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides" 
+    Version="2.0" 
+    PolicyId="ExamplePolicy"> 
+    <!--Target>
+        <Resources>
+            <Resource>
+                <ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">t0101841-VirtualBox</AttributeValue>                   
+                    <ResourceAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"/>
+                </ResourceMatch>
+            </Resource>
+       </Resources>
+    </Target-->
+	<Target>
+        <Actions>
+            <Action>
+                <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">tokens</AttributeValue>                   
+                    <ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"/>
+                </ActionMatch>
+            </Action>
+       </Actions>
+    </Target>
+    <Rule Effect="Permit" RuleId="CreateAlertRule">
+        <Target>
+            <Actions>
+                <Action>
+                    <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">tokens</AttributeValue>
+                        <ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"/>
+                    </ActionMatch>
+                </Action>
+            </Actions>
+        </Target>
+        <Condition>
+           <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+				<SubjectAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"/>
+				<ResourceAttributeDesignator AttributeId="tenantMember" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false"/>
+			</Apply>            
+      </Condition>
+    </Rule>
+    <Rule Effect="Deny" RuleId="Default" />	
+</Policy>
