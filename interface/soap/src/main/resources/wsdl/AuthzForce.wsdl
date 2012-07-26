@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:schema="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+	xmlns:tns="http://pdp.thalesgroup.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AuthzForce"
+	targetNamespace="http://pdp.thalesgroup.com/">
+
+	<!-- <wsdl:import namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os" 
+		location="access_control-xacml-2.0-context-schema-os.xsd"/> -->
+
+	<wsdl:types>
+
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+				schemaLocation="access_control-xacml-2.0-context-schema-os.xsd" />
+		</xsd:schema>
+        
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://pdp.thalesgroup.com/">
+        	<xsd:element name="reloadPolicies">
+        		<xsd:complexType>
+        			<xsd:sequence>
+
+<!--         				<xsd:element name="in" type="xsd:string"></xsd:element> -->
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="reloadPoliciesResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+
+        				<xsd:element name="out" type="xsd:string"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element></xsd:schema>
+    </wsdl:types>
+
+	<wsdl:message name="XACMLAuthzDecisionRequest">
+		<wsdl:part name="XACMLAuthzDecisionRequest" element="schema:Request" />
+	</wsdl:message>
+
+	<wsdl:message name="XACMLAuthzDecisionResponse">
+		<wsdl:part name="XACMLAuthzDecisionResponse" element="schema:Response" />
+	</wsdl:message>
+
+
+	<wsdl:message name="reloadPoliciesRequest">
+		<wsdl:part name="reloadPoliciesRequest" element="tns:reloadPolicies"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="reloadPoliciesResponse">
+		<wsdl:part name="reloadPoliciesResponse" element="tns:reloadPoliciesResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="AuthzForce">
+		<wsdl:operation name="XACMLAuthzDecision">
+			<wsdl:input message="tns:XACMLAuthzDecisionRequest" />
+			<wsdl:output message="tns:XACMLAuthzDecisionResponse" />
+		</wsdl:operation>
+
+
+		<wsdl:operation name="reloadPolicies">
+			<wsdl:input message="tns:reloadPoliciesRequest"></wsdl:input>
+			<wsdl:output message="tns:reloadPoliciesResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="AuthzForceSOAP" type="tns:AuthzForce">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="XACMLAuthzDecision">
+			<soap:operation soapAction="http://pdp.thalesgroup.com/XACMLAuthzDecision" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="reloadPolicies">
+			<soap:operation soapAction="http://pdp.thalesgroup.com/reloadPolicies" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AuthzForce">
+		<wsdl:port binding="tns:AuthzForceSOAP" name="AuthzForceSOAP">
+			<soap:address location="http://pdp.thalesgroup.com/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
