@@ -25,8 +25,8 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<webXml>${basedir}/src/main/resources/web.xml</webXml>
+				<configuration>				
+					<webXml>${basedir}/src/main/resources/${server.interface.type}/web.xml</webXml>					
 					<attachClasses>true</attachClasses>
 				</configuration>
 			</plugin>
@@ -47,7 +47,7 @@
 								</manifest>
 							</archive>
 							<descriptors>
-								<descriptor>${basedir}/bin.xml</descriptor>
+								<descriptor>${basedir}/src/main/resources/${server.interface.type}/${server.interface.type}.xml</descriptor>
 							</descriptors>
 						</configuration>
 					</execution>

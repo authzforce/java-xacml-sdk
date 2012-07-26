@@ -47,7 +47,7 @@
 
 <endpoint
         name="Endpoint_AuthzForce_PDP"
-        implementation="com.thalesgroup.pdp.impl.AuthzForceImpl"
+        implementation="com.thalesgroup.authzforce.soap.impl.AuthzForceImpl"
         wsdl="WEB-INF/wsdl/AuthzForce.wsdl"
         url-pattern="/soap/service"/>       
 </endpoints>
