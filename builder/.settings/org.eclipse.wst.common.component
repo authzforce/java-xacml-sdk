@@ -25,6 +25,9 @@
         <dependent-module archiveName="rest-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.interface.rest-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.interface.rest-0.0.1-SNAPSHOT">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="audit-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.audit-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.audit-0.0.1-SNAPSHOT">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="directoryPolicyFinder-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/com.thalesgroup.authzforce.policyFinder.directory-0.0.1-SNAPSHOT/com.thalesgroup.authzforce.policyFinder.directory-0.0.1-SNAPSHOT">
             <dependency-type>uses</dependency-type>
         </dependent-module>
