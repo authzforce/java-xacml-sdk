@@ -1,5 +1,5 @@
 
-package com.thalesgroup.pdp;
+package com.thalesgroup.authzforce.soap.api;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,13 +23,13 @@ public class AuthzForce_Service
 {
 
     private final static URL AUTHZFORCE_WSDL_LOCATION;
-    private final static Logger logger = Logger.getLogger(com.thalesgroup.pdp.AuthzForce_Service.class.getName());
+    private final static Logger logger = Logger.getLogger(com.thalesgroup.authzforce.soap.api.AuthzForce_Service.class.getName());
 
     static {
         URL url = null;
         try {
             URL baseUrl;
-            baseUrl = com.thalesgroup.pdp.AuthzForce_Service.class.getResource(".");
+            baseUrl = com.thalesgroup.authzforce.soap.api.AuthzForce_Service.class.getResource(".");
             url = new URL(baseUrl, "file:/D:/_DEV/boss-workspace/AuthzForce-PDP/WebContent/WEB-INF/wsdl/AuthzForce.wsdl");
         } catch (MalformedURLException e) {
             logger.warning("Failed to create URL for the wsdl Location: 'file:/D:/_DEV/boss-workspace/AuthzForce-PDP/WebContent/WEB-INF/wsdl/AuthzForce.wsdl', retrying as a local file");

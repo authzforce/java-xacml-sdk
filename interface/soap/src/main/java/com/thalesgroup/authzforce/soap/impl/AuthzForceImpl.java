@@ -1,11 +1,11 @@
-package com.thalesgroup.pdp.impl;
+package com.thalesgroup.authzforce.soap.impl;
 
 import javax.jws.WebService;
 
 import oasis.names.tc.xacml._2_0.context.schema.os.RequestType;
 import oasis.names.tc.xacml._2_0.context.schema.os.ResponseType;
 
-import com.thalesgroup.pdp.AuthzForce;
+import com.thalesgroup.authzforce.soap.api.AuthzForce;
 
 @SuppressWarnings("restriction")
 @WebService(serviceName = "AuthzForce", portName = "AuthzForceSOAP", endpointInterface = "com.thalesgroup.pdp.AuthzForce", targetNamespace = "http://pdp.thalesgroup.com/")

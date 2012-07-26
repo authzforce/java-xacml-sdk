@@ -1,4 +1,4 @@
-package com.thalesgroup.pdp.impl;
+package com.thalesgroup.authzforce.soap.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -123,7 +123,7 @@ public class PDPWrapper {
 		}
 		
 		String resourceLogs = "|-|";
-		// ¨Parse resources informations
+		// ï¿½Parse resources informations
 		List<Map<String, String>> rscList = new ArrayList<Map<String, String>>();
 		logger.debug("Resources : ");
 		for (ResourceType rscType : xacmlAuthzDecisionRequest.getResource()) {

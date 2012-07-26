@@ -1,5 +1,5 @@
 
-package com.thalesgroup.pdp;
+package com.thalesgroup.authzforce.soap.api;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

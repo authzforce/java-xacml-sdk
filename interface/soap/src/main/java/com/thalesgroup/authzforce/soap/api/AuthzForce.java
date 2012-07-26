@@ -1,5 +1,5 @@
 
-package com.thalesgroup.pdp;
+package com.thalesgroup.authzforce.soap.api;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -21,7 +21,7 @@ import oasis.names.tc.xacml._2_0.context.schema.os.ResponseType;
  */
 @WebService(name = "AuthzForce", targetNamespace = "http://pdp.thalesgroup.com/")
 @XmlSeeAlso({
-    com.thalesgroup.pdp.ObjectFactory.class,
+    com.thalesgroup.authzforce.soap.api.ObjectFactory.class,
     oasis.names.tc.xacml._2_0.policy.schema.os.ObjectFactory.class,
     oasis.names.tc.xacml._2_0.context.schema.os.ObjectFactory.class
 })
