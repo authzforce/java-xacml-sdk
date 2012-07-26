@@ -18,9 +18,8 @@
 			<includes>
 				<include>com.thalesgroup.authzforce.attributeFinder:ldap</include>
 				<include>com.thalesgroup.authzforce.attributeFinder:sql</include>
-				<include>com.thalesgroup.authzforce.attributeFinder:certificate</include>
-				<include>com.thalesgroup.authzforce.core:authzforce</include>
-				<!-- <include>com.thalesgroup.authzforce.core:tazs</include> -->
+				<include>com.thalesgroup.authzforce.attributeFinder:certificate</include>				
+				<include>com.thalesgroup.authzforce.core:tazs</include>
 				<include>com.thalesgroup.authzforce.core:model</include>
 				<include>com.thalesgroup.authzforce.interface:rest</include>
 				<include>com.thalesgroup.authzforce.policyFinder:directoryPolicyFinder</include>
@@ -29,6 +28,7 @@
 			<sources>
 				<excludes>
 					<exclude>*soap*</exclude>
+					<exclude>com.thalesgroup.authzforce.core:authzforce</exclude>					
 				</excludes>
 				<includes>
 					<include>*.*</include>
@@ -44,9 +44,8 @@
 						<includes>
 							<include>com.thalesgroup.authzforce.attributeFinder:ldap</include>
 							<include>com.thalesgroup.authzforce.attributeFinder:sql</include>
-							<include>com.thalesgroup.authzforce.attributeFinder:certificate</include>
-							<include>com.thalesgroup.authzforce.core:authzforce</include>
-							<!-- <include>com.thalesgroup.authzforce.core:tazs</include> -->
+							<include>com.thalesgroup.authzforce.attributeFinder:certificate</include>							
+							<include>com.thalesgroup.authzforce.core:tazs</include>
 							<include>com.thalesgroup.authzforce.core:model</include>
 							<include>com.thalesgroup.authzforce.interface:rest</include>
 							<include>com.thalesgroup.authzforce.policyFinder:directoryPolicyFinder</include>
