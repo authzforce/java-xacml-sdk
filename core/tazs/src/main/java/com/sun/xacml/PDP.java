@@ -60,6 +60,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import oasis.names.tc.xacml._2_0.context.schema.os.RequestType;
+
 
 /**
  * This is the core class for the XACML engine, providing the starting point
@@ -218,6 +228,60 @@ public class PDP
             // the request and return whatever we get back
             return new ResponseCtx(evaluateContext(context));
         }
+    }
+
+    /**
+     * 
+     * @param request
+     * @return
+     */
+    public ResponseCtx evaluate(RequestType request) {
+        
+    	RequestCtx req = convertRequestTypeToRequestCtxJaxB(request);
+        try {
+            return evaluate(new BasicEvaluationCtx(req, attributeFinder));
+        } catch (ParsingException pe) {
+            logger.log(Level.INFO, "the PDP receieved an invalid request", pe);
+
+            // there was something wrong with the request, so we return
+            // Indeterminate with a status of syntax error...though this
+            // may change if a more appropriate status type exists
+            ArrayList<String> code = new ArrayList<String>();
+            code.add(Status.STATUS_SYNTAX_ERROR);
+            Status status = new Status(code, pe.getMessage());
+            return new ResponseCtx(new Result(Result.DECISION_INDETERMINATE,
+                                              status));
+        }
+    }
+    
+    /**
+     * 
+     * @param request
+     * @return
+     */
+    private RequestCtx convertRequestTypeToRequestCtxJaxB(RequestType request) {
+    	
+    	Node node = null;
+    	DocumentBuilder builder;
+		try {
+			Marshaller m = BindingUtility.createMarshaller();
+			synchronized (DocumentBuilder.class) {
+				builder = BindingUtility.getDocumentBuilder();	
+			}			
+			Document doc = builder.newDocument();
+			JAXBElement<RequestType> element = BindingUtility.contextFac.createRequest(request);
+			m.marshal(element, doc);
+			node = doc.getDocumentElement();
+		} catch (JAXBException ex) {
+			throw new RuntimeException(ex);
+		}
+
+		try {
+			return RequestCtx.getInstance(node);
+		} catch (ParsingException e) {
+			logger.severe("An exception occured = "+e);
+			return null;
+		}		
     }
 
     /**
