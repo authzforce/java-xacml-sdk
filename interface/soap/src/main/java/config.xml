@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://sunxacml.sourceforge.net/schema/config-0.3" defaultPDP="AuthZForceMvn"
+	defaultAttributeFactory="attr" defaultCombiningAlgFactory="comb"
+	defaultFunctionFactory="func"
+	xsi:schemaLocation="http://sunxacml.sourceforge.net/schema/config-0.3 config.xsd">
+	<pdp name="AuthZForceMvn">
+<!-- 	<attributeFinderModule class="com.sun.xacml.finder.impl.AttributeRoleFinder"> -->
+<!-- 		<Options>			 -->
+<!-- 			<url>http://localhost:8080/FortressWS/FortressWS</url> -->
+<!-- 			<attributeSupportedId>fortress-role</attributeSupportedId> -->
+<!-- 			<fortressAttribute>Session</fortressAttribute> -->
+<!-- 			<substituteValue>urn:oasis:names:tc:xacml:1.0:subject:subject-id</substituteValue> -->
+<!-- 		</Options> -->
+<!-- 	</attributeFinderModule> -->
+		<!--  <attributeFinderModule class="com.sun.xacml.finder.impl.AttributeDBFinder">
+			<Options>
+				<url>jdbc:mysql://10.222.148.101:3306/</url>
+				<username>root</username>
+				<password>password</password>
+				<dbName>keystone-essex-4</dbName>
+				<driver>com.mysql.jdbc.Driver</driver>
+				<attributeSupportedId>tenantMember</attributeSupportedId>
+				<sqlRequest>SELECT u.name as $alias FROM user_tenant_membership utm, tenant t, user u WHERE utm.tenant_id = t.id AND u.id = utm.user_id AND t.name = $filter</sqlRequest>
+				<substituteValue>urn:oasis:names:tc:xacml:1.0:resource:resource-id</substituteValue>
+			</Options>
+		</attributeFinderModule>-->
+		<attributeFinderModule class="com.sun.xacml.finder.impl.SelectorModule" />
+		<policyFinderModule class="com.sun.xacml.finder.impl.FilePolicyModule">
+			<list>
+				<string>/opt/AuthZForce/Policy/AuthZForce-Policy.xml</string>
+			</list>
+		</policyFinderModule>
+	</pdp>
+	<attributeFactory name="attr" useStandardDatatypes="true" />
+	<combiningAlgFactory name="comb"
+		useStandardAlgorithms="true" />
+	<functionFactory name="func" useStandardFunctions="true">
+		<!-- <condition> <function class="TimeInRangeFunction"/> </condition> -->
+	</functionFactory>
+</config>
