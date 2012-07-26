@@ -115,7 +115,7 @@ public class DirectoryPolicyFinder extends PolicyFinderModule {
 	 */
 	@Override
 	public void init(PolicyFinder finder) {
-		PolicyReader reader = new PolicyReader(this.schemaFile, finder);
+		PolicyReader reader = new PolicyReader(finder, null, this.schemaFile);
 
 		Iterator it = this.fileNames.iterator();
 		while (it.hasNext()) {

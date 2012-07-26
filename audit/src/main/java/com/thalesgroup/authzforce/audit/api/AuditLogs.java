@@ -1,4 +1,4 @@
-package com.thalesgroup.authzforce.audit;
+package com.thalesgroup.authzforce.audit.api;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -475,24 +475,4 @@ public class LdapAttributeFinder extends AttributeFinderModule implements
 			throw new RuntimeException(e);
 		}
 	}
-
-	@Override
-	public String getAttributeSupportedId() {
-		return attributeSupportedId;
-	}
-
-	@Override
-	public String getSubstituteValue() {
-		return substituteValue;
-	}
-
-	@Override
-	public StringAttribute getResourceVal() {
-		return subjectVal;
-	}
-
-	@Override
-	public Set getSet() {
-		return set;
-	}
 }

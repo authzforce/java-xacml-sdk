@@ -41,9 +41,9 @@ import com.sun.xacml.ParsingException;
 import com.sun.xacml.UnknownIdentifierException;
 import com.sun.xacml.ctx.ResponseCtx;
 import com.sun.xacml.ctx.Result;
-import com.thalesgroup.authzforce.audit.AttributesResolved;
-import com.thalesgroup.authzforce.audit.AuditLogs;
-import com.thalesgroup.authzforce.audit.Request;
+import com.thalesgroup.authzforce.audit.api.AttributesResolved;
+import com.thalesgroup.authzforce.audit.api.AuditLogs;
+import com.thalesgroup.authzforce.audit.api.Request;
 import com.thalesgroup.pdp.AuthZForce;
 
 /**

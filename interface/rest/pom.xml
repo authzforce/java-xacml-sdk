@@ -123,6 +123,11 @@
 			<groupId>com.thalesgroup.authzforce.core</groupId>
 			<artifactId>${server.type}</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+			<groupId>com.thalesgroup.authzforce</groupId>
+			<artifactId>audit</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

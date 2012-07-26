@@ -179,7 +179,7 @@ public class FilePolicyFinder extends PolicyFinderModule {
      * @param finder a PolicyFinder used to help in instantiating PolicySets
      */
     public void init(PolicyFinder finder) {
-        PolicyReader reader = new PolicyReader(this.schemaFile, finder);
+        PolicyReader reader = new PolicyReader(finder, null,this.schemaFile);
       
 //      Deprecated method
 //      PolicyReader(finder, logger, this.schemaFile);

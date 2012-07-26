@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 	<name>AuthZForce</name>
 	<properties>
-		<server.type>authzforce</server.type>
+		<server.type>tazs</server.type>
 		<server.interface.type>rest</server.interface.type>
 	</properties>
 	<scm>
@@ -22,6 +22,7 @@
 		<module>attributeFinder</module>
 		<module>policyFinder</module>
 		<module>builder</module>
+		<module>audit</module>
 	</modules>
 	<dependencies>
 		<dependency>
