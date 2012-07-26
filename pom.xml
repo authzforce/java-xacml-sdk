@@ -7,16 +7,22 @@
 	<packaging>pom</packaging>
 	<name>AuthZForce</name>
 	<properties>
-		<server.type>authzforce</server.type>	
-		<server.interface.type>rest</server.interface.type>			
+		<server.type>authzforce</server.type>
+		<server.interface.type>rest</server.interface.type>
 	</properties>
+	<scm>
+		<connection>scm:svn:http://svn.theresis.org/svn/gt-appsec/AuthZForce/AuthZForce/trunk</connection>
+		<developerConnection>scm:svn:http://T0101841@svn.theresis.org/svn/gt-appsec/AuthZForce/AuthZForce/trunk</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://wiki.corp.thales/display/KTDSOA/Thales+Authorization+Server</url>
+	</scm>
 	<modules>
 		<module>interface</module>
 		<module>core</module>
 		<module>attributeFinder</module>
 		<module>policyFinder</module>
 		<module>builder</module>
-	</modules>	
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>

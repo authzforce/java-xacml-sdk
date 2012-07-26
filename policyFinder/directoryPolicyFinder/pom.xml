@@ -15,7 +15,7 @@
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   	<dependency>
-  		<groupId>com.thalesgroup.authzforce.policyfinder</groupId>
+  		<groupId>com.thalesgroup.authzforce.policyFinder</groupId>
   		<artifactId>filePolicyFinder</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
