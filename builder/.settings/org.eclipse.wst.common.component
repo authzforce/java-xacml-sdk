@@ -31,6 +31,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/com.thalesgroup.authzforce.builder-0.0.1-SNAPSHOT/target/classes"/>
-        <property name="context-root" value="authzforce-0.0.1"/>
+        <property name="context-root" value="authzforce-rest-0.0.1-SNAPSHOT"/>
     </wb-module>
 </project-modules>

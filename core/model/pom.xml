@@ -7,10 +7,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
+	<groupId>com.thalesgroup.authzforce.core</groupId>
 	<artifactId>model</artifactId>
 	<name>AuthZForce :: Core :: Model</name>
 	<build>
 		<finalName>${project.parent.artifactId}-${project.artifactId}-${project.version}</finalName>
-	</build>
-	<groupId>com.thalesgroup.authzforce.core</groupId>
+	</build>		
 </project>

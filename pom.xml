@@ -6,13 +6,17 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>AuthZForce</name>
+	<properties>
+		<server.type>authzforce</server.type>	
+		<server.interface.type>rest</server.interface.type>			
+	</properties>
 	<modules>
 		<module>interface</module>
 		<module>core</module>
 		<module>attributeFinder</module>
 		<module>policyFinder</module>
 		<module>builder</module>
-	</modules>
+	</modules>	
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>

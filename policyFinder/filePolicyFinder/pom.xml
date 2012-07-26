@@ -7,11 +7,11 @@
   </parent>
   <groupId>com.thalesgroup.authzforce.policyFinder</groupId>
   <artifactId>filePolicyFinder</artifactId>
-  <name>AuthZForce :: Policy Finder :: File Policy Finder</name>
+  <name>AuthZForce :: Policy Finder :: File Policy Finder</name>  
   <dependencies>
   	<dependency>
   		<groupId>com.thalesgroup.authzforce.core</groupId>
-  		<artifactId>authzforce</artifactId>
+  		<artifactId>${server.type}</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   </dependencies>

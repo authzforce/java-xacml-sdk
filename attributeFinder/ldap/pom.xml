@@ -22,15 +22,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.thalesgroup.authzforce.core</groupId>
-			<artifactId>authzforce</artifactId>
+			<artifactId>${server.type}</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>com.thalesgroup.authzforce.core</groupId>
-			<artifactId>tazs</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		-->
 	</dependencies>
 </project>

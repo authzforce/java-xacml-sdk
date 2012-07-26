@@ -11,7 +11,7 @@
 	<name>AuthZForce :: Builder</name>
 	<packaging>war</packaging>
 	<build>
-		<finalName>${project.parent.artifactId}-${project.artifactId}-${project.version}</finalName>
+		<finalName>${server.type}-${server.interface.type}-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
@@ -67,16 +67,9 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.thalesgroup.authzforce.core</groupId>
-			<artifactId>authzforce</artifactId>
+			<artifactId>${server.type}</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>com.thalesgroup.authzforce.core</groupId>
-			<artifactId>tazs</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>com.thalesgroup.authzforce</groupId>
 			<artifactId>attributeFinder</artifactId>
@@ -101,29 +94,23 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>
-				com.thalesgroup.authzforce.attributeFinder
-			</groupId>
+			<groupId>com.thalesgroup.authzforce.attributeFinder</groupId>
 			<artifactId>certificate</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>
-				com.thalesgroup.authzforce.attributeFinder
-			</groupId>
+			<groupId>com.thalesgroup.authzforce.attributeFinder</groupId>
 			<artifactId>ldap</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>
-				com.thalesgroup.authzforce.attributeFinder
-			</groupId>
+			<groupId>com.thalesgroup.authzforce.attributeFinder</groupId>
 			<artifactId>sql</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>		
 		<dependency>
 			<groupId>com.thalesgroup.authzforce.interface</groupId>
-			<artifactId>rest</artifactId>
+			<artifactId>${server.interface.type}</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

@@ -4,7 +4,7 @@
     <groupId>com.thalesgroup</groupId>
     <artifactId>authzforce</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-  </parent>
+  </parent>  
   <groupId>com.thalesgroup.authzforce</groupId>
   <artifactId>policyFinder</artifactId>
   <packaging>pom</packaging>
