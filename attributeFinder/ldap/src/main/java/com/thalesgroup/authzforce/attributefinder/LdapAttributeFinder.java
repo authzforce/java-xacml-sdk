@@ -475,4 +475,14 @@ public class LdapAttributeFinder extends AttributeFinderModule implements
 			throw new RuntimeException(e);
 		}
 	}
+	
+	private AttributeValue getResourceVal() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private String getSubstituteValue() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
