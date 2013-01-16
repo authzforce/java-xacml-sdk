@@ -29,8 +29,14 @@ import org.slf4j.LoggerFactory;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.thalesgroup.authzforce.sdk.XacmlSdk;
+import com.thalesgroup.authzforce.sdk.core.schema.Action;
+import com.thalesgroup.authzforce.sdk.core.schema.Environment;
 import com.thalesgroup.authzforce.sdk.core.schema.Request;
+import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Response;
+import com.thalesgroup.authzforce.sdk.core.schema.Responses;
+import com.thalesgroup.authzforce.sdk.core.schema.Subject;
+import com.thalesgroup.authzforce.sdk.core.schema.XACMLAttributeId;
 import com.thalesgroup.authzforce.sdk.core.schema.XACMLDatatypes;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
@@ -61,7 +67,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 		this.client = Client.create();
 		this.webResource = this.client.resource(serverEndpoint);
 	}
-	
+
 	private void clearRequest() {
 		this.request = new Request();
 	}
@@ -212,7 +218,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 */
 	private List<AttributeType> forgeSubject(
 			List<AttributeType> subjectAttributes,
-			Map<String, String> subjectMap) throws XacmlSdkException {
+			Map<XACMLAttributeId, String> subjectMap) throws XacmlSdkException {
 		if (subjectAttributes != null && subjectMap != null) {
 			// subject
 			LOGGER.debug("Forging subject...");
@@ -221,8 +227,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 			Iterator itKey = subjectMap.keySet().iterator();
 			Iterator itVal = subjectMap.values().iterator();
 			while (itKey.hasNext()) {
-				subjAttr.setAttributeId(((String) (itKey.next())));
-				subjAttr.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING);
+				subjAttr.setAttributeId(((XACMLAttributeId) (itKey.next()))
+						.value());
+				subjAttr.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING
+						.value());
 
 				Object itValObj = itVal.next();
 				if (itValObj instanceof String) {
@@ -247,10 +255,113 @@ public class XacmlSdkImpl implements XacmlSdk {
 				}
 			}
 		} else {
-			throw new XacmlSdkException(
-					XacmlSdkExceptionCodes.MISSING_SUBJECT);
+			throw new XacmlSdkException(XacmlSdkExceptionCodes.MISSING_SUBJECT);
 		}
 		return subjectAttributes;
+	}
+
+	private List<AttributeType> forgeResource(Resource resource)
+			throws XacmlSdkException {
+		List<AttributeType> resAttributes = new ArrayList<AttributeType>();
+		AttributeValueType resAttrVal = new AttributeValueType();
+		AttributeType resAttr = new AttributeType();
+
+		if (resource != null) {
+			LOGGER.debug("Forging resource...");
+
+			resAttr.setAttributeId(resource.getId().value());
+			resAttr.setDataType(resource.getDatatype().value());
+
+			resAttrVal.getContent().add(resource.getValue());
+			resAttr.getAttributeValue().add(resAttrVal);
+
+			resAttributes.add(resAttr);
+
+			resAttr = new AttributeType();
+			resAttrVal = new AttributeValueType();
+		} else {
+			throw new XacmlSdkException(
+					XacmlSdkExceptionCodes.MISSING_RESOURCE.value());
+		}
+		return resAttributes;
+	}
+
+	private List<AttributeType> forgeSubject(Subject subject)
+			throws XacmlSdkException {
+		List<AttributeType> subjectAttributes = new ArrayList<AttributeType>();
+		AttributeValueType subjectAttrVal = new AttributeValueType();
+		AttributeType subjectAttr = new AttributeType();
+
+		if (subject != null) {
+			LOGGER.debug("Forging Subject...");
+
+			subjectAttr.setAttributeId(subject.getId().value());
+			subjectAttr.setDataType(subject.getDatatype().value());
+
+			subjectAttrVal.getContent().add(subject.getValue());
+			subjectAttr.getAttributeValue().add(subjectAttrVal);
+
+			subjectAttributes.add(subjectAttr);
+
+			subjectAttr = new AttributeType();
+			subjectAttrVal = new AttributeValueType();
+		} else {
+			throw new XacmlSdkException(
+					XacmlSdkExceptionCodes.MISSING_SUBJECT.value());
+		}
+		return subjectAttributes;
+	}
+
+	private List<AttributeType> forgeAction(Action action)
+			throws XacmlSdkException {
+		List<AttributeType> actionAttributes = new ArrayList<AttributeType>();
+		AttributeValueType actionAttrVal = new AttributeValueType();
+		AttributeType actionAttr = new AttributeType();
+
+		if (action != null) {
+			LOGGER.debug("Forging Action...");
+
+			actionAttr.setAttributeId(action.getId().value());
+			actionAttr.setDataType(action.getDatatype().value());
+
+			actionAttrVal.getContent().add(action.getValue());
+			actionAttr.getAttributeValue().add(actionAttrVal);
+
+			actionAttributes.add(actionAttr);
+
+			actionAttr = new AttributeType();
+			actionAttrVal = new AttributeValueType();
+		} else {
+			throw new XacmlSdkException(
+					XacmlSdkExceptionCodes.MISSING_ACTION.value());
+		}
+		return actionAttributes;
+	}
+
+	private List<AttributeType> forgeEnvironment(Environment environment)
+			throws XacmlSdkException {
+		List<AttributeType> environmentAttributes = new ArrayList<AttributeType>();
+		AttributeValueType environmentAttrVal = new AttributeValueType();
+		AttributeType environmentAttr = new AttributeType();
+
+		if (environment != null) {
+			LOGGER.debug("Forging Environment...");
+
+			environmentAttr.setAttributeId(environment.getId().value());
+			environmentAttr.setDataType(environment.getDatatype().value());
+
+			environmentAttrVal.getContent().add(environment.getValue());
+			environmentAttr.getAttributeValue().add(environmentAttrVal);
+
+			environmentAttributes.add(environmentAttr);
+
+			environmentAttr = new AttributeType();
+			environmentAttrVal = new AttributeValueType();
+		} else {
+			throw new XacmlSdkException(
+					XacmlSdkExceptionCodes.MISSING_ENVIRONMENT.value());
+		}
+		return environmentAttributes;
 	}
 
 	/**
@@ -264,8 +375,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * @throws XacmlSdkException
 	 */
 	private List<AttributeType> forgeResource(
-			List<AttributeType> resAttributes, Map<String, String> resourceMap)
-			throws XacmlSdkException {
+			List<AttributeType> resAttributes,
+			Map<XACMLAttributeId, String> resourceMap) throws XacmlSdkException {
 		if (resAttributes != null && resourceMap != null) {
 			// resource
 			LOGGER.debug("Forging resource...");
@@ -275,8 +386,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 			Iterator itKey = resourceMap.keySet().iterator();
 			Iterator itVal = resourceMap.values().iterator();
 			while (itKey.hasNext()) {
-				resAttr.setAttributeId(((String) (itKey.next())));
-				resAttr.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING);
+				resAttr.setAttributeId(((XACMLAttributeId) (itKey.next()))
+						.value());
+				resAttr.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING
+						.value());
 
 				resAttrVal.getContent().add(((String) (itVal.next())));
 				resAttr.getAttributeValue().add(resAttrVal);
@@ -304,8 +417,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * @throws XacmlSdkException
 	 */
 	private List<AttributeType> forgeAction(
-			List<AttributeType> actionAttributes, Map<String, String> actionMap)
-			throws XacmlSdkException {
+			List<AttributeType> actionAttributes,
+			Map<XACMLAttributeId, String> actionMap) throws XacmlSdkException {
 		if (actionAttributes != null && actionMap != null) {
 			// action
 			LOGGER.debug("Forging action...");
@@ -315,8 +428,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 			Iterator itKey = actionMap.keySet().iterator();
 			Iterator itVal = actionMap.values().iterator();
 			while (itKey.hasNext()) {
-				actionAttr.setAttributeId(((String) (itKey.next())));
-				actionAttr.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING);
+				actionAttr.setAttributeId(((XACMLAttributeId) (itKey.next()))
+						.value());
+				actionAttr.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING
+						.value());
 				actionAttrVal.getContent().add(((String) (itVal.next())));
 				actionAttr.getAttributeValue().add(actionAttrVal);
 
@@ -332,7 +447,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	}
 
 	private List<AttributeType> forgeEnvironment(
-			Map<String, String> environmentMap) throws XacmlSdkException {
+			Map<XACMLAttributeId, String> environmentMap)
+			throws XacmlSdkException {
 		List<AttributeType> environmentAttributes = new ArrayList<AttributeType>();
 		if (environmentMap != null) {
 			LOGGER.debug("Forging environment...");
@@ -341,9 +457,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 			Iterator itKey = environmentMap.keySet().iterator();
 			Iterator itVal = environmentMap.values().iterator();
 			while (itKey.hasNext()) {
-				environmentAttr.setAttributeId(((String) (itKey.next())));
+				environmentAttr.setAttributeId(((XACMLAttributeId) (itKey
+						.next())).value());
 				environmentAttr
-						.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING);
+						.setDataType(XACMLDatatypes.XACML_DATATYPE_STRING
+								.value());
 				actionAttrVal.getContent().add(((String) (itVal.next())));
 				environmentAttr.getAttributeValue().add(actionAttrVal);
 
@@ -366,7 +484,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * 
 	 */
 	private Request addEnvironmentVariable(
-			Map<String, String> environmentAttribute) throws XacmlSdkException {
+			Map<XACMLAttributeId, String> environmentAttribute)
+			throws XacmlSdkException {
 		ArrayList<AttributeType> envAttributes = new ArrayList<AttributeType>();
 		EnvironmentType xacmlEnvironment = new EnvironmentType();
 
@@ -380,15 +499,65 @@ public class XacmlSdkImpl implements XacmlSdk {
 		return request;
 	}
 
+	private void createXacmlRequest(Subject subject, List<Resource> resources,
+			List<Action> actions, Environment environment) {
+		Request xacmlRequest = new Request();
+
+		List<AttributeType> subjectAttributes = new ArrayList<AttributeType>();
+		List<AttributeType> resAttributes = new ArrayList<AttributeType>();
+		List<AttributeType> actionAttributes = new ArrayList<AttributeType>();
+		List<AttributeType> envAttributes = new ArrayList<AttributeType>();
+
+		EnvironmentType xacmlEnvironment = new EnvironmentType();
+		ActionType xacmlAction = new ActionType();
+		SubjectType xacmlSubject = new SubjectType();
+		ResourceType xacmlResource;
+
+		List<ResourceType> xacmlResourceList = new ArrayList<ResourceType>();
+		try {
+			for (Resource resource : resources) {
+				xacmlResource = new ResourceType();
+
+				resAttributes = forgeResource(resource);
+
+				xacmlResource.getAttribute().addAll(resAttributes);
+				xacmlResourceList.add(xacmlResource);
+			}
+			for (Action action : actions) {
+				xacmlAction = new ActionType();
+				actionAttributes = forgeAction(action);
+			}
+
+			subjectAttributes = forgeSubject(subject);
+			envAttributes = forgeEnvironment(environment);
+		} catch (XacmlSdkException e) {
+			e.printStackTrace();
+		}
+		xacmlSubject.getAttribute().addAll(subjectAttributes);
+
+		xacmlAction.getAttribute().addAll(actionAttributes);
+
+		xacmlEnvironment.getAttribute().addAll(envAttributes);
+
+		LOGGER.debug("Assembling XACML...");
+		xacmlRequest.getSubject().add(xacmlSubject);
+		xacmlRequest.getResource().addAll(xacmlResourceList);
+		xacmlRequest.setAction(xacmlAction);
+		xacmlRequest.setEnvironment(xacmlEnvironment);
+
+		this.request = xacmlRequest;
+	}
+
 	/**
 	 * @throws XacmlSdkException
-	 * @notImplemented
 	 * 
-	 *                 Multiple Resource Profile
+	 *             Multiple Resource Profile
 	 */
-	private Request createXacmlRequest(Map<String, String> subjectMap,
-			List<Map<String, String>> resourceMap,
-			Map<String, String> actionMap, Map<String, String> environmentMap)
+	private Request createXacmlRequest(
+			Map<XACMLAttributeId, String> subjectMap,
+			List<Map<XACMLAttributeId, String>> resourceMap,
+			Map<XACMLAttributeId, String> actionMap,
+			Map<XACMLAttributeId, String> environmentMap)
 			throws XacmlSdkException {
 
 		Request xacmlRequest = new Request();
@@ -405,7 +574,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		List<ResourceType> xacmlResourceList = new ArrayList<ResourceType>();
 
-		for (Map<String, String> resourceList : resourceMap) {
+		for (Map<XACMLAttributeId, String> resourceList : resourceMap) {
 			xacmlResource = new ResourceType();
 			resAttributes = new ArrayList<AttributeType>();
 			resAttributes = (ArrayList<AttributeType>) forgeResource(
@@ -437,51 +606,132 @@ public class XacmlSdkImpl implements XacmlSdk {
 		return xacmlRequest;
 	}
 
-	public Response getAuthZ(Map<String, String> mySubject,
-			Map<String, String> myResource, Map<String, String> myAction,
-			Map<String, String> myEnvironment) throws XacmlSdkException {
+	@Override
+	public Response getAuthZ(Map<XACMLAttributeId, String> mySubject,
+			Map<XACMLAttributeId, String> myResource,
+			Map<XACMLAttributeId, String> myAction,
+			Map<XACMLAttributeId, String> myEnvironment)
+			throws XacmlSdkException {
 
-		List<Map<String, String>> resourceList = new ArrayList<Map<String, String>>();
+		List<Map<XACMLAttributeId, String>> resourceList = new ArrayList<Map<XACMLAttributeId, String>>();
 		resourceList.add(myResource);
 
-		return getAuthZ(mySubject, resourceList, myAction, myEnvironment);
+		return getAuthZ(mySubject, resourceList, myAction, myEnvironment)
+				.getResponse().get(0);
 	}
 
-	public Response getAuthZ(Map<String, String> mySubject,
-			List<Map<String, String>> resourceList,
-			Map<String, String> myAction, Map<String, String> myEnvironment)
+	@Override
+	public Responses getAuthZ(Map<XACMLAttributeId, String> mySubject,
+			List<Map<XACMLAttributeId, String>> resourceList,
+			Map<XACMLAttributeId, String> myAction,
+			Map<XACMLAttributeId, String> myEnvironment)
 			throws XacmlSdkException {
-		com.thalesgroup.authzforce.sdk.core.schema.Response response = new com.thalesgroup.authzforce.sdk.core.schema.Response();
+		Responses responses = new Responses();
+		responses.setSubject(mySubject
+				.get(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID));
 		/*
 		 * FIXME: Hack for xacml v2.0
 		 * 
-		 * When we go to xacml v3.0 or v2.0 Multi Resource Profile no need to use a temp map and a loop. 
-		 * Just do:
-		 * createXacmlRequest(mySubject, resourceList, myAction, myEnvironment);
-		 * ResponseType myResponse = webResource.accept(MediaType.APPLICATION_XML)
-		 *			.type(MediaType.APPLICATION_XML)
-		 *			.post(ResponseType.class, this.toString());
-		 * for (ResultType result : myResponse.getResult()) {
-		 *		response.setResponse(result.getResourceId(), result.getDecision()
-		 *				.value());
-		 *	}
+		 * When we go to xacml v3.0 or v2.0 Multi Resource Profile no need to
+		 * use a temp map and a loop. Just do: createXacmlRequest(mySubject,
+		 * resourceList, myAction, myEnvironment); ResponseType myResponse =
+		 * webResource.accept(MediaType.APPLICATION_XML)
+		 * .type(MediaType.APPLICATION_XML) .post(ResponseType.class,
+		 * this.toString()); for (ResultType result : myResponse.getResult()) {
+		 * response.setResponse(result.getResourceId(), result.getDecision()
+		 * .value()); }
 		 */
-		List<Map<String, String>> tmpResourceList = new ArrayList<Map<String, String>>();
-		for (Map<String, String> map : resourceList) {
+		List<Map<XACMLAttributeId, String>> tmpResourceList = new ArrayList<Map<XACMLAttributeId, String>>();
+		for (Map<XACMLAttributeId, String> map : resourceList) {
 			tmpResourceList.add(map);
-			createXacmlRequest(mySubject, tmpResourceList, myAction, myEnvironment);
-			ResponseType myResponse = webResource.accept(MediaType.APPLICATION_XML)
+			createXacmlRequest(mySubject, tmpResourceList, myAction,
+					myEnvironment);
+			ResponseType myResponse = webResource
+					.accept(MediaType.APPLICATION_XML)
 					.type(MediaType.APPLICATION_XML)
 					.post(ResponseType.class, this.toString());
 			for (ResultType result : myResponse.getResult()) {
-				response.setResponse(result.getResourceId(), result.getDecision()
-						.value());
+				Response response = new Response();
+				response.setResourceId(result.getResourceId());
+				response.setDecision(result.getDecision());
+				/*
+				 * FIXME: Find a better way to fetch action
+				 */
+				// response.setAction((String)
+				// request.getAction().getAttribute()
+				// .get(0).getAttributeValue().get(0).getContent().get(0));
+				response.setAction(myAction
+						.get(XACMLAttributeId.XACML_ACTION_ACTION_ID));
+				responses.getResponse().add(response);
 			}
 			this.clearRequest();
 			tmpResourceList.clear();
 		}
 
-		return response;
+		return responses;
+	}
+
+	@Override
+	public Responses getAuthZ(Subject subject, List<Resource> resources,
+			List<Action> actions, Environment environment)
+			throws XacmlSdkException {
+		Responses responses = new Responses();
+		responses.setSubject(subject.getValue());
+		List<Resource> tmpResourceList = new ArrayList<Resource>();
+		List<Action> tmpActionList = new ArrayList<Action>();
+		/*
+		 * FIXME: Loop to handle some kind of xacml v3.0 emulation
+		 */
+		for (Resource resource : resources) {
+			tmpResourceList.add(resource);
+			for (Action myAction : actions) {
+				tmpActionList.add(myAction);
+				createXacmlRequest(subject, tmpResourceList, tmpActionList, environment);
+				ResponseType myResponse = webResource
+						.accept(MediaType.APPLICATION_XML)
+						.type(MediaType.APPLICATION_XML)
+						.post(ResponseType.class, this.toString());
+				for (ResultType result : myResponse.getResult()) {
+					Response response = new Response();
+					response.setResourceId(result.getResourceId());
+					response.setDecision(result.getDecision());
+					response.setAction(myAction.getValue());
+					responses.getResponse().add(response);
+				}
+				tmpActionList.clear();
+				this.clearRequest();
+			}
+			tmpResourceList.clear();
+		}
+		return responses;
+	}
+
+	@Override
+	public Response getAuthZ(Subject subject, Resource resource, Action action,
+			Environment environment) throws XacmlSdkException {
+		List<Resource> tmpResourceList = new ArrayList<Resource>();
+		List<Action> tmpActionList = new ArrayList<Action>();
+		tmpResourceList.add(resource);
+		tmpActionList.add(action);
+		return getAuthZ(subject, tmpResourceList, tmpActionList, environment).getResponse().get(0);
+	}
+
+	@Override
+	public Responses getAuthZ(Subject subject, List<Resource> resource,
+			Action action, Environment environment) throws XacmlSdkException {
+		List<Action> tmpActionList = new ArrayList<Action>();
+		tmpActionList.add(action);
+		return getAuthZ(subject, resource, tmpActionList, environment);
+	}
+
+	@Override
+	public Responses getAuthZ(Subject subject, Resource resource,
+			List<Action> action, Environment environment)
+			throws XacmlSdkException {
+		List<Resource> tmpResourceList = new ArrayList<Resource>();
+		tmpResourceList.add(resource);
+		
+		return getAuthZ(subject, tmpResourceList, action, environment);
 	}
 
 }
