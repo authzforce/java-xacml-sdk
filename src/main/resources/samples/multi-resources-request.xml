@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:Request xsi:type="request"
+	xmlns:ns2="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:ns4="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<ns4:Subject>
+		<ns4:Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id">
+			<ns4:AttributeValue>T0101841</ns4:AttributeValue>
+		</ns4:Attribute>
+	</ns4:Subject>
+	<ns4:Resource>
+		<ns4:Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id">
+			<ns4:AttributeValue>10.222.148.108</ns4:AttributeValue>
+		</ns4:Attribute>
+	</ns4:Resource>
+	<ns4:Resource>
+		<ns4:Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-location-id">
+			<ns4:AttributeValue>sonar.dev.theresis.org</ns4:AttributeValue>
+		</ns4:Attribute>
+	</ns4:Resource>
+	<ns4:Action>
+		<ns4:Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id">
+			<ns4:AttributeValue>GET</ns4:AttributeValue>
+		</ns4:Attribute>
+	</ns4:Action>
+	<ns4:Environment>
+		<ns4:Attribute DataType="http://www.w3.org/2001/XMLSchema#string"
+			AttributeId="urn:oasis:names:tc:xacml:1.0:subject:authentication-time">
+			<ns4:AttributeValue>Mon Jan 14 15:25:44 CET 2013</ns4:AttributeValue>
+		</ns4:Attribute>
+	</ns4:Environment>
+</ns4:Request>
