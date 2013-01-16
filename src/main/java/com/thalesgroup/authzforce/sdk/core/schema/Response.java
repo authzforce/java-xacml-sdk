@@ -1,21 +1,32 @@
 package com.thalesgroup.authzforce.sdk.core.schema;
 
-import java.util.HashMap;
-import java.util.Map;
+import oasis.names.tc.xacml._2_0.context.schema.os.DecisionType;
+
 
 public class Response {
 
-	private Map<String, String> myResponses;
+	private String resourceId;
+	private String action;
+	private DecisionType decision;
 	
-	public Response() {
-		myResponses = new HashMap<String, String>();
+	public String getResourceId() {
+		return resourceId;
+	}
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public DecisionType getDecision() {
+		return decision;
+	}
+	public void setDecision(DecisionType decision) {
+		this.decision = decision;
 	}
 	
-	public void setResponse(String resourceId, String decision) {
-		myResponses.put(resourceId, decision);
-	}
-
-	public Map<String, String> getResponses() {
-		return myResponses;
-	}
+	
 }
