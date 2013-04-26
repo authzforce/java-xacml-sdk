@@ -1,27 +1,12 @@
 package com.thalesgroup.authzforce.sdk.core.schema;
 
-public abstract class Attribute {
+import java.io.Serializable;
 
-	private XACMLAttributeId id;	
-	private XACMLDatatypes datatype;
-	private String value;
-	
-	public XACMLAttributeId getId() {
-		return id;
-	}
-	public void setId(XACMLAttributeId id) {
-		this.id = id;
-	}
-	public XACMLDatatypes getDatatype() {
-		return datatype;
-	}
-	public void setDatatype(XACMLDatatypes datatype) {
-		this.datatype = datatype;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
+
+public class Attribute extends AttributeValueType {
+
+	public void setValue(Object value) {
+		this.content.add((Serializable)value);
 	}
 }

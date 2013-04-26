@@ -22,7 +22,7 @@ import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
  */
 public class Test {
 
-	private static final String PDP_ENDPOINT = "http://127.0.0.1:8080/tazs-rest-0.0.1-SNAPSHOT/service";
+	private static final String PDP_ENDPOINT = "http://127.0.0.1:8080/authzforce-rest-interface-3.0.0/service";
 
 	private static final String SUBJECT = "T0101841";
 	private static final String RESOURCE = "http://www.opencloudware.org";
@@ -53,14 +53,13 @@ public class Test {
 		try {
 			responses = myXacml.getAuthZ(subject, resources, actions, environment);
 		} catch (XacmlSdkException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(e);
 		}
 		for (Response response : responses.getResponse()) {
 			System.out.println(response.getAction() + " on "
 					+ response.getResourceId() + ": " 
 					+ response.getDecision().value() + " for " 
-					+ responses.getSubject());
+					+ response.getSubject());
 		}
 	}
 }

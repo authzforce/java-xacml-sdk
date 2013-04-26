@@ -44,32 +44,58 @@
 			<artifactId>jersey-client</artifactId>
 			<version>1.16</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-runtime</artifactId>
+			<version>0.6.4</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
-			<plugin>
+		<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.8.2</version>
+				<version>0.8.3</version>
+				<!-- XACML v3 schema Generation -->
 				<executions>
 					<execution>
-						<id>xjc-${xacml-version}</id>
+						<id>v3</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<debug>false</debug>
-							<verbose>false</verbose>
-							<extension>false</extension>
+							<debug>true</debug>
+							<strict>false</strict>
 							<schemaDirectory>${basedir}/src/main/resources/schema/</schemaDirectory>
 							<schemaIncludes>
-								<include>access_control-xacml-2.0-context-schema-os.xsd</include>
-								<include>xacml-core-v3-schema-wd-17.xsd</include>
+								<value>xacml-core-v3-schema-wd-17.xsd</value>
 							</schemaIncludes>
+							<bindingIncludes>
+								<include>xacml-core-v3-schema-wd-17.xjb</include>
+							</bindingIncludes>
+							<extension>true</extension>
+							<args>
+								<arg>-Xannotate</arg>
+								<args>-Xequals</args>
+								<args>-XhashCode</args>
+							</args>
+							<plugins>
+								<plugin>
+									<groupId>org.jvnet.jaxb2_commons</groupId>
+									<artifactId>jaxb2-basics</artifactId>
+									<version>0.6.4</version>
+								</plugin>
+								<plugin>
+									<groupId>org.jvnet.jaxb2_commons</groupId>
+									<artifactId>jaxb2-basics-annotate</artifactId>
+									<version>0.6.4</version>
+								</plugin>
+							</plugins>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
+	<version>3.0.0</version>
 </project>
