@@ -1,7 +1,7 @@
 package com.thalesgroup.authzforce.sdk.core.schema;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Responses {
 

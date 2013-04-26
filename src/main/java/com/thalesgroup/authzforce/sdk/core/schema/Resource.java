@@ -1,23 +1,31 @@
 package com.thalesgroup.authzforce.sdk.core.schema;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Resource extends Attribute {
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeType;
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 
-	private List<Attribute> attribute;
+public class Resource extends AttributeType {
+
+	public Resource(Object value, XACMLDatatypes xacmlDatatype) {
+		AttributeValueType attrVal = new AttributeValueType();
+		attrVal.getContent().add((Serializable)value);
+		attrVal.setDataType(xacmlDatatype.value());
+		
+		this.includeInResult = true;
+		this.setAttributeId(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value());
+		this.getAttributeValue().add(attrVal);
+	}
 	
-	public List<Attribute> getAttribute() {
-		return attribute;
+	public void addObject(Object value, XACMLDatatypes xacmlDatatype) {
+		AttributeValueType attrVal = new AttributeValueType();
+		attrVal.getContent().add((Serializable)value);
+		attrVal.setDataType(xacmlDatatype.value());
+		this.getAttributeValue().add(attrVal);
 	}
 
-	public void setAttribute(List<Attribute> attribute) {
-		this.attribute = attribute;
+	public List getAttributes() {
+		return this.attributeValue;
 	}
-
-	public Resource(String value, XACMLDatatypes datatype) {
-		this.setId(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID);
-		this.setValue(value);
-		this.setDatatype(datatype);
-	}
-
 }
