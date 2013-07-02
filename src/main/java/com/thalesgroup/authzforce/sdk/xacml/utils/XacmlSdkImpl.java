@@ -191,7 +191,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 			System.out.println(e);
 		}
 		/* Doing some debugging log at least */
-		LOGGER.debug(request.toString());
+		LOGGER.debug(this.toString());
 
 		return request;
 	}
