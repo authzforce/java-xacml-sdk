@@ -128,7 +128,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 		AttributesType attr = new AttributesType();
 
 		if (action != null) {
-			LOGGER.debug("Forging Environment...");
+			LOGGER.debug("Forging Action...");
 			attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
 					.value());
 			attr.getAttribute().add(action);
