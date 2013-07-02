@@ -190,6 +190,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		/* Doing some debugging log at least */
+		LOGGER.debug(request.toString());
 
 		return request;
 	}
