@@ -11,6 +11,7 @@ import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Response;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.Subject;
+import com.thalesgroup.authzforce.sdk.core.schema.XACMLAttributeId;
 import com.thalesgroup.authzforce.sdk.core.schema.XACMLDatatypes;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
@@ -43,11 +44,14 @@ public class Test {
 		List<Action> actions = new ArrayList<Action>();
 		Resource rsc1 = new Resource(RESOURCE, XACMLDatatypes.XACML_DATATYPE_STRING);
 		Resource rsc2 = new Resource(RESOURCE_2, XACMLDatatypes.XACML_DATATYPE_STRING);
+		Resource rsc3 = new Resource(RESOURCE_2, XACMLDatatypes.XACML_DATATYPE_STRING);
 		rsc1.setIncludeInResult(true);
 		rsc2.setIncludeInResult(true);
+		rsc3.setAttributeId("urn:oasis:names:tc:xacml:1.0:resource:tenant-id");
 		
 		resources.add(rsc1);
 		resources.add(rsc2);
+		resources.add(rsc3);
 		
 		Action act1 = new Action(ACTION, XACMLDatatypes.XACML_DATATYPE_STRING);
 		Action act2 = new Action(ACTION_2, XACMLDatatypes.XACML_DATATYPE_STRING);

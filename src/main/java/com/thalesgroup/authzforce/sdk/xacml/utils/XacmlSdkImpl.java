@@ -3,6 +3,7 @@ package com.thalesgroup.authzforce.sdk.xacml.utils;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
@@ -53,11 +54,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private WebResource webResource;
 	private Client client;
 
-	private static List<AttributesType> attributes = new ArrayList<AttributesType>();
-	private static AttributesType resourcesCategory = new AttributesType();
-	private static AttributesType actionCategory = new AttributesType();
-	private static AttributesType subjectCategory = new AttributesType();
-	private static AttributesType environmentCategory = new AttributesType();
+	private static List<AttributesType> attributes = new LinkedList<AttributesType>();
+	private static List<AttributesType> resourceCategory = new LinkedList<AttributesType>();
+	private static List<AttributesType> actionCategory = new LinkedList<AttributesType>();
+	private static List<AttributesType> subjectCategory = new LinkedList<AttributesType>();
+	private static List<AttributesType> environmentCategory = new LinkedList<AttributesType>();
 
 	/**
 	 * Constructor
@@ -97,36 +98,88 @@ public class XacmlSdkImpl implements XacmlSdk {
 	}
 
 	private void forgeResource(Resource resource) throws XacmlSdkException {
-		AttributesType attr = new AttributesType();		
-
 		if (resource != null) {
+			AttributesType attr = new AttributesType();
 			LOGGER.debug("Forging Resource...");
-//			attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
-//					.value());
-//			attr.getAttribute().add(resource);
-//
-//			attributes.add(attr);
-			if(!resourcesCategory.getAttribute().contains(resource)) {
-				resourcesCategory.getAttribute().add(resource);
+			if (resourceCategory.size() > 0) {
+				if (resource.getAttributeId().equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
+					boolean containId = false;
+					for (AttributesType attrsType : resourceCategory) {
+						for (AttributeType attrType : attrsType.getAttribute()) {
+							if (attrType.getAttributeId().equals(
+									XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID
+											.value())) {
+								containId = true;
+								break;
+							}
+						}
+						if (containId) {
+							break;
+						}
+					}
+					if (containId) {
+						attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
+								.value());
+						attr.getAttribute().add(resource);
+						resourceCategory.add(attr);
+
+					} else {
+						resourceCategory.get(resourceCategory.size() - 1)
+								.getAttribute().add(resource);
+					}
+				} else {
+					resourceCategory.get(resourceCategory.size() - 1)
+					.getAttribute().add(resource);
+				}
+			} else {
+				attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
+						.value());
+				attr.getAttribute().add(resource);
+				resourceCategory.add(attr);
 			}
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_RESOURCE.value());
-		}		
+		}
 	}
 
 	private void forgeSubject(Subject subject) throws XacmlSdkException {
-		AttributesType attr = new AttributesType();
-
 		if (subject != null) {
+			AttributesType attr = new AttributesType();
 			LOGGER.debug("Forging Subject...");
-//			attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
-//					.value());
-//			attr.getAttribute().add(subject);
-//
-//			attributes.add(attr);
-			if(!subjectCategory.getAttribute().contains(subject)) {
-				subjectCategory.getAttribute().add(subject);
+			if (subjectCategory.size() > 0) {
+				if (subject.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
+					boolean containId = false;
+					for (AttributesType attrsType : subjectCategory) {
+						for (AttributeType attrType : attrsType.getAttribute()) {
+							if (attrType.getAttributeId().equals(
+									XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID
+											.value())) {
+								containId = true;
+								break;
+							}
+						}
+						if (containId) {
+							break;
+						}
+					}
+					if (containId) {
+						attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT.value());
+						attr.getAttribute().add(subject);
+						subjectCategory.add(attr);
+
+					} else {
+						subjectCategory.get(subjectCategory.size() - 1)
+								.getAttribute().add(subject);
+					}
+				} else {
+					subjectCategory.get(subjectCategory.size() - 1)
+					.getAttribute().add(subject);
+				}
+			} else {
+				attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT.value());
+				attr.getAttribute().add(subject);
+				subjectCategory.add(attr);
 			}
 		} else {
 			throw new XacmlSdkException(
@@ -135,17 +188,42 @@ public class XacmlSdkImpl implements XacmlSdk {
 	}
 
 	private void forgeAction(Action action) throws XacmlSdkException {
-		AttributesType attr = new AttributesType();
-
 		if (action != null) {
+			AttributesType attr = new AttributesType();
 			LOGGER.debug("Forging Action...");
-//			attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
-//					.value());
-//			attr.getAttribute().add(action);
-//
-//			attributes.add(attr);
-			if(!actionCategory.getAttribute().contains(action)) {
-				actionCategory.getAttribute().add(action);
+			if (actionCategory.size() > 0) {
+				if (action.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
+					boolean containId = false;
+					for (AttributesType attrsType : actionCategory) {
+						for (AttributeType attrType : attrsType.getAttribute()) {
+							if (attrType.getAttributeId().equals(
+									XACMLAttributeId.XACML_ACTION_ACTION_ID
+											.value())) {
+								containId = true;
+								break;
+							}
+						}
+						if (containId) {
+							break;
+						}
+					}
+					if (containId) {
+						attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION.value());
+						attr.getAttribute().add(action);
+						actionCategory.add(attr);
+
+					} else {
+						actionCategory.get(actionCategory.size() - 1)
+								.getAttribute().add(action);
+					}
+				} else {
+					actionCategory.get(actionCategory.size() - 1)
+					.getAttribute().add(action);
+				}
+			} else {
+				attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION.value());
+				attr.getAttribute().add(action);
+				actionCategory.add(attr);
 			}
 		} else {
 			throw new XacmlSdkException(
@@ -155,17 +233,41 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 	private void forgeEnvironment(Environment environment)
 			throws XacmlSdkException {
-		AttributesType attr = new AttributesType();
-
 		if (environment != null) {
-			LOGGER.debug("Forging Environment...");
-//			attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
-//					.value());
-//			attr.getAttribute().add(environment);
-//
-//			attributes.add(attr);
-			if(!environmentCategory.getAttribute().contains(environment)) {
-				environmentCategory.getAttribute().add(environment);
+			AttributesType attr = new AttributesType();
+			LOGGER.debug("Forging Subject...");
+			if (subjectCategory.size() > 0) {
+				if (environment.getAttributeId().equals(XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID.value())) {
+					boolean containId = false;
+					for (AttributesType attrsType : environmentCategory) {
+						for (AttributeType attrType : attrsType.getAttribute()) {
+							if (attrType.getAttributeId().equals(
+									XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID.value())) {
+								containId = true;
+								break;
+							}
+						}
+						if (containId) {
+							break;
+						}
+					}
+					if (containId) {
+						attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
+						attr.getAttribute().add(environment);
+						environmentCategory.add(attr);
+
+					} else {
+						environmentCategory.get(environmentCategory.size() - 1)
+								.getAttribute().add(environment);
+					}
+				} else {
+					environmentCategory.get(environmentCategory.size() - 1)
+					.getAttribute().add(environment);
+				}
+			} else {
+				attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
+				attr.getAttribute().add(environment);
+				environmentCategory.add(attr);
 			}
 		} else {
 			throw new XacmlSdkException(
@@ -179,10 +281,14 @@ public class XacmlSdkImpl implements XacmlSdk {
 		RequestType xacmlRequest = new RequestType();
 
 		LOGGER.debug("Assembling XACML...");
-		subjectCategory.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT.value());
-		resourcesCategory.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE.value());
-		actionCategory.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION.value());
-		environmentCategory.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
+		// subjectCategory.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
+		// .value());
+		// resourcesCategory.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
+		// .value());
+		// actionCategory.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
+		// .value());
+		// environmentCategory.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
+		// .value());
 		try {
 			forgeSubject(subject);
 			forgeEnvironment(environment);
@@ -196,11 +302,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-//		xacmlRequest.getAttributes().addAll(attributes);
-		xacmlRequest.getAttributes().add(subjectCategory);
-		xacmlRequest.getAttributes().add(resourcesCategory);
-		xacmlRequest.getAttributes().add(actionCategory);
-		xacmlRequest.getAttributes().add(environmentCategory);
+		// xacmlRequest.getAttributes().addAll(attributes);
+		xacmlRequest.getAttributes().addAll(subjectCategory);
+		xacmlRequest.getAttributes().addAll(resourceCategory);
+		xacmlRequest.getAttributes().addAll(actionCategory);
+		xacmlRequest.getAttributes().addAll(environmentCategory);
 		xacmlRequest.setCombinedDecision(false);
 		xacmlRequest.setReturnPolicyIdList(false);
 
@@ -215,7 +321,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 			LOGGER.debug(writer.toString());
 		} catch (Exception e) {
 			System.out.println(e);
-		}		
+		}
+		System.out.println(writer);
 
 		return request;
 	}
@@ -247,20 +354,27 @@ public class XacmlSdkImpl implements XacmlSdk {
 			Response response = new Response();
 			for (AttributesType returnedAttr : result.getAttributes()) {
 				for (AttributeType attr : returnedAttr.getAttribute()) {
-					if (attr.getAttributeId().equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
+					if (attr.getAttributeId()
+							.equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID
+									.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValue()) {
-							response.setResourceId(String.valueOf(attrValue.getContent().get(0)));
+							response.setResourceId(String.valueOf(attrValue
+									.getContent().get(0)));
 						}
-					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
+					} else if (attr.getAttributeId().equals(
+							XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValue()) {
-							response.setAction(String.valueOf(attrValue.getContent().get(0)));
+							response.setAction(String.valueOf(attrValue
+									.getContent().get(0)));
 						}
-					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
+					} else if (attr.getAttributeId().equals(
+							XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValue()) {
-							response.setSubject(String.valueOf(attrValue.getContent().get(0)));
+							response.setSubject(String.valueOf(attrValue
+									.getContent().get(0)));
 						}
 					}
 				}
