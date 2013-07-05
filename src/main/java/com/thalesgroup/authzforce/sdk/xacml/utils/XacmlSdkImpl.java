@@ -54,6 +54,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private Client client;
 
 	private static List<AttributesType> attributes = new ArrayList<AttributesType>();
+	private static AttributesType resourcesCategory = new AttributesType();
+	private static AttributesType actionCategory = new AttributesType();
+	private static AttributesType subjectCategory = new AttributesType();
+	private static AttributesType environmentCategory = new AttributesType();
 
 	/**
 	 * Constructor
@@ -93,19 +97,21 @@ public class XacmlSdkImpl implements XacmlSdk {
 	}
 
 	private void forgeResource(Resource resource) throws XacmlSdkException {
-		AttributesType attr = new AttributesType();
+		AttributesType attr = new AttributesType();		
 
 		if (resource != null) {
 			LOGGER.debug("Forging Resource...");
-			attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
-					.value());
-			attr.getAttribute().add(resource);
-
-			attributes.add(attr);
+//			attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
+//					.value());
+//			attr.getAttribute().add(resource);
+//
+//			attributes.add(attr);
+//			
+			resourcesCategory.getAttribute().add(resource);
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_RESOURCE.value());
-		}
+		}		
 	}
 
 	private void forgeSubject(Subject subject) throws XacmlSdkException {
@@ -113,11 +119,12 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		if (subject != null) {
 			LOGGER.debug("Forging Subject...");
-			attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
-					.value());
-			attr.getAttribute().add(subject);
-
-			attributes.add(attr);
+//			attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
+//					.value());
+//			attr.getAttribute().add(subject);
+//
+//			attributes.add(attr);
+			subjectCategory.getAttribute().add(subject);
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_SUBJECT.value());
@@ -129,11 +136,12 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		if (action != null) {
 			LOGGER.debug("Forging Action...");
-			attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
-					.value());
-			attr.getAttribute().add(action);
-
-			attributes.add(attr);
+//			attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
+//					.value());
+//			attr.getAttribute().add(action);
+//
+//			attributes.add(attr);
+			actionCategory.getAttribute().add(action);
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_ACTION.value());
@@ -146,11 +154,12 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		if (environment != null) {
 			LOGGER.debug("Forging Environment...");
-			attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
-					.value());
-			attr.getAttribute().add(environment);
-
-			attributes.add(attr);
+//			attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
+//					.value());
+//			attr.getAttribute().add(environment);
+//
+//			attributes.add(attr);
+			environmentCategory.getAttribute().add(environment);
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_ENVIRONMENT.value());
@@ -163,6 +172,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 		RequestType xacmlRequest = new RequestType();
 
 		LOGGER.debug("Assembling XACML...");
+		subjectCategory.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT.value());
+		resourcesCategory.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE.value());
+		actionCategory.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION.value());
+		environmentCategory.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
 		try {
 			forgeSubject(subject);
 			forgeEnvironment(environment);
@@ -176,7 +189,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		xacmlRequest.getAttributes().addAll(attributes);
+//		xacmlRequest.getAttributes().addAll(attributes);
+		xacmlRequest.getAttributes().add(subjectCategory);
+		xacmlRequest.getAttributes().add(resourcesCategory);
+		xacmlRequest.getAttributes().add(actionCategory);
+		xacmlRequest.getAttributes().add(environmentCategory);
 		xacmlRequest.setCombinedDecision(false);
 		xacmlRequest.setReturnPolicyIdList(false);
 
@@ -187,11 +204,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 					.newInstance("oasis.names.tc.xacml._3_0.core.schema.wd_17");
 			Marshaller u = jc.createMarshaller();
 			u.marshal(xacmlRequest, writer);
+			/* Doing some debugging log at least */
+			LOGGER.debug(writer.toString());
 		} catch (Exception e) {
 			System.out.println(e);
-		}
-		/* Doing some debugging log at least */
-		LOGGER.debug(this.toString());
+		}		
 
 		return request;
 	}
@@ -218,6 +235,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 				.type(MediaType.APPLICATION_XML)
 				.post(ResponseType.class, myRequest);
 
+		// FIXME: possible NPE on each of the getContent
 		for (ResultType result : myResponse.getResult()) {
 			Response response = new Response();
 			for (AttributesType returnedAttr : result.getAttributes()) {
@@ -225,17 +243,17 @@ public class XacmlSdkImpl implements XacmlSdk {
 					if (attr.getAttributeId().equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValue()) {
-							response.setResourceId(String.valueOf(attrValue.getContent()));
+							response.setResourceId(String.valueOf(attrValue.getContent().get(0)));
 						}
 					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValue()) {
-							response.setAction(String.valueOf(attrValue.getContent()));
+							response.setAction(String.valueOf(attrValue.getContent().get(0)));
 						}
 					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValue()) {
-							response.setSubject(String.valueOf(attrValue.getContent()));
+							response.setSubject(String.valueOf(attrValue.getContent().get(0)));
 						}
 					}
 				}
