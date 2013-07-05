@@ -235,8 +235,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 			throws XacmlSdkException {
 		if (environment != null) {
 			AttributesType attr = new AttributesType();
-			LOGGER.debug("Forging Subject...");
-			if (subjectCategory.size() > 0) {
+			LOGGER.debug("Forging Environment...");
+			if (environmentCategory.size() > 0) {
 				if (environment.getAttributeId().equals(XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID.value())) {
 					boolean containId = false;
 					for (AttributesType attrsType : environmentCategory) {
