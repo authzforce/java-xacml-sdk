@@ -100,9 +100,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private void forgeResource(Resource resource) throws XacmlSdkException {
 		if (resource != null) {
 			AttributesType attr = new AttributesType();
+			AttributeType attrId = new AttributeType();
 			LOGGER.debug("Forging Resource...");
 			if (resourceCategory.size() > 0) {
-				if (resource.getAttributeId().equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
+				if (resource.getAttributeId().equals(
+						XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
 					boolean containId = false;
 					for (AttributesType attrsType : resourceCategory) {
 						for (AttributeType attrType : attrsType.getAttribute()) {
@@ -110,6 +112,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 									XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID
 											.value())) {
 								containId = true;
+								attrId = attrType;
 								break;
 							}
 						}
@@ -118,18 +121,19 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
-								.value());
-						attr.getAttribute().add(resource);
-						resourceCategory.add(attr);
-
+						if (attrId != resource) {
+							attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
+									.value());
+							attr.getAttribute().add(resource);
+							resourceCategory.add(attr);
+						}
 					} else {
 						resourceCategory.get(resourceCategory.size() - 1)
 								.getAttribute().add(resource);
 					}
 				} else {
 					resourceCategory.get(resourceCategory.size() - 1)
-					.getAttribute().add(resource);
+							.getAttribute().add(resource);
 				}
 			} else {
 				attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
@@ -146,9 +150,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private void forgeSubject(Subject subject) throws XacmlSdkException {
 		if (subject != null) {
 			AttributesType attr = new AttributesType();
+			AttributeType attrId = new AttributeType();
 			LOGGER.debug("Forging Subject...");
 			if (subjectCategory.size() > 0) {
-				if (subject.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
+				if (subject.getAttributeId().equals(
+						XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
 					boolean containId = false;
 					for (AttributesType attrsType : subjectCategory) {
 						for (AttributeType attrType : attrsType.getAttribute()) {
@@ -156,6 +162,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 									XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID
 											.value())) {
 								containId = true;
+								attrId = attrType;
 								break;
 							}
 						}
@@ -164,20 +171,23 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT.value());
-						attr.getAttribute().add(subject);
-						subjectCategory.add(attr);
-
+						if (attrId != subject) {
+							attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
+									.value());
+							attr.getAttribute().add(subject);
+							subjectCategory.add(attr);
+						}
 					} else {
 						subjectCategory.get(subjectCategory.size() - 1)
 								.getAttribute().add(subject);
 					}
 				} else {
 					subjectCategory.get(subjectCategory.size() - 1)
-					.getAttribute().add(subject);
+							.getAttribute().add(subject);
 				}
 			} else {
-				attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT.value());
+				attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
+						.value());
 				attr.getAttribute().add(subject);
 				subjectCategory.add(attr);
 			}
@@ -190,9 +200,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private void forgeAction(Action action) throws XacmlSdkException {
 		if (action != null) {
 			AttributesType attr = new AttributesType();
+			AttributeType attrId = new AttributeType();
 			LOGGER.debug("Forging Action...");
 			if (actionCategory.size() > 0) {
-				if (action.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
+				if (action.getAttributeId().equals(
+						XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
 					boolean containId = false;
 					for (AttributesType attrsType : actionCategory) {
 						for (AttributeType attrType : attrsType.getAttribute()) {
@@ -200,6 +212,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 									XACMLAttributeId.XACML_ACTION_ACTION_ID
 											.value())) {
 								containId = true;
+								attrId = attrType;
 								break;
 							}
 						}
@@ -208,20 +221,23 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION.value());
-						attr.getAttribute().add(action);
-						actionCategory.add(attr);
-
+						if (attrId != action) {
+							attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
+									.value());
+							attr.getAttribute().add(action);
+							actionCategory.add(attr);
+						}
 					} else {
 						actionCategory.get(actionCategory.size() - 1)
 								.getAttribute().add(action);
 					}
 				} else {
 					actionCategory.get(actionCategory.size() - 1)
-					.getAttribute().add(action);
+							.getAttribute().add(action);
 				}
 			} else {
-				attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION.value());
+				attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
+						.value());
 				attr.getAttribute().add(action);
 				actionCategory.add(attr);
 			}
@@ -235,15 +251,21 @@ public class XacmlSdkImpl implements XacmlSdk {
 			throws XacmlSdkException {
 		if (environment != null) {
 			AttributesType attr = new AttributesType();
+			AttributeType attrId = new AttributeType();
 			LOGGER.debug("Forging Environment...");
 			if (environmentCategory.size() > 0) {
-				if (environment.getAttributeId().equals(XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID.value())) {
+				if (environment.getAttributeId().equals(
+						XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID
+								.value())) {
 					boolean containId = false;
 					for (AttributesType attrsType : environmentCategory) {
 						for (AttributeType attrType : attrsType.getAttribute()) {
-							if (attrType.getAttributeId().equals(
-									XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID.value())) {
+							if (attrType
+									.getAttributeId()
+									.equals(XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID
+											.value())) {
 								containId = true;
+								attrId = attrType;
 								break;
 							}
 						}
@@ -252,20 +274,23 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
-						attr.getAttribute().add(environment);
-						environmentCategory.add(attr);
-
+						if (attrId != environment) {
+							attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
+									.value());
+							attr.getAttribute().add(environment);
+							environmentCategory.add(attr);
+						}
 					} else {
 						environmentCategory.get(environmentCategory.size() - 1)
 								.getAttribute().add(environment);
 					}
 				} else {
 					environmentCategory.get(environmentCategory.size() - 1)
-					.getAttribute().add(environment);
+							.getAttribute().add(environment);
 				}
 			} else {
-				attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
+				attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
+						.value());
 				attr.getAttribute().add(environment);
 				environmentCategory.add(attr);
 			}
