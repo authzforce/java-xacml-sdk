@@ -121,7 +121,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						if (attrId != resource) {
+						if (!attrId.equals(resource)) {
 							attr.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
 									.value());
 							attr.getAttribute().add(resource);
@@ -171,7 +171,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						if (attrId != subject) {
+						if (!attrId.equals(subject)) {
 							attr.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
 									.value());
 							attr.getAttribute().add(subject);
@@ -221,7 +221,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						if (attrId != action) {
+						if (!attrId.equals(action)) {
 							attr.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
 									.value());
 							attr.getAttribute().add(action);
@@ -274,7 +274,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 						}
 					}
 					if (containId) {
-						if (attrId != environment) {
+						if (!attrId.equals(environment)) {
 							attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
 									.value());
 							attr.getAttribute().add(environment);
