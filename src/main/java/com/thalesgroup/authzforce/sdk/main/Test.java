@@ -22,7 +22,7 @@ import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
  */
 public class Test {
 
-	private static final String PDP_ENDPOINT = "http://127.0.0.1:8080/authzforce-rest-interface-3.0.0/service";
+	private static final String PDP_ENDPOINT = "http://pdp.beeasi.theresis.org:8080/PDP-3.0.0/service";
 
 	private static final String SUBJECT = "T0101841";
 	private static final String RESOURCE = "http://www.opencloudware.org";
@@ -36,16 +36,26 @@ public class Test {
 	
 	private static void mainObject() {
 		Subject subject = new Subject(SUBJECT, XACMLDatatypes.XACML_DATATYPE_STRING);
+		subject.setIncludeInResult(true);
 		Environment environment = new Environment("", XACMLDatatypes.XACML_DATATYPE_STRING);
 		
 		List<Resource> resources = new ArrayList<Resource>();
 		List<Action> actions = new ArrayList<Action>();
+		Resource rsc1 = new Resource(RESOURCE, XACMLDatatypes.XACML_DATATYPE_STRING);
+		Resource rsc2 = new Resource(RESOURCE_2, XACMLDatatypes.XACML_DATATYPE_STRING);
+		rsc1.setIncludeInResult(true);
+		rsc2.setIncludeInResult(true);
 		
-		resources.add(new Resource(RESOURCE, XACMLDatatypes.XACML_DATATYPE_STRING));
-		resources.add(new Resource(RESOURCE_2, XACMLDatatypes.XACML_DATATYPE_STRING));
+		resources.add(rsc1);
+		resources.add(rsc2);
 		
-		actions.add(new Action(ACTION, XACMLDatatypes.XACML_DATATYPE_STRING));
-		actions.add(new Action(ACTION_2, XACMLDatatypes.XACML_DATATYPE_STRING));
+		Action act1 = new Action(ACTION, XACMLDatatypes.XACML_DATATYPE_STRING);
+		Action act2 = new Action(ACTION_2, XACMLDatatypes.XACML_DATATYPE_STRING);
+		act1.setIncludeInResult(true);
+		act2.setIncludeInResult(true);
+		
+		actions.add(act1);
+		actions.add(act2);
 		
 		XacmlSdk myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT));
 
