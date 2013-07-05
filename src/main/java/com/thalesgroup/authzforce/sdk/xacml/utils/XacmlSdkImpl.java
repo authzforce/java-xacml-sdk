@@ -106,8 +106,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 //			attr.getAttribute().add(resource);
 //
 //			attributes.add(attr);
-//			
-			resourcesCategory.getAttribute().add(resource);
+			if(!resourcesCategory.getAttribute().contains(resource)) {
+				resourcesCategory.getAttribute().add(resource);
+			}
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_RESOURCE.value());
@@ -124,7 +125,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 //			attr.getAttribute().add(subject);
 //
 //			attributes.add(attr);
-			subjectCategory.getAttribute().add(subject);
+			if(!subjectCategory.getAttribute().contains(subject)) {
+				subjectCategory.getAttribute().add(subject);
+			}
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_SUBJECT.value());
@@ -141,7 +144,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 //			attr.getAttribute().add(action);
 //
 //			attributes.add(attr);
-			actionCategory.getAttribute().add(action);
+			if(!actionCategory.getAttribute().contains(action)) {
+				actionCategory.getAttribute().add(action);
+			}
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_ACTION.value());
@@ -159,7 +164,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 //			attr.getAttribute().add(environment);
 //
 //			attributes.add(attr);
-			environmentCategory.getAttribute().add(environment);
+			if(!environmentCategory.getAttribute().contains(environment)) {
+				environmentCategory.getAttribute().add(environment);
+			}
 		} else {
 			throw new XacmlSdkException(
 					XacmlSdkExceptionCodes.MISSING_ENVIRONMENT.value());
