@@ -50,6 +50,7 @@ public class Test {
 		rsc3.setAttributeId("urn:oasis:names:tc:xacml:1.0:resource:tenant-id");
 		
 		resources.add(rsc1);
+		resources.add(rsc1);
 		resources.add(rsc2);
 		resources.add(rsc3);
 		
