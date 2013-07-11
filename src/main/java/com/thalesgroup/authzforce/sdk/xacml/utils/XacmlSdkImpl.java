@@ -54,11 +54,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private WebResource webResource;
 	private Client client;
 
-	private static List<AttributesType> attributes = new LinkedList<AttributesType>();
-	private static List<AttributesType> resourceCategory = new LinkedList<AttributesType>();
-	private static List<AttributesType> actionCategory = new LinkedList<AttributesType>();
-	private static List<AttributesType> subjectCategory = new LinkedList<AttributesType>();
-	private static List<AttributesType> environmentCategory = new LinkedList<AttributesType>();
+	private List<AttributesType> attributes = new LinkedList<AttributesType>();
+	private List<AttributesType> resourceCategory = new LinkedList<AttributesType>();
+	private List<AttributesType> actionCategory = new LinkedList<AttributesType>();
+	private List<AttributesType> subjectCategory = new LinkedList<AttributesType>();
+	private List<AttributesType> environmentCategory = new LinkedList<AttributesType>();
 
 	/**
 	 * Constructor
