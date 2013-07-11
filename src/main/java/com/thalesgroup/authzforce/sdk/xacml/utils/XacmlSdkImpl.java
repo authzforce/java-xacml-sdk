@@ -72,6 +72,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 	private void clearRequest() {
 		this.request = new Request();
+		resourceCategory.clear();
+		actionCategory.clear();
+		subjectCategory.clear();
+		environmentCategory.clear();
 	}
 
 	/*
