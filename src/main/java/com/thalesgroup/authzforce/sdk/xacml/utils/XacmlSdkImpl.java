@@ -59,6 +59,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private List<AttributesType> actionCategory = new LinkedList<AttributesType>();
 	private List<AttributesType> subjectCategory = new LinkedList<AttributesType>();
 	private List<AttributesType> environmentCategory = new LinkedList<AttributesType>();
+	
+	private RequestType myRequest;
 
 	/**
 	 * Constructor
@@ -66,12 +68,13 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * @param serverEndpoint
 	 */
 	public XacmlSdkImpl(URI serverEndpoint) {
-		this.client = Client.create();
+		this.client = new Client();
 		this.webResource = this.client.resource(serverEndpoint);
 	}
 
 	private void clearRequest() {
 		this.request = new Request();
+		myRequest = new RequestType();
 		resourceCategory.clear();
 		actionCategory.clear();
 		subjectCategory.clear();
@@ -372,7 +375,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 		/*
 		 * FIXME: Loop to handle some kind of xacml v3.0 emulation
 		 */
-		RequestType myRequest = createXacmlRequest(subject, resources, actions,
+		myRequest = createXacmlRequest(subject, resources, actions,
 				environment);
 		ResponseType myResponse = webResource.accept(MediaType.APPLICATION_XML)
 				.type(MediaType.APPLICATION_XML)
@@ -410,6 +413,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 			}
 			response.setDecision(result.getDecision());
 			responses.getResponse().add(response);
+			
 			this.clearRequest();
 		}
 		return responses;
