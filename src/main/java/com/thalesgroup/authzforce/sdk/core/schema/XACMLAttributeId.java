@@ -13,6 +13,9 @@ public enum XACMLAttributeId {
 	XACML_SUBJECT_KEY_INFO("urn:oasis:names:tc:xacml:1.0:subject:key-info"), 
 	XACML_SUBJECT_REQUEST_TIME("urn:oasis:names:tc:xacml:1.0:subject:request-time"), 
 	XACML_SUBJECT_SESSION_START_TIME("urn:oasis:names:tc:xacml:1.0:subject:session-start-time"), 
+	/**
+	 * urn:oasis:names:tc:xacml:1.0:subject:subject-id
+	 */
 	XACML_SUBJECT_SUBJECT_ID("urn:oasis:names:tc:xacml:1.0:subject:subject-id"), 
 	XACML_SUBJECT_SUBJECT_ID_QUALIFIER("urn:oasis:names:tc:xacml:1.0:subject:subject-id-qualifier"), 
 	XACML_SUBJECT_SUBJECT_ID_ROLE("urn:oasis:names:tc:xacml:1.0:subject:subject-id-role"),
