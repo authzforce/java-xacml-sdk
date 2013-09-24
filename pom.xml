@@ -13,7 +13,7 @@
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>3.1.12</version>
+	<version>3.2.0</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<dependencies>
 		<dependency>
@@ -54,4 +54,98 @@
 			<version>3.0.3</version>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<source>
+								import java.util.Date
+								import java.text.MessageFormat
+								def
+								vartimestamp = MessageFormat.format("{0,date,yyyy}", new Date())
+								project.properties['currentYear'] = vartimestamp
+							</source>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<!-- Thales's license Headers -->
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
+				<configuration>
+					<!-- Template location -->
+					<header>src/main/resources/fileHeader.apache2.txt</header>
+					<properties>
+						<!-- Values to be substituted in template -->
+						<h_inceptionYear>${inceptionYear}</h_inceptionYear>
+						<h_currentYear>${currentYear}</h_currentYear>
+						<h_copyrightOwner>${copyrightOwner}</h_copyrightOwner>
+					</properties>
+					<strictCheck>true</strictCheck>
+					<excludes>
+						<exclude>**/*.html</exclude>
+						<exclude>**/*.xml</exclude>
+						<exclude>**/*.txt</exclude>
+						<exclude>**/*.ec</exclude>
+						<exclude>**/*.log</exclude>
+						<exclude>**/*.css</exclude>
+						<exclude>**/*.js</exclude>
+						<exclude>**/*.jsp</exclude>
+						<exclude>**/*.md</exclude>
+						<exclude>**/*.properties</exclude>
+						<exclude>**/*.gitignore</exclude>
+						<exclude>src/test/**</exclude>
+						<exclude>src/main/resources/**</exclude>
+					</excludes>
+					<includes>
+						<include>src/main/java/com/thalesgroup/**</include>
+						<include>src/main/java/com/sun/xacml/xacmlv3/**</include>
+						<include>src/main/java/com/sun/cond/xacmlv3/**</include>
+						<include>src/main/java/com/sun/ctx/xacmlv3/**</include>
+						<include>src/main/java/com/sun/xacml/CacheManager.java</include>
+						<include>src/main/java/com/sun/xacml/ObligationExpressions.java</include>
+						<include>src/main/java/com/sun/xacml/combine/PermitUnlessDenyPolicyAlg</include>
+						<include>src/main/java/com/sun/xacml/combine/PermitUnlessDenyRuleAlg</include>
+						<include>src/main/java/com/sun/xacml/combine/DenyUnlessPermitPolicyAlg</include>
+						<include>src/main/java/com/sun/xacml/combine/DenyUnlessPermitRuleAlg</include>
+						<include>src/main/java/com/sun/xacml/finder/impl/MultipleResourceFinder.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>compile</phase>
+						<!-- <goals> -->
+						<!-- <goal>compile</goal> -->
+						<!-- <goal>test-compile</goal> -->
+						<!-- </goals> -->
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
