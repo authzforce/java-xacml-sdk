@@ -8,8 +8,11 @@
 		<relativePath>../authzforce</relativePath>
 	</parent>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
 		<jdom.version>2.0.5</jdom.version>
 	</properties>
+	<inceptionYear>2013</inceptionYear>
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>

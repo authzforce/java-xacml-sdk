@@ -1,5 +1,5 @@
 /**
- * Copyright (C) ${h_inceptionYear}-2013 ${h_copyrightOwner} - All rights reserved.
+ * Copyright (C) 2013-2013 Thales Services - ThereSIS - All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
