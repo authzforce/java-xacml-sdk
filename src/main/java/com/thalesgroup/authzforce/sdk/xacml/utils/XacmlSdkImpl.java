@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) ${h_inceptionYear}-2013 ${h_copyrightOwner} - All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 package com.thalesgroup.authzforce.sdk.xacml.utils;
 
 import java.io.StringWriter;
@@ -7,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -70,6 +86,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 	public XacmlSdkImpl(URI serverEndpoint) {
 		this.client = new Client();
 		this.webResource = this.client.resource(serverEndpoint);
+		this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING, false);
 	}
 
 	private void clearRequest() {
@@ -343,18 +360,18 @@ public class XacmlSdkImpl implements XacmlSdk {
 		xacmlRequest.setReturnPolicyIdList(false);
 
 		this.request = xacmlRequest;
-		StringWriter writer = new StringWriter();
-		try {
-			JAXBContext jc = JAXBContext
-					.newInstance("oasis.names.tc.xacml._3_0.core.schema.wd_17");
-			Marshaller u = jc.createMarshaller();
-			u.marshal(xacmlRequest, writer);
-			/* Doing some debugging log at least */
-			LOGGER.debug(writer.toString());
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		System.out.println(writer);
+//		StringWriter writer = new StringWriter();
+//		try {
+//			JAXBContext jc = JAXBContext
+//					.newInstance("oasis.names.tc.xacml._3_0.core.schema.wd_17");
+//			Marshaller u = jc.createMarshaller();
+//			u.marshal(xacmlRequest, writer);
+//			/* Doing some debugging log at least */
+//			LOGGER.debug(writer.toString());
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
+//		System.out.println(writer);
 
 		return request;
 	}
@@ -377,9 +394,20 @@ public class XacmlSdkImpl implements XacmlSdk {
 		 */
 		myRequest = createXacmlRequest(subject, resources, actions,
 				environment);
-		ResponseType myResponse = webResource.accept(MediaType.APPLICATION_XML)
+		StringWriter writer = new StringWriter();
+		try {
+			JAXBContext jc = JAXBContext
+					.newInstance("oasis.names.tc.xacml._3_0.core.schema.wd_17");
+			Marshaller u = jc.createMarshaller();
+			u.marshal(myRequest, writer);
+			/* Doing some debugging log at least */
+//			LOGGER.debug(writer.toString());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		ResponseType myResponse = webResource
 				.type(MediaType.APPLICATION_XML)
-				.post(ResponseType.class, myRequest);
+				.post(ResponseType.class, writer.toString());
 
 		// FIXME: possible NPE on each of the getContent
 		for (ResultType result : myResponse.getResult()) {
