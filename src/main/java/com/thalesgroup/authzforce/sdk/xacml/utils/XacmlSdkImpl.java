@@ -15,6 +15,7 @@
  */
 package com.thalesgroup.authzforce.sdk.xacml.utils;
 
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeType;
@@ -389,9 +391,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
 		Responses responses = new Responses();
-		/*
-		 * FIXME: Loop to handle some kind of xacml v3.0 emulation
-		 */
 		myRequest = createXacmlRequest(subject, resources, actions,
 				environment);
 		StringWriter writer = new StringWriter();
@@ -405,9 +404,17 @@ public class XacmlSdkImpl implements XacmlSdk {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		ResponseType myResponse = webResource
-				.type(MediaType.APPLICATION_XML)
-				.post(ResponseType.class, writer.toString());
+		// FIXME: Fix this time consuming String unmarshalling.
+		String myResponseTmp = webResource.type(MediaType.APPLICATION_XML).post(String.class, writer.toString());
+		ResponseType myResponse = null;
+		System.out.println(myResponseTmp);
+		try {
+			JAXBContext jc = JAXBContext.newInstance("oasis.names.tc.xacml._3_0.core.schema.wd_17");
+			Unmarshaller u = jc.createUnmarshaller();
+			myResponse = (ResponseType) u.unmarshal(new StringReader(myResponseTmp));
+		} catch (Exception e) {
+			System.out.println(e);
+		}		
 
 		// FIXME: possible NPE on each of the getContent
 		for (ResultType result : myResponse.getResult()) {
@@ -464,6 +471,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 		List<Action> tmpActionList = new ArrayList<Action>();
 		tmpResourceList.add(resource);
 		tmpActionList.add(action);
+		
 		return getAuthZ(subject, tmpResourceList, tmpActionList, environment)
 				.getResponse().get(0);
 	}
@@ -482,6 +490,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 			Action action, Environment environment) throws XacmlSdkException {
 		List<Action> tmpActionList = new ArrayList<Action>();
 		tmpActionList.add(action);
+		
 		return getAuthZ(subject, resource, tmpActionList, environment);
 	}
 
