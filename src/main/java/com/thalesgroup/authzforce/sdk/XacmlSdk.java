@@ -33,6 +33,10 @@ public interface XacmlSdk {
 	 * @return XML Request (String)
 	 */
 	public abstract String toString();
+	
+	public abstract Responses getAuthZ(List<Subject> subject,
+			List<Resource> resources, List<Action> actions,
+			Environment environment) throws XacmlSdkException;
 
 	/**
 	 * 
