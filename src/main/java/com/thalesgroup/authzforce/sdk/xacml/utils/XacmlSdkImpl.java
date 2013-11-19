@@ -320,7 +320,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 					XacmlSdkExceptionCodes.MISSING_ENVIRONMENT.value());
 		}
 	}
-
+	
 	private Request createXacmlRequest(Subject subject,
 			List<Resource> resources, List<Action> actions,
 			Environment environment) {
