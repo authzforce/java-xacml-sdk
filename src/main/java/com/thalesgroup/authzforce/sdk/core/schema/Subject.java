@@ -33,11 +33,37 @@ public class Subject extends Attribute {
 		this.getAttributeValues().add(attrVal);
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @param xacmlDatatype
+	 */
 	public void addObject(Object value, XACMLDatatypes xacmlDatatype) {
+		this.addObject(value, xacmlDatatype, XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID);
+	}
+	
+	/**
+	 * 
+	 * @param value
+	 * @param xacmlDatatype
+	 * @param attributeId
+	 */
+	public void addObject(Object value, XACMLDatatypes xacmlDatatype, XACMLAttributeId attributeId) {
+		this.addObject(value, xacmlDatatype, attributeId.value());
+	}
+	
+	/**
+	 * 
+	 * @param value
+	 * @param xacmlDatatype
+	 * @param attributeId
+	 */
+	public void addObject(Object value, XACMLDatatypes xacmlDatatype, String attributeId) {
 		AttributeValueType attrVal = new AttributeValueType();
 		attrVal.getContent().add((Serializable)value);
 		attrVal.setDataType(xacmlDatatype.value());
 		this.getAttributeValues().add(attrVal);
+		this.setAttributeId(attributeId);
 	}
 
 	public List getAttributes() {

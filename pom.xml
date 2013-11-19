@@ -15,7 +15,7 @@
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>3.3.0-SNAPSHOT</version>
+	<version>3.4.0-SNAPSHOT</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<dependencies>
 		<dependency>
@@ -101,7 +101,7 @@
 					<header>src/main/resources/fileHeader.apache2.txt</header>
 					<properties>
 						<!-- Values to be substituted in template -->
-						<h_inceptionYear>${inceptionYear}</h_inceptionYear>
+						<h_inceptionYear>${project.inceptionYear}</h_inceptionYear>
 						<h_currentYear>${currentYear}</h_currentYear>
 						<h_copyrightOwner>${copyrightOwner}</h_copyrightOwner>
 					</properties>
