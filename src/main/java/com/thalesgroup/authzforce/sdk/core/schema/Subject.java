@@ -18,8 +18,8 @@ package com.thalesgroup.authzforce.sdk.core.schema;
 import java.io.Serializable;
 import java.util.List;
 
-import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
 
 public class Subject extends Attribute {
 
@@ -61,7 +61,7 @@ public class Subject extends Attribute {
 	public void addObject(Object value, XACMLDatatypes xacmlDatatype, String attributeId) {
 		AttributeValueType attrVal = new AttributeValueType();
 		attrVal.getContent().add((Serializable)value);
-		attrVal.setDataType(xacmlDatatype.value());
+		attrVal.setDataType(xacmlDatatype.value());		
 		this.getAttributeValues().add(attrVal);
 		this.setAttributeId(attributeId);
 	}

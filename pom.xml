@@ -15,7 +15,7 @@
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>3.4.0-SNAPSHOT</version>
+	<version>3.4.1-SNAPSHOT</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<dependencies>
 		<dependency>

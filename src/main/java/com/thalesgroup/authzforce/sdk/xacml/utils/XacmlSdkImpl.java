@@ -321,7 +321,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 		}
 	}
 	
-	private Request createXacmlRequest(Subject subject,
+	private Request createXacmlRequest(List<Subject> subjects,
 			List<Resource> resources, List<Action> actions,
 			Environment environment) {
 		Request xacmlRequest = new Request();
@@ -336,8 +336,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 		// environmentCategory.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
 		// .value());
 		try {
-			forgeSubject(subject);
 			forgeEnvironment(environment);
+			for (Subject subject : subjects) {
+				forgeSubject(subject);
+			}
 			for (Action action : actions) {
 				forgeAction(action);
 			}
@@ -372,19 +374,12 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		return request;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdk#getAuthZ(com.thalesgroup
-	 * .authzforce.sdk.core.schema.Subject, java.util.List, java.util.List,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
-	 */
+	
 	@Override
-	public Responses getAuthZ(Subject subject, List<Resource> resources,
+	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
 			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
+
 		Responses responses = new Responses();
 		myRequest = createXacmlRequest(subject, resources, actions,
 				environment);
@@ -440,7 +435,25 @@ public class XacmlSdkImpl implements XacmlSdk {
 			
 			this.clearRequest();
 		}
-		return responses;
+		return responses;	
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdk#getAuthZ(com.thalesgroup
+	 * .authzforce.sdk.core.schema.Subject, java.util.List, java.util.List,
+	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
+	 */
+	@Override
+	public Responses getAuthZ(Subject subject, List<Resource> resources,
+			List<Action> actions, Environment environment)
+			throws XacmlSdkException {
+		List<Subject> tmpSubjectList = new ArrayList<Subject>();
+		tmpSubjectList.add(subject);
+		
+		return getAuthZ(tmpSubjectList, resources, actions, environment);
 	}
 
 	/*
