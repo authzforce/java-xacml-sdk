@@ -26,8 +26,6 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
@@ -61,14 +59,12 @@ import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
  */
 public class XacmlSdkImpl implements XacmlSdk {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(XacmlSdkImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(XacmlSdkImpl.class);
 
 	private Request request;
 	private WebResource webResource;
 	private Client client;
 
-//	private List<Attributes> attributes = new LinkedList<Attributes>();
 	private List<Attributes> resourceCategory = new LinkedList<Attributes>();
 	private List<Attributes> actionCategory = new LinkedList<Attributes>();
 	private List<Attributes> subjectCategory = new LinkedList<Attributes>();
@@ -107,9 +103,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 		StringWriter sw = new StringWriter();
 		try {
 			JAXBContext.newInstance(Request.class).createMarshaller().marshal(request, sw);
-//			marsh.marshal(new JAXBElement<RequestType>(new QName(
-//					"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"),
-//					RequestType.class, request), sw);
 		} catch (JAXBException e) {
 			LOGGER.error("", e);
 		}
@@ -321,20 +314,24 @@ public class XacmlSdkImpl implements XacmlSdk {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param subjects
+	 * @param resources
+	 * @param actions
+	 * @param environment
+	 * 
+	 * @return
+	 */
 	private Request createXacmlRequest(List<Subject> subjects,
 			List<Resource> resources, List<Action> actions,
 			Environment environment) {
 		Request xacmlRequest = new Request();
 
 		LOGGER.debug("Assembling XACML...");
-		// subjectCategory.setCategory(XACMLAttributeId.XACML_1_0_SUBJECT_CATEGORY_SUBJECT
-		// .value());
-		// resourcesCategory.setCategory(XACMLAttributeId.XACML_3_0_RESOURCE_CATEGORY_RESOURCE
-		// .value());
-		// actionCategory.setCategory(XACMLAttributeId.XACML_3_0_ACTION_CATEGORY_ACTION
-		// .value());
-		// environmentCategory.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
-		// .value());
+//		LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+//		StatusPrinter.print(lc);
+
 		try {
 			forgeEnvironment(environment);
 			for (Subject subject : subjects) {
@@ -347,10 +344,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 				forgeResource(resource);
 			}
 		} catch (XacmlSdkException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			LOGGER.error(e1.getLocalizedMessage());
 		}
-		// xacmlRequest.getAttributes().addAll(attributes);
 		xacmlRequest.getAttributes().addAll(subjectCategory);
 		xacmlRequest.getAttributes().addAll(resourceCategory);
 		xacmlRequest.getAttributes().addAll(actionCategory);
@@ -359,18 +355,17 @@ public class XacmlSdkImpl implements XacmlSdk {
 		xacmlRequest.setReturnPolicyIdList(false);
 
 		this.request = xacmlRequest;
-//		StringWriter writer = new StringWriter();
-//		try {
-//			JAXBContext jc = JAXBContext
-//					.newInstance("oasis.names.tc.xacml._3_0.core.schema.wd_17");
-//			Marshaller u = jc.createMarshaller();
-//			u.marshal(xacmlRequest, writer);
-//			/* Doing some debugging log at least */
-//			LOGGER.debug(writer.toString());
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-//		System.out.println(writer);
+
+		StringWriter stringRequest = new StringWriter();
+		if(LOGGER.isDebugEnabled()) {
+			try {
+				JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(request, stringRequest);
+			} catch (JAXBException e) {
+				e.printStackTrace();
+				LOGGER.error(e.getLocalizedMessage());
+			}
+			LOGGER.debug("XACML Request created: " + stringRequest.toString());
+		}
 
 		return request;
 	}
@@ -387,21 +382,19 @@ public class XacmlSdkImpl implements XacmlSdk {
 		try {
 			JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(myRequest, writer);
 			/* Doing some debugging log at least */
-//			LOGGER.debug(writer.toString());
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
+			LOGGER.error(e.getLocalizedMessage());
 		}
 		// FIXME: Fix this time consuming String unmarshalling.
 		String myResponseTmp = webResource.type(MediaType.APPLICATION_XML).post(String.class, writer.toString());
 		Response myResponse = null;
-		System.out.println(myResponseTmp);
+		LOGGER.debug(myResponseTmp);
 		try {
 			myResponse = (Response) JAXBContext.newInstance(Response.class).createUnmarshaller().unmarshal(new StringReader(myResponseTmp));
-//			JAXBContext jc = JAXBContext.newInstance("oasis.names.tc.xacml._3_0.core.schema.wd_17");
-//			Unmarshaller u = jc.createUnmarshaller();
-//			myResponse = (Response) u.unmarshal(new StringReader(myResponseTmp));
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
+			LOGGER.error(e.getLocalizedMessage());
 		}		
 		
 		// FIXME: possible NPE on each of the getContent
