@@ -10,12 +10,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
 		<jdom.version>2.0.5</jdom.version>
+		<slf4j.version>1.6.6</slf4j.version>
 	</properties>
 	<inceptionYear>2013</inceptionYear>
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>3.4.1-SNAPSHOT</version>
+	<version>3.4.2-SNAPSHOT</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<dependencies>
 		<dependency>
@@ -37,6 +38,11 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.7</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.ws</groupId>
