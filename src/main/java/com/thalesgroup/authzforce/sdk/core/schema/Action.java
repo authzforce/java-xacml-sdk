@@ -43,8 +43,12 @@ public class Action extends Attribute {
 		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
 	}
 
-	public Action(Date value) {
-		getInstance(new SimpleDateFormat("YYY-MM-DD").format(value),
+	/**
+	 * 
+	 * @param date /!\ WARNING: date format needs to be "YYY-MM-DD" /!\
+	 */
+	public Action(Date date) {
+		getInstance(new SimpleDateFormat("YYY-MM-DD").format(date),
 				XACMLDatatypes.XACML_DATATYPE_DATE);
 	}
 
