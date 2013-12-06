@@ -16,6 +16,8 @@
 package com.thalesgroup.authzforce.sdk.core.schema;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
@@ -23,7 +25,43 @@ import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 
 public class Environment extends Attribute {
 
+	public Environment(String value) {
+		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
+	}
+
+	public Environment(int value) {
+		getInstance(String.valueOf(value),
+				XACMLDatatypes.XACML_DATATYPE_INTEGER);
+	}
+	
+	public Environment(double value) {
+		getInstance(String.valueOf(value),
+				XACMLDatatypes.XACML_DATATYPE_DOUBLE);
+	}
+	
+	public Environment(boolean value) {
+		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
+	}
+
+	public Environment(Date value) {
+		getInstance(new SimpleDateFormat("YYY-MM-DD").format(value),
+				XACMLDatatypes.XACML_DATATYPE_DATE);
+	}
+
+	/**
+	 * 
+	 * @param value
+	 * @param xacmlDatatype
+	 * 
+	 * @Deprecated It's now best to used constructor strongly typed to ensure
+	 *             that the datatype is supported
+	 */
+	@Deprecated
 	public Environment(Object value, XACMLDatatypes xacmlDatatype) {
+		getInstance(value, xacmlDatatype);
+	}
+	
+	private void getInstance(Object value, XACMLDatatypes xacmlDatatype) {
 		AttributeValueType attrVal = new AttributeValueType();
 		attrVal.getContent().add((Serializable)value);
 		attrVal.setDataType(xacmlDatatype.value());
