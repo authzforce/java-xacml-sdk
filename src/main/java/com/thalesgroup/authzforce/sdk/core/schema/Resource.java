@@ -46,8 +46,12 @@ public class Resource extends Attribute {
 		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
 	}
 
-	public Resource(Date value) {
-		getInstance(new SimpleDateFormat("YYY-MM-DD").format(value),
+	/**
+	 * 
+	 * @param date /!\ WARNING: date format needs to be "YYY-MM-DD" /!\
+	 */
+	public Resource(Date date) {
+		getInstance(new SimpleDateFormat("YYY-MM-DD").format(date),
 				XACMLDatatypes.XACML_DATATYPE_DATE);
 	}
 
