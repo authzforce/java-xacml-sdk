@@ -329,8 +329,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 		Request xacmlRequest = new Request();
 
 		LOGGER.debug("Assembling XACML...");
-//		LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-//		StatusPrinter.print(lc);
 
 		try {
 			forgeEnvironment(environment);

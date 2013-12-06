@@ -77,9 +77,11 @@ public class Test {
 		resources.add(rsc3);
 		resources.add(rsc2);
 		resources.add(rsc3);
+		Integer testInt = 1;
 		
-		Action act1 = new Action(ACTION, XACMLDatatypes.XACML_DATATYPE_STRING);
-		Action act2 = new Action(ACTION_2, XACMLDatatypes.XACML_DATATYPE_STRING);
+//		Action act1 = new Action(ACTION, XACMLDatatypes.XACML_DATATYPE_STRING);
+		Action act1 = new Action(testInt);
+		Action act2 = new Action(ACTION_2);
 		act1.setIncludeInResult(true);
 		act2.setIncludeInResult(true);
 		
