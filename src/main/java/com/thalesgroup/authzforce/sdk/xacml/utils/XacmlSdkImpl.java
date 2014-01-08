@@ -15,15 +15,12 @@
  */
 package com.thalesgroup.authzforce.sdk.xacml.utils;
 
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.ws.rs.core.MediaType;
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -33,11 +30,12 @@ import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attributes;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Result;
 
+import org.apache.cxf.jaxrs.client.Client;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
+import com.thalesgroup.authzforce.api.Authzforce;
 import com.thalesgroup.authzforce.sdk.XacmlSdk;
 import com.thalesgroup.authzforce.sdk.core.schema.Action;
 import com.thalesgroup.authzforce.sdk.core.schema.Environment;
@@ -62,8 +60,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private static final Logger LOGGER = LoggerFactory.getLogger(XacmlSdkImpl.class);
 
 	private Request request;
-	private WebResource webResource;
-	private Client client;
+//	private WebResource webResource;
+//	private Client client;
+	private URI serverEndpoint;
 
 	private List<Attributes> resourceCategory = new LinkedList<Attributes>();
 	private List<Attributes> actionCategory = new LinkedList<Attributes>();
@@ -78,9 +77,10 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * @param serverEndpoint
 	 */
 	public XacmlSdkImpl(URI serverEndpoint) {
-		this.client = new Client();
-		this.webResource = this.client.resource(serverEndpoint);
-		this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING, false);
+//		this.client = new Client();
+//		this.webResource = this.client.resource(serverEndpoint);
+		this.serverEndpoint = serverEndpoint;
+//		this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING, false);
 	}
 
 	private void clearRequest() {
@@ -385,15 +385,18 @@ public class XacmlSdkImpl implements XacmlSdk {
 			LOGGER.error(e.getLocalizedMessage());
 		}
 		// FIXME: Fix this time consuming String unmarshalling.
-		String myResponseTmp = webResource.type(MediaType.APPLICATION_XML).post(String.class, writer.toString());
-		Response myResponse = null;
-		LOGGER.debug(myResponseTmp);
-		try {
-			myResponse = (Response) JAXBContext.newInstance(Response.class).createUnmarshaller().unmarshal(new StringReader(myResponseTmp));
-		} catch (Exception e) {
-			e.printStackTrace();
-			LOGGER.error(e.getLocalizedMessage());
-		}		
+		String myResponseTmp = null;
+		Authzforce targetedPDP = JAXRSClientFactory.create(serverEndpoint, Authzforce.class);
+		Response myResponse = targetedPDP.requestPolicyDecision(myRequest);
+//		String myResponseTmp = webResource.type(MediaType.APPLICATION_XML).post(String.class, writer.toString());
+//		Response myResponse = null;
+		LOGGER.debug(myResponse.toString());
+//		try {
+//			myResponse = (Response) JAXBContext.newInstance(Response.class).createUnmarshaller().unmarshal(new StringReader(myResponseTmp));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			LOGGER.error(e.getLocalizedMessage());
+//		}		
 		
 		// FIXME: possible NPE on each of the getContent
 		for (Result result : myResponse.getResults()) {

@@ -26,7 +26,6 @@ import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Response;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.Subject;
-import com.thalesgroup.authzforce.sdk.core.schema.XACMLDatatypes;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
 
@@ -37,7 +36,7 @@ import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
  */
 public class Test {
 
-	private static final String PDP_ENDPOINT = "http://pdp.beeasi.theresis.org:8080/PDP-3.0.0/service";
+	private static final String PDP_ENDPOINT = "http://10.222.148.108:8080/PDP-3.0.0";
 
 	private static final String SUBJECT = "T0101841";
 	private static final String SUBJECT_2 = "gcunha";
@@ -51,22 +50,22 @@ public class Test {
 	}
 	
 	private static void mainObject() {
-		Subject subject = new Subject(SUBJECT, XACMLDatatypes.XACML_DATATYPE_STRING);
+		Subject subject = new Subject(SUBJECT);
 		subject.setIncludeInResult(true);
 		
 		/*
 		 * BUG: APPSEC-174
 		 */
-		Subject subject2 = new Subject(SUBJECT_2, XACMLDatatypes.XACML_DATATYPE_STRING);
+		Subject subject2 = new Subject(SUBJECT_2);
 		subject.setIncludeInResult(true);
 		
-		Environment environment = new Environment("iam-hmi", XACMLDatatypes.XACML_DATATYPE_STRING);
+		Environment environment = new Environment("iam-hmi");
 		
 		List<Resource> resources = new ArrayList<Resource>();
 		List<Action> actions = new ArrayList<Action>();
-		Resource rsc1 = new Resource(RESOURCE, XACMLDatatypes.XACML_DATATYPE_STRING);
-		Resource rsc2 = new Resource(RESOURCE_2, XACMLDatatypes.XACML_DATATYPE_STRING);
-		Resource rsc3 = new Resource(RESOURCE_2, XACMLDatatypes.XACML_DATATYPE_STRING);
+		Resource rsc1 = new Resource(RESOURCE);
+		Resource rsc2 = new Resource(RESOURCE_2);
+		Resource rsc3 = new Resource(RESOURCE_2);
 		rsc1.setIncludeInResult(true);
 		rsc2.setIncludeInResult(true);
 		rsc3.setAttributeId("urn:oasis:names:tc:xacml:1.0:resource:tenant-id");
@@ -79,7 +78,7 @@ public class Test {
 		resources.add(rsc3);
 		Integer testInt = 1;
 		
-//		Action act1 = new Action(ACTION, XACMLDatatypes.XACML_DATATYPE_STRING);
+//		Action act1 = new Action(ACTION);
 		Action act1 = new Action(testInt);
 		Action act2 = new Action(ACTION_2);
 		act1.setIncludeInResult(true);
