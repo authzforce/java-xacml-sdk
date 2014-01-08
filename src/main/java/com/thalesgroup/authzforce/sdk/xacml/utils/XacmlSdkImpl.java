@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2013 Thales Services - ThereSIS - All rights reserved.
+ * Copyright (C) 2013-2014 Thales Services - ThereSIS - All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.ws.rs.client.ClientException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -30,7 +31,6 @@ import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attributes;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Result;
 
-import org.apache.cxf.jaxrs.client.Client;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -385,19 +385,15 @@ public class XacmlSdkImpl implements XacmlSdk {
 			LOGGER.error(e.getLocalizedMessage());
 		}
 		// FIXME: Fix this time consuming String unmarshalling.
-		String myResponseTmp = null;
 		Authzforce targetedPDP = JAXRSClientFactory.create(serverEndpoint, Authzforce.class);
-		Response myResponse = targetedPDP.requestPolicyDecision(myRequest);
-//		String myResponseTmp = webResource.type(MediaType.APPLICATION_XML).post(String.class, writer.toString());
-//		Response myResponse = null;
+		Response myResponse = null;
+		try {
+			myResponse = targetedPDP.requestPolicyDecision(myRequest);
+		} catch (ClientException e) {
+//			LOGGER.error("Fault: " + e.getLocalizedMessage());
+			throw new XacmlSdkException("Client Exception occured", e);
+	    }
 		LOGGER.debug(myResponse.toString());
-//		try {
-//			myResponse = (Response) JAXBContext.newInstance(Response.class).createUnmarshaller().unmarshal(new StringReader(myResponseTmp));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			LOGGER.error(e.getLocalizedMessage());
-//		}		
-		
 		// FIXME: possible NPE on each of the getContent
 		for (Result result : myResponse.getResults()) {
 			com.thalesgroup.authzforce.sdk.core.schema.Response response = new com.thalesgroup.authzforce.sdk.core.schema.Response();

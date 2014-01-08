@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2013 Thales Services - ThereSIS - All rights reserved.
+ * Copyright (C) 2013-2014 Thales Services - ThereSIS - All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,11 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.Response.Status;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.thalesgroup.authzforce.sdk.XacmlSdk;
 import com.thalesgroup.authzforce.sdk.core.schema.Action;
 import com.thalesgroup.authzforce.sdk.core.schema.Environment;
@@ -36,6 +41,8 @@ import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
  */
 public class Test {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
+	
 	private static final String PDP_ENDPOINT = "http://10.222.148.108:8080/PDP-3.0.0";
 
 	private static final String SUBJECT = "T0101841";
@@ -93,27 +100,32 @@ public class Test {
 		try {
 			responses = myXacml.getAuthZ(subject, resources, actions, environment);
 		} catch (XacmlSdkException e) {
-			System.err.println(e);
+			LOGGER.error(e.getLocalizedMessage());
+			LOGGER.error(e.getCause().getLocalizedMessage());
 		}
-		for (Response response : responses.getResponse()) {
-			System.out.println(response.getAction() + " on "
-					+ response.getResourceId() + ": " 
-					+ response.getDecision().value() + " for " 
-					+ response.getSubject());
+		if(responses != null) {
+			for (Response response : responses.getResponse()) {
+				System.out.println(response.getAction() + " on "
+						+ response.getResourceId() + ": " 
+						+ response.getDecision().value() + " for " 
+						+ response.getSubject());
+			}
 		}
-		
 		myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT));
 		responses = null;
 		try {
 			responses = myXacml.getAuthZ(subject2, resources, actions, environment);
 		} catch (XacmlSdkException e) {
-			System.err.println(e);
+			LOGGER.error(e.getLocalizedMessage());
+			LOGGER.error(e.getCause().getLocalizedMessage());
 		}
-		for (Response response : responses.getResponse()) {
-			System.out.println(response.getAction() + " on "
-					+ response.getResourceId() + ": " 
-					+ response.getDecision().value() + " for " 
-					+ response.getSubject());
+		if(responses != null) {
+			for (Response response : responses.getResponse()) {
+				System.out.println(response.getAction() + " on "
+						+ response.getResourceId() + ": " 
+						+ response.getDecision().value() + " for " 
+						+ response.getSubject());
+			}
 		}
 	}
 }
