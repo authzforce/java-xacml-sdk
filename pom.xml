@@ -25,5 +25,43 @@
 		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-core</module>
 		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-model</module>
 		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-samples</module>
+		<module>../authzforce-xacmlsdk/xacml-sdk-distribution</module>
 	</modules>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.4</version>
+					<configuration>
+						<descriptors>
+							<descriptor>src/main/resources/bin.xml</descriptor>
+						</descriptors>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<compilerVersion>1.7</compilerVersion>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.2</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.0.7</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

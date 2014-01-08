@@ -18,44 +18,17 @@
 	<name>AuthZForce :: XACML SDK :: COMMON</name>
 	<dependencies>
 		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.2.9</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jdom</groupId>
-			<artifactId>jdom2</artifactId>
-			<version>${jdom.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xerces</artifactId>
-			<version>2.4.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.2</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.0.7</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.ws</groupId>
 			<artifactId>jaxws-api</artifactId>
 			<version>2.2.9</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>1.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
-			<version>0.6.4</version>
 		</dependency>
 
 		<!-- XACML Dependencies -->
@@ -79,7 +52,6 @@
 				<version>1.5</version>
 				<executions>
 					<execution>
-						<phase>validate</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -126,22 +98,11 @@
 						<exclude>src/main/resources/**</exclude>
 					</excludes>
 					<includes>
-						<include>src/main/java/com/thalesgroup/**</include>
-						<include>src/main/java/com/sun/xacml/xacmlv3/**</include>
-						<include>src/main/java/com/sun/cond/xacmlv3/**</include>
-						<include>src/main/java/com/sun/ctx/xacmlv3/**</include>
-						<include>src/main/java/com/sun/xacml/CacheManager.java</include>
-						<include>src/main/java/com/sun/xacml/ObligationExpressions.java</include>
-						<include>src/main/java/com/sun/xacml/combine/PermitUnlessDenyPolicyAlg</include>
-						<include>src/main/java/com/sun/xacml/combine/PermitUnlessDenyRuleAlg</include>
-						<include>src/main/java/com/sun/xacml/combine/DenyUnlessPermitPolicyAlg</include>
-						<include>src/main/java/com/sun/xacml/combine/DenyUnlessPermitRuleAlg</include>
-						<include>src/main/java/com/sun/xacml/finder/impl/MultipleResourceFinder.java</include>
+						<include>src/main/java/com/thalesgroup/**</include>						
 					</includes>
 				</configuration>
 				<executions>
 					<execution>
-						<phase>validate</phase>
 						<goals>
 							<goal>format</goal>
 						</goals>
