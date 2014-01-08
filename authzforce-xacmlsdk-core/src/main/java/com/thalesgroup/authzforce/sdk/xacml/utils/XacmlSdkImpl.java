@@ -368,7 +368,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 		return request;
 	}
 	
-	@Override
 	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
 			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
@@ -376,21 +375,12 @@ public class XacmlSdkImpl implements XacmlSdk {
 		Responses responses = new Responses();
 		myRequest = createXacmlRequest(subject, resources, actions,
 				environment);
-		StringWriter writer = new StringWriter();
-		try {
-			JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(myRequest, writer);
-			/* Doing some debugging log at least */
-		} catch (Exception e) {
-			e.printStackTrace();
-			LOGGER.error(e.getLocalizedMessage());
-		}
-		// FIXME: Fix this time consuming String unmarshalling.
 		Authzforce targetedPDP = JAXRSClientFactory.create(serverEndpoint, Authzforce.class);
 		Response myResponse = null;
 		try {
 			myResponse = targetedPDP.requestPolicyDecision(myRequest);
 		} catch (ClientException e) {
-//			LOGGER.error("Fault: " + e.getLocalizedMessage());
+			LOGGER.error("Fault: " + e.getLocalizedMessage());
 			throw new XacmlSdkException("Client Exception occured", e);
 	    }
 		LOGGER.debug(myResponse.toString());
@@ -436,7 +426,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * .authzforce.sdk.core.schema.Subject, java.util.List, java.util.List,
 	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
 	 */
-	@Override
 	public Responses getAuthZ(Subject subject, List<Resource> resources,
 			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
@@ -456,7 +445,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * com.thalesgroup.authzforce.sdk.core.schema.Action,
 	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
 	 */
-	@Override
 	public com.thalesgroup.authzforce.sdk.core.schema.Response getAuthZ(Subject subject, Resource resource, Action action,
 			Environment environment) throws XacmlSdkException {
 		List<Resource> tmpResourceList = new ArrayList<Resource>();
@@ -476,7 +464,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * com.thalesgroup.authzforce.sdk.core.schema.Action,
 	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
 	 */
-	@Override
 	public Responses getAuthZ(Subject subject, List<Resource> resource,
 			Action action, Environment environment) throws XacmlSdkException {
 		List<Action> tmpActionList = new ArrayList<Action>();
@@ -494,7 +481,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * com.thalesgroup.authzforce.sdk.core.schema.Resource, java.util.List,
 	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
 	 */
-	@Override
 	public Responses getAuthZ(Subject subject, Resource resource,
 			List<Action> action, Environment environment)
 			throws XacmlSdkException {

@@ -19,8 +19,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.Response.Status;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,7 +103,7 @@ public class Test {
 		}
 		if(responses != null) {
 			for (Response response : responses.getResponse()) {
-				System.out.println(response.getAction() + " on "
+				LOGGER.info(response.getAction() + " on "
 						+ response.getResourceId() + ": " 
 						+ response.getDecision().value() + " for " 
 						+ response.getSubject());
@@ -121,7 +119,7 @@ public class Test {
 		}
 		if(responses != null) {
 			for (Response response : responses.getResponse()) {
-				System.out.println(response.getAction() + " on "
+				LOGGER.info(response.getAction() + " on "
 						+ response.getResourceId() + ": " 
 						+ response.getDecision().value() + " for " 
 						+ response.getSubject());
