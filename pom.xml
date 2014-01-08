@@ -20,12 +20,12 @@
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<packaging>pom</packaging>
 	<modules>
-		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-api</module>
-		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-common</module>
-		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-core</module>
-		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-model</module>
-		<module>../authzforce-xacmlsdk/authzforce-xacmlsdk-samples</module>
-		<module>../authzforce-xacmlsdk/xacml-sdk-distribution</module>
+		<module>./authzforce-xacmlsdk-api</module>
+		<module>./authzforce-xacmlsdk-common</module>
+		<module>./authzforce-xacmlsdk-core</module>
+		<module>./authzforce-xacmlsdk-model</module>
+		<module>./authzforce-xacmlsdk-samples</module>
+		<module>./xacml-sdk-distribution</module>
 	</modules>
 	<build>
 		<pluginManagement>
