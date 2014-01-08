@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>xacml-sdk</artifactId>
+    <groupId>com.thalesgroup.authzforce</groupId>
+    <version>3.5.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.thalesgroup.authzforce</groupId>
+  <artifactId>xacml-sdk-core</artifactId>
+  <name>AuthZForce :: XACML SDK :: CORE</name>
+  <inceptionYear>2013</inceptionYear>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.gmaven</groupId>
+        <artifactId>gmaven-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <source>import java.util.Date
+								import java.text.MessageFormat
+								def
+								vartimestamp = MessageFormat.format("{0,date,yyyy}", new Date())
+								project.properties['currentYear'] = vartimestamp</source>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.9.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>format</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <header>src/main/resources/fileHeader.apache2.txt</header>
+          <properties>
+            <h_inceptionYear>${project.inceptionYear}</h_inceptionYear>
+            <h_currentYear>${currentYear}</h_currentYear>
+            <h_copyrightOwner>${copyrightOwner}</h_copyrightOwner>
+          </properties>
+          <strictCheck>true</strictCheck>
+          <excludes>
+            <exclude>**/*.html</exclude>
+            <exclude>**/*.xml</exclude>
+            <exclude>**/*.txt</exclude>
+            <exclude>**/*.ec</exclude>
+            <exclude>**/*.log</exclude>
+            <exclude>**/*.css</exclude>
+            <exclude>**/*.js</exclude>
+            <exclude>**/*.jsp</exclude>
+            <exclude>**/*.md</exclude>
+            <exclude>**/*.properties</exclude>
+            <exclude>**/*.gitignore</exclude>
+            <exclude>src/test/**</exclude>
+            <exclude>src/main/resources/**</exclude>
+          </excludes>
+          <includes>
+            <include>src/main/java/com/thalesgroup/**</include>
+          </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>aspectj-maven-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <properties>
+    <slf4j.version>1.6.6</slf4j.version>
+    <copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdom.version>2.0.5</jdom.version>
+  </properties>
+</project>
+

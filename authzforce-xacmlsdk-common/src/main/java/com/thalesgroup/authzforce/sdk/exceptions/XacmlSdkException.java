@@ -20,12 +20,11 @@ public class XacmlSdkException extends Exception {
 	private static final long serialVersionUID = 985260175957642427L;
 
 	public XacmlSdkException() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public XacmlSdkException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	public XacmlSdkException(XacmlSdkExceptionCodes errorCode) {
@@ -48,12 +47,10 @@ public class XacmlSdkException extends Exception {
 
 	public XacmlSdkException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public XacmlSdkException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 }
