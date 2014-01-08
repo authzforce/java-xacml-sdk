@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2014 Thales Services - ThereSIS - All rights reserved.
+ * Copyright (C) 2013-2013 Thales Services - ThereSIS - All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,6 +34,15 @@ public interface XacmlSdk {
 	 */
 	public abstract String toString();
 	
+	/**
+	 * 
+	 * @param subject
+	 * @param resources
+	 * @param actions
+	 * @param environment
+	 * @return
+	 * @throws XacmlSdkException
+	 */
 	public abstract Responses getAuthZ(List<Subject> subject,
 			List<Resource> resources, List<Action> actions,
 			Environment environment) throws XacmlSdkException;
