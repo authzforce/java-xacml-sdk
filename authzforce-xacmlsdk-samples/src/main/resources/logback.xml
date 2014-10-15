@@ -7,9 +7,9 @@
 		</layout>
 	</appender>
 
-	<logger name="org.apache.cxf" additivity="false" level="DEBUG" />
+	<logger name="org.apache.cxf" additivity="false" level="WARN" />
 
-	<logger name="org.apache" additivity="false" level="DEBUG" />
+	<logger name="org.apache" additivity="false" level="WARN" />
 
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />

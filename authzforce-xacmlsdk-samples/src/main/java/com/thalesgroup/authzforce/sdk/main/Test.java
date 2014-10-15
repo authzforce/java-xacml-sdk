@@ -41,7 +41,8 @@ public class Test {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
 	
-	private static final String PDP_ENDPOINT = "http://10.222.148.108:8080/PDP-3.0.0";
+	private static final String PDP_ENDPOINT = "http://testing-iam.cryptex.theresis.org:8080/authzforce-webapp-3.0.0-20131206.090429-7";
+	private static final String DOMAIN_ID = "ff88c864-8f1b-11e3-83ed-005056a2287a";
 
 	private static final String SUBJECT = "T0101841";
 	private static final String SUBJECT_2 = "gcunha";
@@ -92,7 +93,7 @@ public class Test {
 		actions.add(act1);
 		actions.add(act2);
 		
-		XacmlSdk myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT));
+		XacmlSdk myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT), DOMAIN_ID);
 
 		Responses responses = null;
 		try {
@@ -108,22 +109,6 @@ public class Test {
 						+ response.getDecision().value() + " for " 
 						+ response.getSubject());
 			}
-		}
-		myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT));
-		responses = null;
-		try {
-			responses = myXacml.getAuthZ(subject2, resources, actions, environment);
-		} catch (XacmlSdkException e) {
-			LOGGER.error(e.getLocalizedMessage());
-			LOGGER.error(e.getCause().getLocalizedMessage());
-		}
-		if(responses != null) {
-			for (Response response : responses.getResponse()) {
-				LOGGER.info(response.getAction() + " on "
-						+ response.getResourceId() + ": " 
-						+ response.getDecision().value() + " for " 
-						+ response.getSubject());
-			}
-		}
+		}		
 	}
 }

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.ws.rs.client.ClientException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -31,11 +30,16 @@ import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attributes;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Result;
 
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
+import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thalesgroup.authzforce.api.Authzforce;
+import com.thalesgroup.authzforce.api.jaxrs.EndUserDomain;
+import com.thalesgroup.authzforce.api.jaxrs.EndUserDomainSet;
 import com.thalesgroup.authzforce.sdk.XacmlSdk;
 import com.thalesgroup.authzforce.sdk.core.schema.Action;
 import com.thalesgroup.authzforce.sdk.core.schema.Environment;
@@ -57,35 +61,59 @@ import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
  */
 public class XacmlSdkImpl implements XacmlSdk {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(XacmlSdkImpl.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(XacmlSdkImpl.class);
 
 	private Request request;
-//	private WebResource webResource;
-//	private Client client;
+	// private WebResource webResource;
+	// private Client client;
 	private URI serverEndpoint;
+	private String domainId;
 
 	private List<Attributes> resourceCategory = new LinkedList<Attributes>();
 	private List<Attributes> actionCategory = new LinkedList<Attributes>();
 	private List<Attributes> subjectCategory = new LinkedList<Attributes>();
-	private List<Attributes> environmentCategory = new LinkedList<Attributes>();
-	
-	private oasis.names.tc.xacml._3_0.core.schema.wd_17.Request myRequest;
+	private List<Attributes> environmentCategory = new LinkedList<Attributes>();	
 
 	/**
 	 * Constructor
 	 * 
+	 * This constructor is deprecated. Now you need to use {@link
+	 * XacmlSdkImpl(URI serverEndpoint, String domainId)} to set a domainId for
+	 * multi tenancy purposes. This constructor will use "default" as domainId
+	 * 
+	 * @deprecated
 	 * @param serverEndpoint
 	 */
 	public XacmlSdkImpl(URI serverEndpoint) {
-//		this.client = new Client();
-//		this.webResource = this.client.resource(serverEndpoint);
+		// this.client = new Client();
+		// this.webResource = this.client.resource(serverEndpoint);
 		this.serverEndpoint = serverEndpoint;
-//		this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING, false);
+		this.domainId = "default";
+		// this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING,
+		// false);
+	}
+
+	/**
+	 * This constructor is multi tenant enabled. The final endpoint will be
+	 * something like: http://serverEndpoint/domainId
+	 * 
+	 * @param serverEndpoint
+	 *            is the PDP endpoint
+	 * @param domainId
+	 *            is the domain that you belong to
+	 */
+	public XacmlSdkImpl(URI serverEndpoint, String domainId) {
+		// this.client = new Client();
+		// this.webResource = this.client.resource(serverEndpoint);
+		this.serverEndpoint = serverEndpoint;
+		this.domainId = domainId;
+		// this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING,
+		// false);
 	}
 
 	private void clearRequest() {
 		this.request = new Request();
-		myRequest = new Request();
 		resourceCategory.clear();
 		actionCategory.clear();
 		subjectCategory.clear();
@@ -102,7 +130,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 		LOGGER.debug("Create XML (marshalling)");
 		StringWriter sw = new StringWriter();
 		try {
-			JAXBContext.newInstance(Request.class).createMarshaller().marshal(request, sw);
+			JAXBContext.newInstance(Request.class).createMarshaller()
+					.marshal(request, sw);
 		} catch (JAXBException e) {
 			LOGGER.error("", e);
 		}
@@ -313,7 +342,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 					XacmlSdkExceptionCodes.MISSING_ENVIRONMENT.value());
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param subjects
@@ -323,7 +352,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * 
 	 * @return
 	 */
-	private Request createXacmlRequest(List<Subject> subjects,
+	private void createXacmlRequest(List<Subject> subjects,
 			List<Resource> resources, List<Action> actions,
 			Environment environment) {
 		Request xacmlRequest = new Request();
@@ -354,36 +383,55 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		this.request = xacmlRequest;
 
-		StringWriter stringRequest = new StringWriter();
-		if(LOGGER.isDebugEnabled()) {
+		if (LOGGER.isDebugEnabled()) {
+			StringWriter stringRequest = new StringWriter();
 			try {
-				JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(request, stringRequest);
+				JAXBContext
+						.newInstance(
+								oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class)
+						.createMarshaller().marshal(request, stringRequest);
 			} catch (JAXBException e) {
 				e.printStackTrace();
 				LOGGER.error(e.getLocalizedMessage());
 			}
 			LOGGER.debug("XACML Request created: " + stringRequest.toString());
 		}
-
-		return request;
 	}
-	
+
 	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
 			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
 
 		Responses responses = new Responses();
-		myRequest = createXacmlRequest(subject, resources, actions,
-				environment);
-		Authzforce targetedPDP = JAXRSClientFactory.create(serverEndpoint, Authzforce.class);
-		Response myResponse = null;
-		try {
-			myResponse = targetedPDP.requestPolicyDecision(myRequest);
-		} catch (ClientException e) {
-			LOGGER.error("Fault: " + e.getLocalizedMessage());
-			throw new XacmlSdkException("Client Exception occured", e);
-	    }
-		LOGGER.debug(myResponse.toString());
+		// XACML Request creation
+		createXacmlRequest(subject, resources, actions, environment);
+		
+		EndUserDomainSet targetedDomain = JAXRSClientFactory.create(
+				serverEndpoint, EndUserDomainSet.class);
+
+		
+		// Request/response logging (for debugging).
+		
+		final ClientConfiguration clientConf = WebClient.getConfig(targetedDomain);
+		clientConf.getInInterceptors().add(new LoggingInInterceptor());
+		clientConf.getOutInterceptors().add(new LoggingOutInterceptor());
+
+		// Get your domain's resource
+		final EndUserDomain myDomain = targetedDomain.getEndUserDomain(domainId);
+		Response myResponse = myDomain.getPdp().requestPolicyDecision(request);
+		if (LOGGER.isDebugEnabled()) {
+			StringWriter stringRequest = new StringWriter();
+			try {
+				JAXBContext
+						.newInstance(
+								oasis.names.tc.xacml._3_0.core.schema.wd_17.Response.class)
+						.createMarshaller().marshal(myResponse, stringRequest);
+			} catch (JAXBException e) {
+				e.printStackTrace();
+				LOGGER.error(e.getLocalizedMessage());
+			}
+			LOGGER.debug("XACML Response: " + stringRequest.toString());
+		}		
 		// FIXME: possible NPE on each of the getContent
 		for (Result result : myResponse.getResults()) {
 			com.thalesgroup.authzforce.sdk.core.schema.Response response = new com.thalesgroup.authzforce.sdk.core.schema.Response();
@@ -392,30 +440,34 @@ public class XacmlSdkImpl implements XacmlSdk {
 					if (attr.getAttributeId()
 							.equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID
 									.value())) {
-						for (AttributeValueType attrValue : attr.getAttributeValues()) {
-							response.setResourceId(String.valueOf(attrValue.getContent().get(0)));
+						for (AttributeValueType attrValue : attr
+								.getAttributeValues()) {
+							response.setResourceId(String.valueOf(attrValue
+									.getContent().get(0)));
 						}
 					} else if (attr.getAttributeId().equals(
 							XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValues()) {
-							response.setAction(String.valueOf(attrValue.getContent().get(0)));
+							response.setAction(String.valueOf(attrValue
+									.getContent().get(0)));
 						}
 					} else if (attr.getAttributeId().equals(
 							XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
 						for (AttributeValueType attrValue : attr
 								.getAttributeValues()) {
-							response.setSubject(String.valueOf(attrValue.getContent().get(0)));
+							response.setSubject(String.valueOf(attrValue
+									.getContent().get(0)));
 						}
 					}
 				}
 			}
 			response.setDecision(result.getDecision());
 			responses.getResponse().add(response);
-			
+
 			this.clearRequest();
 		}
-		return responses;	
+		return responses;
 	}
 
 	/*
@@ -431,7 +483,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 			throws XacmlSdkException {
 		List<Subject> tmpSubjectList = new ArrayList<Subject>();
 		tmpSubjectList.add(subject);
-		
+
 		return getAuthZ(tmpSubjectList, resources, actions, environment);
 	}
 
@@ -445,14 +497,16 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * com.thalesgroup.authzforce.sdk.core.schema.Action,
 	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
 	 */
-	public com.thalesgroup.authzforce.sdk.core.schema.Response getAuthZ(Subject subject, Resource resource, Action action,
+	public com.thalesgroup.authzforce.sdk.core.schema.Response getAuthZ(
+			Subject subject, Resource resource, Action action,
 			Environment environment) throws XacmlSdkException {
 		List<Resource> tmpResourceList = new ArrayList<Resource>();
 		List<Action> tmpActionList = new ArrayList<Action>();
 		tmpResourceList.add(resource);
 		tmpActionList.add(action);
-		
-		return getAuthZ(subject, tmpResourceList, tmpActionList, environment).getResponse().get(0);
+
+		return getAuthZ(subject, tmpResourceList, tmpActionList, environment)
+				.getResponse().get(0);
 	}
 
 	/*
@@ -468,7 +522,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 			Action action, Environment environment) throws XacmlSdkException {
 		List<Action> tmpActionList = new ArrayList<Action>();
 		tmpActionList.add(action);
-		
+
 		return getAuthZ(subject, resource, tmpActionList, environment);
 	}
 

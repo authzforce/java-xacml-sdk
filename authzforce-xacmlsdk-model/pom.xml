@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.thalesgroup.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
-		<version>3.5.0-SNAPSHOT</version>
+		<version>4.0.0-SNAPSHOT</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -13,14 +13,13 @@
 		<slf4j.version>1.6.6</slf4j.version>
 	</properties>
 	<inceptionYear>2013</inceptionYear>
-	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk-model</artifactId>
 	<name>AuthZForce :: XACML SDK :: MODEL</name>
 	<dependencies>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>2.2.9</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jdom</groupId>
@@ -31,30 +30,7 @@
 			<groupId>xerces</groupId>
 			<artifactId>xerces</artifactId>
 			<version>2.4.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>javax.xml.ws</groupId>
-			<artifactId>jaxws-api</artifactId>
-			<version>2.2.9</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>1.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
-			<version>0.6.4</version>
-		</dependency>
+		</dependency>		
 
 		<!-- XACML Dependencies -->
 		<dependency>
