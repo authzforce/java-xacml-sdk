@@ -4,24 +4,17 @@
 	<parent>
 		<groupId>com.thalesgroup.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
-		<version>3.5.0-SNAPSHOT</version>		
+		<version>4.0.0-SNAPSHOT</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
-		<jdom.version>2.0.5</jdom.version>
-		<slf4j.version>1.6.6</slf4j.version>
+		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>		
 	</properties>
 	<inceptionYear>2013</inceptionYear>
-	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk-api</artifactId>
 	<name>AuthZForce :: XACML SDK :: API</name>
 	<dependencies>
 		<!-- XACML Dependencies -->
-		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
-			<artifactId>xacml-sdk-model</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.thalesgroup.authzforce</groupId>
 			<artifactId>xacml-sdk-common</artifactId>
