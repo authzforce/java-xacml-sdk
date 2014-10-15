@@ -64,7 +64,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 	private Request request;
 	private WebResource webResource;
-	private Client client;
+	final static Client CLIENT = new Client();
 
 	private List<Attributes> resourceCategory = new LinkedList<Attributes>();
 	private List<Attributes> actionCategory = new LinkedList<Attributes>();
@@ -87,8 +87,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * @param serverEndpoint
 	 */
 	public XacmlSdkImpl(URI serverEndpoint) {
-		this.client = new Client();
-		this.webResource = this.client.resource(serverEndpoint);
+//		this.client = new Client();
+		this.webResource =CLIENT.resource(serverEndpoint);
 		this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING, false);
 	}
 
