@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2013-2013 Thales Services - ThereSIS - All rights reserved.
+ * Copyright (C) 2013-2014 Thales Services - ThereSIS - All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
 public class XacmlSdkImpl implements XacmlSdk {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(XacmlSdkImpl.class);
+	final static Logger loggerPerf = LoggerFactory.getLogger("perf");
 
 	private Request request;
 	private WebResource webResource;
@@ -69,6 +70,14 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private List<Attributes> actionCategory = new LinkedList<Attributes>();
 	private List<Attributes> subjectCategory = new LinkedList<Attributes>();
 	private List<Attributes> environmentCategory = new LinkedList<Attributes>();
+	
+	final static JAXBContext JAXBCONTEXT;
+	static {try {
+		JAXBCONTEXT = JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class);
+	} catch (JAXBException e) {
+		LOGGER.error("An exception occured during initialization of jaxbcontext", e);
+		throw new RuntimeException(e);
+	}}
 	
 	private oasis.names.tc.xacml._3_0.core.schema.wd_17.Request myRequest;
 
@@ -101,10 +110,16 @@ public class XacmlSdkImpl implements XacmlSdk {
 	public String toString() {
 		LOGGER.debug("Create XML (marshalling)");
 		StringWriter sw = new StringWriter();
+		/*AUTHZFORCE-62 -JAXBContext is initialized at each request. This causes major performance issue*/
+		//try {
+		//	JAXBContext.newInstance(Request.class).createMarshaller().marshal(request, sw);
+		//} catch (JAXBException e) {
+		//	LOGGER.error("", e);
+		//}
 		try {
-			JAXBContext.newInstance(Request.class).createMarshaller().marshal(request, sw);
-		} catch (JAXBException e) {
-			LOGGER.error("", e);
+			JAXBCONTEXT.createMarshaller().marshal(request, sw);
+		} catch (JAXBException e1) {
+			LOGGER.error(e1.getLocalizedMessage());
 		}
 		LOGGER.debug(new String(sw.getBuffer()).replaceAll("\"", "'"));
 
@@ -356,12 +371,19 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		StringWriter stringRequest = new StringWriter();
 		if(LOGGER.isDebugEnabled()) {
+			
 			try {
-				JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(request, stringRequest);
-			} catch (JAXBException e) {
-				e.printStackTrace();
-				LOGGER.error(e.getLocalizedMessage());
+				JAXBCONTEXT.createMarshaller().marshal(request, stringRequest);
+			} catch (JAXBException e1) {
+				LOGGER.error(e1.getLocalizedMessage());
 			}
+			/*AUTHZFORCE-62 -JAXBContext is initialized at each request. This causes major performance issue*/
+//			try {
+//				JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(request, stringRequest);
+//			} catch (JAXBException e) {
+//				e.printStackTrace();
+//				LOGGER.error(e.getLocalizedMessage());
+//			}
 			LOGGER.debug("XACML Request created: " + stringRequest.toString());
 		}
 
@@ -373,28 +395,55 @@ public class XacmlSdkImpl implements XacmlSdk {
 			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
 
+		long startInGetAuthz = System.currentTimeMillis();
 		Responses responses = new Responses();
-		myRequest = createXacmlRequest(subject, resources, actions,
-				environment);
+
+		long startTimeCreateRequest = System.currentTimeMillis();
+		myRequest = createXacmlRequest(subject, resources, actions,environment);
+		long endTimeCreateRequest = System.currentTimeMillis();
+		
+		long startTimeToMarhsallReq = System.currentTimeMillis();
 		StringWriter writer = new StringWriter();
+		/*AUTHZFORCE-62 -JAXBContext is initialized at each request. This causes major performance issue*/
+		//try {
+			//JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(myRequest, writer);
+		//} catch (Exception e) {
+			//e.printStackTrace();
+			//LOGGER.error(e.getLocalizedMessage());
+		//}
 		try {
-			JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller().marshal(myRequest, writer);
-			/* Doing some debugging log at least */
-		} catch (Exception e) {
-			e.printStackTrace();
-			LOGGER.error(e.getLocalizedMessage());
+			JAXBCONTEXT.createMarshaller().marshal(myRequest, writer);
+		} catch (JAXBException e1) {
+			LOGGER.error(e1.getLocalizedMessage());
+			throw new XacmlSdkException(e1);
 		}
+		long endTimeToMarhsallReq = System.currentTimeMillis();
+		
+
+		long startTimeCommPDP = System.currentTimeMillis();
 		// FIXME: Fix this time consuming String unmarshalling.
 		String myResponseTmp = webResource.type(MediaType.APPLICATION_XML).post(String.class, writer.toString());
+		long endTimeCommPDP = System.currentTimeMillis();
+		
+		long startTimeToMarhsallResp = System.currentTimeMillis();
 		Response myResponse = null;
 		LOGGER.debug(myResponseTmp);
 		try {
-			myResponse = (Response) JAXBContext.newInstance(Response.class).createUnmarshaller().unmarshal(new StringReader(myResponseTmp));
-		} catch (Exception e) {
-			e.printStackTrace();
-			LOGGER.error(e.getLocalizedMessage());
-		}		
-		
+			myResponse = (Response) JAXBCONTEXT.createUnmarshaller().unmarshal(new StringReader(myResponseTmp));
+		} catch (JAXBException e1) {
+			LOGGER.error(e1.getLocalizedMessage());
+			throw new XacmlSdkException(e1);
+		}
+		/*AUTHZFORCE-62 -JAXBContext is initialized at each request. This causes major performance issue*/
+		//try {
+		//	myResponse = (Response) JAXBContext.newInstance(Response.class).createUnmarshaller().unmarshal(new StringReader(myResponseTmp));
+		//} catch (Exception e) {
+		//	e.printStackTrace();
+		//	LOGGER.error(e.getLocalizedMessage());
+		//}		
+		long endTimeToMarhsallResp = System.currentTimeMillis();
+
+		long startTimeParseResponse = System.currentTimeMillis();
 		// FIXME: possible NPE on each of the getContent
 		for (Result result : myResponse.getResults()) {
 			com.thalesgroup.authzforce.sdk.core.schema.Response response = new com.thalesgroup.authzforce.sdk.core.schema.Response();
@@ -426,6 +475,22 @@ public class XacmlSdkImpl implements XacmlSdk {
 			
 			this.clearRequest();
 		}
+		long endTimeParseResponse = System.currentTimeMillis();
+		long endTimeIngetAuthz = System.currentTimeMillis();
+		long timeIngetAuthz = endTimeIngetAuthz - startInGetAuthz;
+		long timeCreateREq = endTimeCreateRequest - startTimeCreateRequest;
+		long timeToMarshallReq = endTimeToMarhsallReq - startTimeToMarhsallReq;
+		long timeCommPDP = endTimeCommPDP - startTimeCommPDP;
+		long timeToMarhsallResp = endTimeToMarhsallResp - startTimeToMarhsallResp;
+		long timeParseResponse = endTimeParseResponse - startTimeParseResponse;
+
+		loggerPerf.debug("XACML-SDK - getAuthZ - RequestId: "+null+"\n"
+				+ "Time in method: "+timeIngetAuthz+" ms \n"
+				+ "Time to create xacml req: "+timeCreateREq+" ms \n"
+				+ "Time to marshall req: "+timeToMarshallReq+" ms \n"
+				+ "Time Comm with PDP: "+timeCommPDP+" ms \n"
+				+ "Time to unmarshall resp: "+timeToMarhsallResp+" ms \n"
+				+ "Time to parse reponse: "+timeParseResponse+" ms \n");
 		return responses;	
 	}
 
