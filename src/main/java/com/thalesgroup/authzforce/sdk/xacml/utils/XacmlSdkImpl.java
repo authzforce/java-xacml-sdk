@@ -60,7 +60,7 @@ import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
 public class XacmlSdkImpl implements XacmlSdk {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(XacmlSdkImpl.class);
-	final static Logger loggerPerf = LoggerFactory.getLogger("perf");
+//	final static Logger loggerPerf = LoggerFactory.getLogger("perf");
 
 	private Request request;
 	private WebResource webResource;
@@ -87,7 +87,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 * @param serverEndpoint
 	 */
 	public XacmlSdkImpl(URI serverEndpoint) {
-//		this.client = new Client();
+	    /*AUTHZFORCE-63: Jersey Client is initialized at each one request. This cause performance issue*/
+		//this.client = new Client();
 		this.webResource =CLIENT.resource(serverEndpoint);
 		this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING, false);
 	}
@@ -395,14 +396,14 @@ public class XacmlSdkImpl implements XacmlSdk {
 			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
 
-		long startInGetAuthz = System.currentTimeMillis();
+//		long startInGetAuthz = System.currentTimeMillis();
 		Responses responses = new Responses();
 
-		long startTimeCreateRequest = System.currentTimeMillis();
+//		long startTimeCreateRequest = System.currentTimeMillis();
 		myRequest = createXacmlRequest(subject, resources, actions,environment);
-		long endTimeCreateRequest = System.currentTimeMillis();
+//		long endTimeCreateRequest = System.currentTimeMillis();
 		
-		long startTimeToMarhsallReq = System.currentTimeMillis();
+//		long startTimeToMarhsallReq = System.currentTimeMillis();
 		StringWriter writer = new StringWriter();
 		/*AUTHZFORCE-62 -JAXBContext is initialized at each request. This causes major performance issue*/
 		//try {
@@ -417,15 +418,15 @@ public class XacmlSdkImpl implements XacmlSdk {
 			LOGGER.error(e1.getLocalizedMessage());
 			throw new XacmlSdkException(e1);
 		}
-		long endTimeToMarhsallReq = System.currentTimeMillis();
+//		long endTimeToMarhsallReq = System.currentTimeMillis();
 		
 
-		long startTimeCommPDP = System.currentTimeMillis();
+//		long startTimeCommPDP = System.currentTimeMillis();
 		// FIXME: Fix this time consuming String unmarshalling.
 		String myResponseTmp = webResource.type(MediaType.APPLICATION_XML).post(String.class, writer.toString());
-		long endTimeCommPDP = System.currentTimeMillis();
+//		long endTimeCommPDP = System.currentTimeMillis();
 		
-		long startTimeToMarhsallResp = System.currentTimeMillis();
+//		long startTimeToMarhsallResp = System.currentTimeMillis();
 		Response myResponse = null;
 		LOGGER.debug(myResponseTmp);
 		try {
@@ -441,9 +442,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 		//	e.printStackTrace();
 		//	LOGGER.error(e.getLocalizedMessage());
 		//}		
-		long endTimeToMarhsallResp = System.currentTimeMillis();
+//		long endTimeToMarhsallResp = System.currentTimeMillis();
 
-		long startTimeParseResponse = System.currentTimeMillis();
+//		long startTimeParseResponse = System.currentTimeMillis();
 		// FIXME: possible NPE on each of the getContent
 		for (Result result : myResponse.getResults()) {
 			com.thalesgroup.authzforce.sdk.core.schema.Response response = new com.thalesgroup.authzforce.sdk.core.schema.Response();
@@ -475,22 +476,22 @@ public class XacmlSdkImpl implements XacmlSdk {
 			
 			this.clearRequest();
 		}
-		long endTimeParseResponse = System.currentTimeMillis();
-		long endTimeIngetAuthz = System.currentTimeMillis();
-		long timeIngetAuthz = endTimeIngetAuthz - startInGetAuthz;
-		long timeCreateREq = endTimeCreateRequest - startTimeCreateRequest;
-		long timeToMarshallReq = endTimeToMarhsallReq - startTimeToMarhsallReq;
-		long timeCommPDP = endTimeCommPDP - startTimeCommPDP;
-		long timeToMarhsallResp = endTimeToMarhsallResp - startTimeToMarhsallResp;
-		long timeParseResponse = endTimeParseResponse - startTimeParseResponse;
+//		long endTimeParseResponse = System.currentTimeMillis();
+//		long endTimeIngetAuthz = System.currentTimeMillis();
+//		long timeIngetAuthz = endTimeIngetAuthz - startInGetAuthz;
+//		long timeCreateREq = endTimeCreateRequest - startTimeCreateRequest;
+//		long timeToMarshallReq = endTimeToMarhsallReq - startTimeToMarhsallReq;
+//		long timeCommPDP = endTimeCommPDP - startTimeCommPDP;
+//		long timeToMarhsallResp = endTimeToMarhsallResp - startTimeToMarhsallResp;
+//		long timeParseResponse = endTimeParseResponse - startTimeParseResponse;
 
-		loggerPerf.debug("XACML-SDK - getAuthZ - RequestId: "+null+"\n"
-				+ "Time in method: "+timeIngetAuthz+" ms \n"
-				+ "Time to create xacml req: "+timeCreateREq+" ms \n"
-				+ "Time to marshall req: "+timeToMarshallReq+" ms \n"
-				+ "Time Comm with PDP: "+timeCommPDP+" ms \n"
-				+ "Time to unmarshall resp: "+timeToMarhsallResp+" ms \n"
-				+ "Time to parse reponse: "+timeParseResponse+" ms \n");
+//		loggerPerf.debug("XACML-SDK - getAuthZ - RequestId: "+null+"\n"
+//				+ "Time in method: "+timeIngetAuthz+" ms \n"
+//				+ "Time to create xacml req: "+timeCreateREq+" ms \n"
+//				+ "Time to marshall req: "+timeToMarshallReq+" ms \n"
+//				+ "Time Comm with PDP: "+timeCommPDP+" ms \n"
+//				+ "Time to unmarshall resp: "+timeToMarhsallResp+" ms \n"
+//				+ "Time to parse reponse: "+timeParseResponse+" ms \n");
 		return responses;	
 	}
 
