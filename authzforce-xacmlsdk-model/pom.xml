@@ -15,12 +15,6 @@
 	<inceptionYear>2013</inceptionYear>
 	<artifactId>xacml-sdk-model</artifactId>
 	<name>AuthZForce :: XACML SDK :: MODEL</name>
-	<scm>
-		<connection>scm:git:https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</connection>
-		<developerConnection>scm:git:https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</developerConnection>
-		<tag>HEAD</tag>
-		<url>https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</url>
-	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
