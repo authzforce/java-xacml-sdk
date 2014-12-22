@@ -4,3 +4,4 @@
 *.project
 *.tar.gz
 *.jar
+*dependency-reduced-pom.xml
