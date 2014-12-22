@@ -13,6 +13,12 @@
 	<inceptionYear>2013</inceptionYear>
 	<artifactId>xacml-sdk-api</artifactId>
 	<name>AuthZForce :: XACML SDK :: API</name>
+	<scm>
+		<connection>scm:git:https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</connection>
+		<developerConnection>scm:git:https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</url>
+	</scm>
 	<dependencies>
 		<!-- XACML Dependencies -->
 		<dependency>
