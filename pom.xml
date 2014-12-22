@@ -30,6 +30,16 @@
 		<tag>HEAD</tag>
 		<url>https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</url>
 	</scm>
+	<distributionManagement>
+		<repository>
+			<id>theresis</id>
+			<url>http://nexus.dev.theresis.org/nexus/content/repositories/theresis/</url>
+		</repository>
+		<snapshotRepository>
+			<id>theresis-snapshot</id>
+			<url>http://nexus.dev.theresis.org/nexus/content/repositories/theresis-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<pluginManagement>
 			<plugins>
