@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.thalesgroup.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
-		<version>4.0.0</version>
+		<version>4.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>xacml-sdk-distribution</artifactId>
 	<packaging>pom</packaging>
