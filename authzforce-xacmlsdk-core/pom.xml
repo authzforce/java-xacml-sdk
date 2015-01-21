@@ -21,6 +21,10 @@
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>			
+		</dependency>
 
 		<!-- XACML Dependencies -->
 		<dependency>
