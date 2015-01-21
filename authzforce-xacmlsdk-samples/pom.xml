@@ -19,17 +19,12 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.0.7</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
-			<version>0.6.4</version>
-		</dependency>
 
 		<!-- XACML Dependencies -->
 		<dependency>
 			<groupId>com.thalesgroup.authzforce</groupId>
-			<artifactId>xacml-sdk-core</artifactId>	
-			<version>4.0.0</version>					
+			<artifactId>xacml-sdk-core</artifactId>
+			<version>4.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- /XACML Dependencies -->
 	</dependencies>
