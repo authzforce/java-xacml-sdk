@@ -41,13 +41,15 @@ public class Test {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
 	
-	private static final String PDP_ENDPOINT = "http://testing-iam.cryptex.theresis.org:8080/authzforce-webapp-3.0.0-20131206.090429-7";
+	private static final String PDP_ENDPOINT = "http://testing-iam.cryptex.theresis.org:9400/authzforce-webapp-3.0.0-20131206.090429-7";
 	private static final String DOMAIN_ID = "ff88c864-8f1b-11e3-83ed-005056a2287a";
 
-	private static final String SUBJECT = "T0101841";
-	private static final String SUBJECT_2 = "gcunha";
+	private static final String SUBJECT = "ThalesId";
+	private static final String SUBJECT_2 = "userName";
 	private static final String RESOURCE = "http://www.opencloudware.org";
+	private static final String RESOURCE_TENANT_ID = "Exo";
 	private static final String RESOURCE_2 = "EasiClouds";
+	private static final String RESOURCE_2_TENANT_ID = "Thales";
 	private static final String ACTION = "HEAD";
 	private static final String ACTION_2 = "OPTION";
 
@@ -56,6 +58,10 @@ public class Test {
 	}
 	
 	private static void mainObject() {
+		List<Subject> subjects = new ArrayList<Subject>();
+		List<Resource> resources = new ArrayList<Resource>();
+		List<Action> actions = new ArrayList<Action>();
+		
 		Subject subject = new Subject(SUBJECT);
 		subject.setIncludeInResult(true);
 		
@@ -65,23 +71,26 @@ public class Test {
 		Subject subject2 = new Subject(SUBJECT_2);
 		subject.setIncludeInResult(true);
 		
-		Environment environment = new Environment("iam-hmi");
-		
-		List<Resource> resources = new ArrayList<Resource>();
-		List<Action> actions = new ArrayList<Action>();
+		subjects.add(subject);
+		subjects.add(subject2);
+				
 		Resource rsc1 = new Resource(RESOURCE);
-		Resource rsc2 = new Resource(RESOURCE_2);
-		Resource rsc3 = new Resource(RESOURCE_2);
-		rsc1.setIncludeInResult(true);
-		rsc2.setIncludeInResult(true);
-		rsc3.setAttributeId("urn:oasis:names:tc:xacml:1.0:resource:tenant-id");
+		Resource rsc2 = new Resource(RESOURCE_TENANT_ID);
+		rsc2.setAttributeId("urn:oasis:names:tc:xacml:1.0:resource:tenant-id");
 		
+		Resource rsc3 = new Resource(RESOURCE_2);		
+		Resource rsc4 = new Resource(RESOURCE_2_TENANT_ID);
+		rsc4.setAttributeId("urn:oasis:names:tc:xacml:1.0:resource:tenant-id");
+		
+		rsc1.setIncludeInResult(true);
+		rsc2.setIncludeInResult(true);		
+		
+		
+		// The order of the placement is really important. Especially for the resource
 		resources.add(rsc1);
-		resources.add(rsc3);
-		resources.add(rsc1);
-		resources.add(rsc3);
 		resources.add(rsc2);
-		resources.add(rsc3);
+		resources.add(rsc3);		
+		resources.add(rsc4);
 		Integer testInt = 1;
 		
 //		Action act1 = new Action(ACTION);
@@ -93,11 +102,13 @@ public class Test {
 		actions.add(act1);
 		actions.add(act2);
 		
+		Environment environment = new Environment("iam-hmi");
+		
 		XacmlSdk myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT), DOMAIN_ID);
 
 		Responses responses = null;
 		try {
-			responses = myXacml.getAuthZ(subject, resources, actions, environment);
+			responses = myXacml.getAuthZ(subjects, resources, actions, environment);
 		} catch (XacmlSdkException e) {
 			LOGGER.error(e.getLocalizedMessage());
 			LOGGER.error(e.getCause().getLocalizedMessage());
