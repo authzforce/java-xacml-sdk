@@ -25,10 +25,10 @@
 		<module>./xacml-sdk-distribution</module>
 	</modules>
 	<scm>
-		<connection>scm:git:https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</connection>
-		<developerConnection>scm:git:https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</developerConnection>
+		<connection>scm:git:https://gitlab.dev.theresis.org/authzforce/xacmlsdk.git</connection>
+		<developerConnection>scm:git:https://gitlab.dev.theresis.org/authzforce/xacmlsdk.git</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://matrice.dev.theresis.org/authzforce/authzforce-xacmlsdk.git</url>
+		<url>https://gitlab.dev.theresis.org/authzforce/xacmlsdk</url>
 	</scm>
 	<distributionManagement>
 		<repository>
