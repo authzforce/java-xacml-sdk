@@ -12,7 +12,7 @@
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>4.0.1</version>
+	<version>4.0.2-SNAPSHOT</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<packaging>pom</packaging>
 	<modules>
