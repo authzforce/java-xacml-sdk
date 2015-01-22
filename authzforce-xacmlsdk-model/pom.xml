@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.thalesgroup.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
-		<version>4.0.1-SNAPSHOT</version>
+		<version>4.0.1</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
