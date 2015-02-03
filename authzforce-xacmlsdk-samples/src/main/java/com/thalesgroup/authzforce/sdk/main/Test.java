@@ -50,7 +50,6 @@ public class Test {
 	private static final String RESOURCE_TENANT_ID = "Exo";
 	private static final String RESOURCE_2 = "EasiClouds";
 	private static final String RESOURCE_2_TENANT_ID = "Thales";
-	private static final String ACTION = "HEAD";
 	private static final String ACTION_2 = "OPTION";
 
 	public static void main(String[] args) {
