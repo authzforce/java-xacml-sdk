@@ -418,7 +418,18 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		// Get your domain's resource
 		final EndUserDomain myDomain = targetedDomain.getEndUserDomain(domainId);
-		Response myResponse = myDomain.getPdp().requestPolicyDecision(request);
+		Response myResponse = null;
+		try {
+		myResponse = myDomain.getPdp().requestPolicyDecision(request);
+		} catch(javax.ws.rs.NotFoundException e) {
+			throw new XacmlSdkException("HTTP 404: Authorization server not found", e);
+		} catch (javax.ws.rs.BadRequestException e) {
+			throw new XacmlSdkException("HTTP 400: Bad Request", e);
+		} catch (javax.ws.rs.InternalServerErrorException e) {
+			throw new XacmlSdkException("HTTP 500: Internal Server Error", e);
+		} catch (javax.ws.rs.ServerErrorException e) {
+			throw new XacmlSdkException(e);
+		}
 		if (LOGGER.isDebugEnabled()) {
 			StringWriter stringRequest = new StringWriter();
 			try {
