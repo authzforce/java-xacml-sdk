@@ -18,6 +18,7 @@ package com.thalesgroup.authzforce.sdk.xacml.utils;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -303,43 +304,33 @@ public class XacmlSdkImpl implements XacmlSdk {
 					boolean containId = false;
 					for (Attributes attrsType : environmentCategory) {
 						for (Attribute attrType : attrsType.getAttributes()) {
-							if (attrType
-									.getAttributeId()
-									.equals(XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID
-											.value())) {
+							if (attrType.getAttributeId().equals(XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID.value())) {
 								containId = true;
 								attrId = attrType;
 								break;
 							}
 						}
-						if (containId) {
-							break;
-						}
+						if (containId) { break; }
 					}
 					if (containId) {
 						if (!attrId.equals(environment)) {
-							attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
-									.value());
+							attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
 							attr.getAttributes().add(environment);
 							environmentCategory.add(attr);
 						}
 					} else {
-						environmentCategory.get(environmentCategory.size() - 1)
-								.getAttributes().add(environment);
+						environmentCategory.get(environmentCategory.size() - 1).getAttributes().add(environment);
 					}
 				} else {
-					environmentCategory.get(environmentCategory.size() - 1)
-							.getAttributes().add(environment);
+					environmentCategory.get(environmentCategory.size() - 1).getAttributes().add(environment);
 				}
 			} else {
-				attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT
-						.value());
+				attr.setCategory(XACMLAttributeId.XACML_3_0_ENVIRONMENT_CATEGORY_ENVIRONMENT.value());
 				attr.getAttributes().add(environment);
 				environmentCategory.add(attr);
 			}
 		} else {
-			throw new XacmlSdkException(
-					XacmlSdkExceptionCodes.MISSING_ENVIRONMENT.value());
+			throw new XacmlSdkException(XacmlSdkExceptionCodes.MISSING_ENVIRONMENT.value());
 		}
 	}
 
@@ -354,13 +345,15 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 */
 	private void createXacmlRequest(List<Subject> subjects,
 			List<Resource> resources, List<Action> actions,
-			Environment environment) {
+			List<Environment> environments) {
 		Request xacmlRequest = new Request();
 
 		LOGGER.debug("Assembling XACML...");
 
 		try {
-			forgeEnvironment(environment);
+			for (Environment environment : environments) {
+				forgeEnvironment(environment);
+			}			
 			for (Subject subject : subjects) {
 				forgeSubject(subject);
 			}
@@ -397,9 +390,15 @@ public class XacmlSdkImpl implements XacmlSdk {
 			LOGGER.debug("XACML Request created: " + stringRequest.toString());
 		}
 	}
-
+	
 	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
 			List<Action> actions, Environment environment)
+			throws XacmlSdkException {
+		return getAuthZ(subject, resources, actions, Arrays.asList(environment));
+	}
+
+	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
+			List<Action> actions, List<Environment> environment)
 			throws XacmlSdkException {
 
 		Responses responses = new Responses();
