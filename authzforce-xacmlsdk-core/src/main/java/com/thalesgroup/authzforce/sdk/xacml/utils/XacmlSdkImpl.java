@@ -414,9 +414,11 @@ public class XacmlSdkImpl implements XacmlSdk {
 		EndUserDomainSet targetedDomain = JAXRSClientFactory.fromClient(client, EndUserDomainSet.class);
 		
 		// Request/response logging (for debugging).
-		final ClientConfiguration clientConf = WebClient.getConfig(targetedDomain);
-		clientConf.getInInterceptors().add(new LoggingInInterceptor());
-		clientConf.getOutInterceptors().add(new LoggingOutInterceptor());
+		if(LOGGER.isDebugEnabled()) {
+			final ClientConfiguration clientConf = WebClient.getConfig(targetedDomain);
+			clientConf.getInInterceptors().add(new LoggingInInterceptor());
+			clientConf.getOutInterceptors().add(new LoggingOutInterceptor());
+		}
 
 		// Get your domain's resource
 		final EndUserDomain myDomain = targetedDomain.getEndUserDomain(domainId);
