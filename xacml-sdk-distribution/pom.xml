@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.thalesgroup.authzforce</groupId>
+		<artifactId>xacml-sdk</artifactId>
+		<version>4.0.1</version>
+	</parent>
+	<artifactId>xacml-sdk-distribution</artifactId>
+	<packaging>pom</packaging>
+	<name>AuthZForce :: XACML SDK :: DISTRIBUTION</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.thalesgroup.authzforce</groupId>
+			<artifactId>xacml-sdk-core</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/resources/bin.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>simple-command</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,4 +1,7 @@
-/.settings
-/target
-/.classpath
-/.project
+*.settings
+*target
+*.classpath
+*.project
+*.tar.gz
+*.jar
+*dependency-reduced-pom.xml

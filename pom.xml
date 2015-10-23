@@ -1,152 +1,150 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.thalesgroup</groupId>
-		<artifactId>authzforce</artifactId>
-		<version>2.0.0</version>
-		<relativePath>../authzforce</relativePath>
-	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
 		<jdom.version>2.0.5</jdom.version>
+		<slf4j.version>1.6.6</slf4j.version>
+		<cxf.version>3.0.1</cxf.version>
+		<jaxb.version>2.2</jaxb.version>
 	</properties>
 	<inceptionYear>2013</inceptionYear>
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>3.2.1</version>
+	<version>4.0.1</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
-	<dependencies>
-		<dependency>
-			<groupId>org.jdom</groupId>
-			<artifactId>jdom2</artifactId>
-			<version>${jdom.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xerces</artifactId>
-			<version>2.4.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.2</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.xml.ws</groupId>
-			<artifactId>jaxws-api</artifactId>
-			<version>2.2.9</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>1.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
-			<version>0.6.4</version>
-		</dependency>
-		<dependency>
-			<groupId>com.thalesgroup.authzforce.core</groupId>
-			<artifactId>authzforce-model</artifactId>
-			<version>3.0.3</version>
-		</dependency>
-	</dependencies>
+	<packaging>pom</packaging>
+	<modules>
+		<module>./authzforce-xacmlsdk-model</module>
+		<module>./authzforce-xacmlsdk-common</module>
+		<module>./authzforce-xacmlsdk-api</module>
+		<module>./authzforce-xacmlsdk-core</module>
+		<!-- <module>./authzforce-xacmlsdk-samples</module> -->
+		<module>./xacml-sdk-distribution</module>
+	</modules>
+	<scm>
+		<connection>scm:git:https://gitlab.dev.theresis.org/authzforce/xacmlsdk.git</connection>
+		<developerConnection>scm:git:https://gitlab.dev.theresis.org/authzforce/xacmlsdk.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://gitlab.dev.theresis.org/authzforce/xacmlsdk</url>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>theresis</id>
+			<url>http://nexus.dev.theresis.org/nexus/content/repositories/theresis/</url>
+		</repository>
+		<snapshotRepository>
+			<id>theresis-snapshot</id>
+			<url>http://nexus.dev.theresis.org/nexus/content/repositories/theresis-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>gmaven-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<source>
-								import java.util.Date
-								import java.text.MessageFormat
-								def
-								vartimestamp = MessageFormat.format("{0,date,yyyy}", new Date())
-								project.properties['currentYear'] = vartimestamp
-							</source>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<!-- Thales's license Headers -->
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<version>1.9.0</version>
-				<configuration>
-					<!-- Template location -->
-					<header>src/main/resources/fileHeader.apache2.txt</header>
-					<properties>
-						<!-- Values to be substituted in template -->
-						<h_inceptionYear>${inceptionYear}</h_inceptionYear>
-						<h_currentYear>${currentYear}</h_currentYear>
-						<h_copyrightOwner>${copyrightOwner}</h_copyrightOwner>
-					</properties>
-					<strictCheck>true</strictCheck>
-					<excludes>
-						<exclude>**/*.html</exclude>
-						<exclude>**/*.xml</exclude>
-						<exclude>**/*.txt</exclude>
-						<exclude>**/*.ec</exclude>
-						<exclude>**/*.log</exclude>
-						<exclude>**/*.css</exclude>
-						<exclude>**/*.js</exclude>
-						<exclude>**/*.jsp</exclude>
-						<exclude>**/*.md</exclude>
-						<exclude>**/*.properties</exclude>
-						<exclude>**/*.gitignore</exclude>
-						<exclude>src/test/**</exclude>
-						<exclude>src/main/resources/**</exclude>
-					</excludes>
-					<includes>
-						<include>src/main/java/com/thalesgroup/**</include>
-						<include>src/main/java/com/sun/xacml/xacmlv3/**</include>
-						<include>src/main/java/com/sun/cond/xacmlv3/**</include>
-						<include>src/main/java/com/sun/ctx/xacmlv3/**</include>
-						<include>src/main/java/com/sun/xacml/CacheManager.java</include>
-						<include>src/main/java/com/sun/xacml/ObligationExpressions.java</include>
-						<include>src/main/java/com/sun/xacml/combine/PermitUnlessDenyPolicyAlg</include>
-						<include>src/main/java/com/sun/xacml/combine/PermitUnlessDenyRuleAlg</include>
-						<include>src/main/java/com/sun/xacml/combine/DenyUnlessPermitPolicyAlg</include>
-						<include>src/main/java/com/sun/xacml/combine/DenyUnlessPermitRuleAlg</include>
-						<include>src/main/java/com/sun/xacml/finder/impl/MultipleResourceFinder.java</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>format</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.4</version>
-				<executions>
-					<execution>
-						<id>default</id>
-						<phase>compile</phase>
-						<!-- <goals> -->
-						<!-- <goal>compile</goal> -->
-						<!-- <goal>test-compile</goal> -->
-						<!-- </goals> -->
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.4</version>
+					<configuration>
+						<descriptors>
+							<descriptor>src/main/resources/bin.xml</descriptor>
+						</descriptors>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<compilerVersion>1.7</compilerVersion>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-rs-client</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+
+			<!-- JAXB Dependencies -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-core</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>2.0</version>
+			</dependency>
+			<!-- /JAXB Dependencies -->
+
+			<dependency>
+				<groupId>com.thalesgroup.authzforce.core</groupId>
+				<artifactId>authzforce-model</artifactId>
+				<version>3.2.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.thalesgroup.authzforce</groupId>
+				<artifactId>authzforce-rest-api-model</artifactId>
+				<version>4.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.thalesgroup.authzforce</groupId>
+				<artifactId>xacml-sdk-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thalesgroup.authzforce</groupId>
+				<artifactId>xacml-sdk-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thalesgroup.authzforce</groupId>
+				<artifactId>xacml-sdk-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thalesgroup.authzforce</groupId>
+				<artifactId>xacml-sdk-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
