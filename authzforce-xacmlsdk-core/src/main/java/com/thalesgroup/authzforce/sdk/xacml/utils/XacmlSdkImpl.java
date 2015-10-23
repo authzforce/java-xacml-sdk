@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -35,6 +36,7 @@ import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -399,19 +401,19 @@ public class XacmlSdkImpl implements XacmlSdk {
 	}
 
 	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
-			List<Action> actions, Environment environment)
+			List<Action> actions, Environment environment, MultivaluedMap<String, String> customHeaders)
 			throws XacmlSdkException {
 
 		Responses responses = new Responses();
 		// XACML Request creation
 		createXacmlRequest(subject, resources, actions, environment);
 		
-		EndUserDomainSet targetedDomain = JAXRSClientFactory.create(
-				serverEndpoint, EndUserDomainSet.class);
-
+		EndUserDomainSet proxy = JAXRSClientFactory.create(serverEndpoint, EndUserDomainSet.class);
+		WebClient client = WebClient.fromClient(WebClient.client(proxy));
+		client.headers(customHeaders);
+		EndUserDomainSet targetedDomain = JAXRSClientFactory.fromClient(client, EndUserDomainSet.class);
 		
 		// Request/response logging (for debugging).
-		
 		final ClientConfiguration clientConf = WebClient.getConfig(targetedDomain);
 		clientConf.getInInterceptors().add(new LoggingInInterceptor());
 		clientConf.getOutInterceptors().add(new LoggingOutInterceptor());
@@ -468,6 +470,12 @@ public class XacmlSdkImpl implements XacmlSdk {
 			this.clearRequest();
 		}
 		return responses;
+	}
+	
+	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
+			List<Action> actions, Environment environment)
+			throws XacmlSdkException {
+		return getAuthZ(subject, resources, actions, environment, new MetadataMap<String, String>());
 	}
 
 	/*
