@@ -63,6 +63,19 @@
 			<version>4.2.1.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<!-- For loading XML schemas with OASIS catalog (CatalogManager) -->
+			<groupId>xml-resolver</groupId>
+			<artifactId>xml-resolver</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thalesgroup.authzforce</groupId>
+			<artifactId>authzforce-rest-service</artifactId>
+			<version>4.1.3-OCW</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- /Test dependencies -->
 
 	</dependencies>
