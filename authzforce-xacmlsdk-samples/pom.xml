@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>com.thalesgroup.authzforce</groupId>
 			<artifactId>xacml-sdk-core</artifactId>
-			<version>4.0.2-SNAPSHOT</version>
+			<version>4.0.1</version>
 		</dependency>
 		<!-- /XACML Dependencies -->
 

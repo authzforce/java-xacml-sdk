@@ -41,7 +41,7 @@ public class Test {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
 	
-	private static final String PDP_ENDPOINT = "http://127.0.0.1:7777/";
+	private static final String PDP_ENDPOINT = "http://127.0.0.1:8080/authzforce-rest-service-4.1.3-OCW";
 	private static final String DOMAIN_ID = "5e022256-6d0f-4eb8-aa9d-77db3d4ad141";
 
 	private static final String SUBJECT = "ThalesId";
@@ -50,9 +50,8 @@ public class Test {
 	private static final String RESOURCE_TENANT_ID = "Exo";
 	private static final String RESOURCE_2 = "EasiClouds";
 	private static final String RESOURCE_2_TENANT_ID = "Thales";
+	private static final String ACTION = "HEAD";
 	private static final String ACTION_2 = "OPTION";
-	
-	private static final PdpService localPdp = new PdpService(); 
 
 	public static void main(String[] args) {
 		mainObject();
@@ -73,11 +72,11 @@ public class Test {
 		subject.setIncludeInResult(true);
 		
 		subjects.add(subject);
-		subjects.add(subject2);
+//		subjects.add(subject2);
 				
 		Resource rsc1 = new Resource(RESOURCE);
 		Resource rsc2 = new Resource(RESOURCE_TENANT_ID);
-		rsc2.setAttributeId("urn:oasis:names:tc:xacml:1.0:resource:tenant-id");
+		rsc2.setAttributeId("urn:oasis:names:tc:xacml:1.0	:resource:tenant-id");
 		
 		Resource rsc3 = new Resource(RESOURCE_2);		
 		Resource rsc4 = new Resource(RESOURCE_2_TENANT_ID);
@@ -90,8 +89,8 @@ public class Test {
 		// The order of the placement is really important. Especially for the resource
 		resources.add(rsc1);
 		resources.add(rsc2);
-		resources.add(rsc3);		
-		resources.add(rsc4);
+//		resources.add(rsc3);		
+//		resources.add(rsc4);
 		Integer testInt = 1;
 		
 //		Action act1 = new Action(ACTION);
@@ -101,12 +100,12 @@ public class Test {
 		act2.setIncludeInResult(true);
 		
 		actions.add(act1);
-		actions.add(act2);
+//		actions.add(act2);
 		
 		Environment environment = new Environment("iam-hmi");
 		
-		XacmlSdk myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT), DOMAIN_ID);
-
+		XacmlSdkImpl myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT), DOMAIN_ID);		
+		myXacml.addHeader("X-Auth-Token", "5e022256-6d0f-4eb8-aa9d-77db3d4ad14");
 		Responses responses = null;
 		try {
 			responses = myXacml.getAuthZ(subjects, resources, actions, environment);

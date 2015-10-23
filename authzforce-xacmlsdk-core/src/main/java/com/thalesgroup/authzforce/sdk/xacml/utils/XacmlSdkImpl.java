@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
@@ -36,6 +37,7 @@ import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +66,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(XacmlSdkImpl.class);
+
+	private MultivaluedMap<String, String> customHeaders = null;
 
 	private Request request;
 	// private WebResource webResource;
@@ -105,12 +109,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 *            is the domain that you belong to
 	 */
 	public XacmlSdkImpl(URI serverEndpoint, String domainId) {
-		// this.client = new Client();
-		// this.webResource = this.client.resource(serverEndpoint);
 		this.serverEndpoint = serverEndpoint;
 		this.domainId = domainId;
-		// this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING,
-		// false);
+		this.customHeaders = new MetadataMap<String, String>();
 	}
 
 	private void clearRequest() {
@@ -139,6 +140,26 @@ public class XacmlSdkImpl implements XacmlSdk {
 		LOGGER.debug(new String(sw.getBuffer()).replaceAll("\"", "'"));
 
 		return sw.toString();
+	}
+	
+	/*
+	 * Headers customizers
+	 */
+	
+	public MultivaluedMap<String, String> getCustomHeaders() {
+		return customHeaders;
+	}
+
+	public void setCustomHeaders(MultivaluedMap<String, String> customHeaders) {
+		this.customHeaders = customHeaders;
+	}
+	
+	public void addHeader(String key, String value) {
+		this.customHeaders.add(key, value);
+	}
+	
+	public void deleteHeader(String key) {
+		this.customHeaders.remove(key);
 	}
 
 	private void forgeResource(Resource resource) throws XacmlSdkException {
@@ -405,15 +426,19 @@ public class XacmlSdkImpl implements XacmlSdk {
 		// XACML Request creation
 		createXacmlRequest(subject, resources, actions, environment);
 		
-		EndUserDomainSet targetedDomain = JAXRSClientFactory.create(
-				serverEndpoint, EndUserDomainSet.class);
-
+		EndUserDomainSet proxy = JAXRSClientFactory.create(serverEndpoint, EndUserDomainSet.class);
+		WebClient client = WebClient.fromClient(WebClient.client(proxy));
+		if(null != customHeaders && customHeaders.size() > 0) {
+			client.headers(customHeaders);	
+		}		
+		EndUserDomainSet targetedDomain = JAXRSClientFactory.fromClient(client, EndUserDomainSet.class);
 		
 		// Request/response logging (for debugging).
-		
-		final ClientConfiguration clientConf = WebClient.getConfig(targetedDomain);
-		clientConf.getInInterceptors().add(new LoggingInInterceptor());
-		clientConf.getOutInterceptors().add(new LoggingOutInterceptor());
+		if(LOGGER.isDebugEnabled()) {
+			final ClientConfiguration clientConf = WebClient.getConfig(targetedDomain);
+			clientConf.getInInterceptors().add(new LoggingInInterceptor());
+			clientConf.getOutInterceptors().add(new LoggingOutInterceptor());
+		}
 
 		// Get your domain's resource
 		final EndUserDomain myDomain = targetedDomain.getEndUserDomain(domainId);
@@ -553,5 +578,4 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		return getAuthZ(subject, tmpResourceList, action, environment);
 	}
-
 }
