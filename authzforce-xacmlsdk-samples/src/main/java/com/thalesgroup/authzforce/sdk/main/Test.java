@@ -41,8 +41,8 @@ public class Test {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
 	
-	private static final String PDP_ENDPOINT = "http://testing-iam.cryptex.theresis.org:9400/authzforce-webapp-3.0.0-20131206.090429-7";
-	private static final String DOMAIN_ID = "ff88c864-8f1b-11e3-83ed-005056a2287a";
+	private static final String PDP_ENDPOINT = "http://127.0.0.1:7777/";
+	private static final String DOMAIN_ID = "5e022256-6d0f-4eb8-aa9d-77db3d4ad141";
 
 	private static final String SUBJECT = "ThalesId";
 	private static final String SUBJECT_2 = "userName";
@@ -51,6 +51,8 @@ public class Test {
 	private static final String RESOURCE_2 = "EasiClouds";
 	private static final String RESOURCE_2_TENANT_ID = "Thales";
 	private static final String ACTION_2 = "OPTION";
+	
+	private static final PdpService localPdp = new PdpService(); 
 
 	public static void main(String[] args) {
 		mainObject();
