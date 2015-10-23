@@ -66,6 +66,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(XacmlSdkImpl.class);
 
+	private MultivaluedMap<String, String> customHeaders = null;
+
 	private Request request;
 	// private WebResource webResource;
 	// private Client client;
@@ -106,12 +108,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 	 *            is the domain that you belong to
 	 */
 	public XacmlSdkImpl(URI serverEndpoint, String domainId) {
-		// this.client = new Client();
-		// this.webResource = this.client.resource(serverEndpoint);
 		this.serverEndpoint = serverEndpoint;
 		this.domainId = domainId;
-		// this.webResource.setProperty(XMLConstants.FEATURE_SECURE_PROCESSING,
-		// false);
+		this.customHeaders = new MetadataMap<String, String>();
 	}
 
 	private void clearRequest() {
@@ -140,6 +139,26 @@ public class XacmlSdkImpl implements XacmlSdk {
 		LOGGER.debug(new String(sw.getBuffer()).replaceAll("\"", "'"));
 
 		return sw.toString();
+	}
+	
+	/*
+	 * Headers customizers
+	 */
+	
+	public MultivaluedMap<String, String> getCustomHeaders() {
+		return customHeaders;
+	}
+
+	public void setCustomHeaders(MultivaluedMap<String, String> customHeaders) {
+		this.customHeaders = customHeaders;
+	}
+	
+	public void addHeader(String key, String value) {
+		this.customHeaders.add(key, value);
+	}
+	
+	public void deleteHeader(String key) {
+		this.customHeaders.remove(key);
 	}
 
 	private void forgeResource(Resource resource) throws XacmlSdkException {
@@ -401,7 +420,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 	}
 
 	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
-			List<Action> actions, Environment environment, MultivaluedMap<String, String> customHeaders)
+			List<Action> actions, Environment environment)
 			throws XacmlSdkException {
 
 		Responses responses = new Responses();
@@ -410,7 +429,9 @@ public class XacmlSdkImpl implements XacmlSdk {
 		
 		EndUserDomainSet proxy = JAXRSClientFactory.create(serverEndpoint, EndUserDomainSet.class);
 		WebClient client = WebClient.fromClient(WebClient.client(proxy));
-		client.headers(customHeaders);
+		if(null != customHeaders && customHeaders.size() > 0) {
+			client.headers(customHeaders);	
+		}		
 		EndUserDomainSet targetedDomain = JAXRSClientFactory.fromClient(client, EndUserDomainSet.class);
 		
 		// Request/response logging (for debugging).
@@ -472,12 +493,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 			this.clearRequest();
 		}
 		return responses;
-	}
-	
-	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
-			List<Action> actions, Environment environment)
-			throws XacmlSdkException {
-		return getAuthZ(subject, resources, actions, environment, new MetadataMap<String, String>());
 	}
 
 	/*
@@ -553,5 +568,4 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 		return getAuthZ(subject, tmpResourceList, action, environment);
 	}
-
 }
