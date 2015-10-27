@@ -13,7 +13,7 @@
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>4.0.2-SNAPSHOT</version>
+	<version>5.0.0-SNAPSHOT</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<packaging>pom</packaging>
 	<modules>
@@ -21,24 +21,15 @@
 		<module>./authzforce-xacmlsdk-common</module>
 		<module>./authzforce-xacmlsdk-api</module>
 		<module>./authzforce-xacmlsdk-core</module>
-		<!-- <module>./authzforce-xacmlsdk-samples</module> -->
 		<module>./xacml-sdk-distribution</module>
 	</modules>
 	<scm>
-		<connection>scm:git:https://foyer.dev.theresis.org/authzforce/xacmlsdk.git</connection>
-		<developerConnection>scm:git:https://foyer.dev.theresis.org/authzforce/xacmlsdk.git</developerConnection>
+		<connection>scm:git:https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk.git</connection>
+		<developerConnection>scm:git:https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk.git</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://foyer.dev.theresis.org/authzforce/xacmlsdk</url>
+		<url>https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk</url>
 	</scm>
-	<distributionManagement>
-		<repository>
-			<id>theresis</id>
-			<url>http://nexus.dev.theresis.org/nexus/content/repositories/theresis/</url>
-		</repository>
-		<snapshotRepository>
-			<id>theresis-snapshot</id>
-			<url>http://nexus.dev.theresis.org/nexus/content/repositories/theresis-snapshots/</url>
-		</snapshotRepository>
+	<distributionManagement>		
 	</distributionManagement>
 	<build>
 		<pluginManagement>
@@ -118,16 +109,11 @@
 				<groupId>com.thalesgroup.authzforce</groupId>
 				<artifactId>authzforce-xacml-model</artifactId>
 				<version>3.0.3</version>
-			</dependency>
-			<dependency>
-				<groupId>com.thalesgroup.authzforce</groupId>
-				<artifactId>authzforce-core-model</artifactId>
-				<version>3.2.6</version>
-			</dependency>
+			</dependency>			
 			<dependency>
 				<groupId>com.thalesgroup.authzforce</groupId>
 				<artifactId>authzforce-rest-api-model</artifactId>
-				<version>4.2</version>
+				<version>4.3.0-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>

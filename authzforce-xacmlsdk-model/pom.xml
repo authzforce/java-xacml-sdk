@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.thalesgroup.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
-		<version>4.0.2-SNAPSHOT</version>
+		<version>5.0.0-SNAPSHOT</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,10 +37,6 @@
 			<groupId>com.thalesgroup.authzforce</groupId>
 			<artifactId>authzforce-xacml-model</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.thalesgroup.authzforce</groupId> -->
-<!-- 			<artifactId>authzforce-core-model</artifactId> -->
-<!-- 		</dependency> -->
 		<!-- /XACML Dependencies -->
 	</dependencies>
 	<build>
