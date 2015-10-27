@@ -17,7 +17,7 @@ import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.Subject;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
-import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
+import com.thalesgroup.authzforce.sdk.impl.XacmlSdkImpl;
 
 public class TestPdpNetworkErrors {
 
@@ -28,7 +28,7 @@ public class TestPdpNetworkErrors {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestPdpNetworkErrors.class);
 	private final static String ENDPOINT_ADDRESS = "http://127.0.0.1:7777/";
-	public final XacmlSdkImpl sdk = new XacmlSdkImpl(URI.create(ENDPOINT_ADDRESS), USER_DOMAIN);
+	public final XacmlSdkImpl sdk = new XacmlSdkImpl(URI.create(ENDPOINT_ADDRESS), USER_DOMAIN, null);
 	
 
 

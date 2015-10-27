@@ -18,14 +18,37 @@
  */
 package com.thalesgroup.authzforce.sdk.core.schema;
 
+import java.io.StringWriter;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+
 /**
  * @author romain.ferrari[AT]thalesgroup.com
  *
  */
 public class Request extends oasis.names.tc.xacml._3_0.core.schema.wd_17.Request {
-
+	
 	public Request() {
 		super();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdk#toString()
+	 */
+	@Override
+	public String toString() {
+		StringWriter sw = new StringWriter();
+		try {
+			JAXBContext.newInstance(Request.class).createMarshaller()
+					.marshal(this, sw);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+
+		return sw.toString();
 	}
 
 }

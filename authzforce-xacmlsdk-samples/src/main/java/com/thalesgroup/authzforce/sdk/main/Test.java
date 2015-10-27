@@ -19,8 +19,12 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.MultivaluedMap;
+
+import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.MultiValueMap;
 
 import com.thalesgroup.authzforce.sdk.XacmlSdk;
 import com.thalesgroup.authzforce.sdk.core.schema.Action;
@@ -30,7 +34,7 @@ import com.thalesgroup.authzforce.sdk.core.schema.Response;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.Subject;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
-import com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdkImpl;
+import com.thalesgroup.authzforce.sdk.impl.XacmlSdkImpl;
 
 /**
  * 
@@ -103,9 +107,11 @@ public class Test {
 //		actions.add(act2);
 		
 		Environment environment = new Environment("iam-hmi");
+					
+		MultivaluedMap<String, String> customHeaders = new MetadataMap<String, String>();
+		customHeaders.add("X-Auth-Token", "5e022256-6d0f-4eb8-aa9d-77db3d4ad14");
 		
-		XacmlSdkImpl myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT), DOMAIN_ID);		
-		myXacml.addHeader("X-Auth-Token", "5e022256-6d0f-4eb8-aa9d-77db3d4ad14");
+		XacmlSdkImpl myXacml = new XacmlSdkImpl(URI.create(PDP_ENDPOINT), DOMAIN_ID, customHeaders);
 		Responses responses = null;
 		try {
 			responses = myXacml.getAuthZ(subjects, resources, actions, environment);
