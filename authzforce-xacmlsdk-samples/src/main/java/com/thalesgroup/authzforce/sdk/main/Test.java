@@ -24,9 +24,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.MultiValueMap;
 
-import com.thalesgroup.authzforce.sdk.XacmlSdk;
 import com.thalesgroup.authzforce.sdk.core.schema.Action;
 import com.thalesgroup.authzforce.sdk.core.schema.Environment;
 import com.thalesgroup.authzforce.sdk.core.schema.Resource;

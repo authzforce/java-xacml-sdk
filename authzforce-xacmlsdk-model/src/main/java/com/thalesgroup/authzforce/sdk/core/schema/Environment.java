@@ -18,28 +18,27 @@ package com.thalesgroup.authzforce.sdk.core.schema;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 
-public class Environment extends Attribute {
+public final class Environment extends Attribute {
 
-	public Environment(String value) {
+	public Environment(final String value) {
 		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
 	}
 
-	public Environment(int value) {
+	public Environment(final int value) {
 		getInstance(String.valueOf(value),
 				XACMLDatatypes.XACML_DATATYPE_INTEGER);
 	}
 	
-	public Environment(double value) {
+	public Environment(final double value) {
 		getInstance(String.valueOf(value),
 				XACMLDatatypes.XACML_DATATYPE_DOUBLE);
 	}
 	
-	public Environment(boolean value) {
+	public Environment(final boolean value) {
 		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
 	}
 
@@ -47,41 +46,17 @@ public class Environment extends Attribute {
 	 * 
 	 * @param date /!\ WARNING: date format needs to be "YYY-MM-DD" /!\
 	 */
-	public Environment(Date date) {
+	public Environment(final Date date) {
 		getInstance(new SimpleDateFormat("YYY-MM-DD").format(date),
 				XACMLDatatypes.XACML_DATATYPE_DATE);
 	}
 
-	/**
-	 * 
-	 * @param value
-	 * @param xacmlDatatype
-	 * 
-	 * @Deprecated It's now best to used constructor strongly typed to ensure
-	 *             that the datatype is supported
-	 */
-	@Deprecated
-	public Environment(Object value, XACMLDatatypes xacmlDatatype) {
-		getInstance(value, xacmlDatatype);
-	}
-	
-	private void getInstance(Object value, XACMLDatatypes xacmlDatatype) {
+	private void getInstance(final Object value, final XACMLDatatypes xacmlDatatype) {
 		AttributeValueType attrVal = new AttributeValueType();
 		attrVal.getContent().add((Serializable)value);
 		attrVal.setDataType(xacmlDatatype.value());
 		
 		this.setAttributeId(XACMLAttributeId.XACML_1_0_ENVIRONMENT_ENVIRONMENT_ID.value());
 		this.getAttributeValues().add(attrVal);
-	}
-	
-	public void addObject(Object value, XACMLDatatypes xacmlDatatype) {
-		AttributeValueType attrVal = new AttributeValueType();
-		attrVal.getContent().add((Serializable)value);
-		attrVal.setDataType(xacmlDatatype.value());
-		this.getAttributeValues().add(attrVal);
-	}
-
-	public List getAttributes() {
-		return this.attributeValues;
 	}
 }

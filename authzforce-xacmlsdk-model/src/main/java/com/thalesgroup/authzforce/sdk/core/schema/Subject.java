@@ -18,28 +18,27 @@ package com.thalesgroup.authzforce.sdk.core.schema;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 
-public class Subject extends Attribute {
+public final class Subject extends Attribute {
 
-	public Subject(String value) {
+	public Subject(final String value) {
 		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
 	}
 
-	public Subject(int value) {
+	public Subject(final int value) {
 		getInstance(String.valueOf(value),
 				XACMLDatatypes.XACML_DATATYPE_INTEGER);
 	}
 	
-	public Subject(double value) {
+	public Subject(final double value) {
 		getInstance(String.valueOf(value),
 				XACMLDatatypes.XACML_DATATYPE_DOUBLE);
 	}
 	
-	public Subject(boolean value) {
+	public Subject(final boolean value) {
 		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
 	}
 
@@ -47,25 +46,12 @@ public class Subject extends Attribute {
 	 * 
 	 * @param date /!\ WARNING: date format needs to be "YYY-MM-DD" /!\
 	 */
-	public Subject(Date date) {
+	public Subject(final Date date) {
 		getInstance(new SimpleDateFormat("YYY-MM-DD").format(date),
 				XACMLDatatypes.XACML_DATATYPE_DATE);
 	}
-
-	/**
-	 * 
-	 * @param value
-	 * @param xacmlDatatype
-	 * 
-	 * @Deprecated It's now best to used constructor strongly typed to ensure
-	 *             that the datatype is supported
-	 */
-	@Deprecated
-	public Subject(Object value, XACMLDatatypes xacmlDatatype) {
-		getInstance(value, xacmlDatatype);
-	}
 	
-	private void getInstance(Object value, XACMLDatatypes xacmlDatatype) {
+	private void getInstance(final Object value, final XACMLDatatypes xacmlDatatype) {
 		AttributeValueType attrVal = new AttributeValueType();
 		attrVal.getContent().add((Serializable)value);
 		attrVal.setDataType(xacmlDatatype.value());
@@ -74,42 +60,4 @@ public class Subject extends Attribute {
 		this.setAttributeId(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value());
 		this.getAttributeValues().add(attrVal);
 	}
-	
-	/**
-	 * 
-	 * @param value
-	 * @param xacmlDatatype
-	 */
-	public void addObject(Object value, XACMLDatatypes xacmlDatatype) {
-		this.addObject(value, xacmlDatatype, XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID);
-	}
-	
-	/**
-	 * 
-	 * @param value
-	 * @param xacmlDatatype
-	 * @param attributeId
-	 */
-	public void addObject(Object value, XACMLDatatypes xacmlDatatype, XACMLAttributeId attributeId) {
-		this.addObject(value, xacmlDatatype, attributeId.value());
-	}
-	
-	/**
-	 * 
-	 * @param value
-	 * @param xacmlDatatype
-	 * @param attributeId
-	 */
-	public void addObject(Object value, XACMLDatatypes xacmlDatatype, String attributeId) {
-		AttributeValueType attrVal = new AttributeValueType();
-		attrVal.getContent().add((Serializable)value);
-		attrVal.setDataType(xacmlDatatype.value());		
-		this.getAttributeValues().add(attrVal);
-		this.setAttributeId(attributeId);
-	}
-
-	public List getAttributes() {
-		return this.attributeValues;
-	}
-
 }
