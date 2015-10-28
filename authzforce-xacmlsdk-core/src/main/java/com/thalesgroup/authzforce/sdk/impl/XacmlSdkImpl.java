@@ -34,6 +34,10 @@ import com.thalesgroup.authzforce.sdk.core.schema.Request;
 import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.Subject;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
@@ -48,9 +52,8 @@ import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
  */
 public class XacmlSdkImpl implements XacmlSdk {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(XacmlSdkImpl.class);
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(XacmlSdkImpl.class);
+
 	public final Net networkHandler;
 
 	/**
@@ -65,20 +68,20 @@ public class XacmlSdkImpl implements XacmlSdk {
 	public XacmlSdkImpl(URI serverEndpoint, String domainId, MultivaluedMap<String, String> customHeaders) {
 		networkHandler = new Net(serverEndpoint, domainId, customHeaders);
 	}
+	
+	public XacmlSdkImpl(URI serverEndpoint, String domainId) {
+		networkHandler = new Net(serverEndpoint, domainId, null);
+	}
 
-	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
-			List<Action> actions, List<Environment> environment)
-			throws XacmlSdkException {
-
-		
+	public Responses getAuthZ(List<SubjectCategory> subject, List<ResourceCategory> resources,
+			List<ActionCategory> actions, List<EnvironmentCategory> environment) throws XacmlSdkException {
 		// XACML Request creation
 		Request request = Utils.createXacmlRequest(subject, resources, actions, environment);
-		// Get your domain's resource
 		Response rawResponse = null;
 		try {
 			LOGGER.debug("Calling PDP using network handler: {}", networkHandler);
 			rawResponse = networkHandler.getMyDomain().getPdp().requestPolicyDecision(request);
-		} catch(javax.ws.rs.NotFoundException e) {
+		} catch (javax.ws.rs.NotFoundException e) {
 			throw new XacmlSdkException("HTTP 404: Authorization server not found", e);
 		} catch (javax.ws.rs.BadRequestException e) {
 			throw new XacmlSdkException("HTTP 400: Bad Request", e);
@@ -86,91 +89,36 @@ public class XacmlSdkImpl implements XacmlSdk {
 			throw new XacmlSdkException("HTTP 500: Internal Server Error", e);
 		} catch (javax.ws.rs.ServerErrorException e) {
 			throw new XacmlSdkException(e);
-		}		
-		if (LOGGER.isDebugEnabled()) {
-			Utils.logRawResponse(rawResponse);	
 		}
-		
+		if (LOGGER.isDebugEnabled()) {
+			Utils.logRawResponse(rawResponse);
+		}
+
 		return Utils.extractResponse(rawResponse);
 	}
 	
-	public Responses getAuthZ(List<Subject> subject, List<Resource> resources,
-			List<Action> actions, Environment environment)
-			throws XacmlSdkException {
-		return getAuthZ(subject, resources, actions, Arrays.asList(environment));
+	public Responses getAuthZ(SubjectCategory subject, ResourceCategory resources, ActionCategory actions,
+			EnvironmentCategory environment) throws XacmlSdkException {
+		return this.getAuthZ(Arrays.asList(subject), Arrays.asList(resources), Arrays.asList(actions), Arrays.asList(environment));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdk#getAuthZ(com.thalesgroup
-	 * .authzforce.sdk.core.schema.Subject, java.util.List, java.util.List,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
-	 */
-	public Responses getAuthZ(Subject subject, List<Resource> resources,
-			List<Action> actions, Environment environment)
-			throws XacmlSdkException {
-		List<Subject> tmpSubjectList = new ArrayList<Subject>();
-		tmpSubjectList.add(subject);
-
-		return getAuthZ(tmpSubjectList, resources, actions, environment);
+	public Responses getAuthZ(List<SubjectCategory> subject, ResourceCategory resources, ActionCategory actions,
+			EnvironmentCategory environment) throws XacmlSdkException {
+		return this.getAuthZ(subject, Arrays.asList(resources), Arrays.asList(actions), Arrays.asList(environment));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdk#getAuthZ(com.thalesgroup
-	 * .authzforce.sdk.core.schema.Subject,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Resource,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Action,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
-	 */
-	public com.thalesgroup.authzforce.sdk.core.schema.Response getAuthZ(
-			Subject subject, Resource resource, Action action,
-			Environment environment) throws XacmlSdkException {
-		List<Resource> tmpResourceList = new ArrayList<Resource>();
-		List<Action> tmpActionList = new ArrayList<Action>();
-		tmpResourceList.add(resource);
-		tmpActionList.add(action);
-
-		return getAuthZ(subject, tmpResourceList, tmpActionList, environment)
-				.getResponse().get(0);
+	public Responses getAuthZ(SubjectCategory subject, List<ResourceCategory> resources, ActionCategory actions,
+			EnvironmentCategory environment) throws XacmlSdkException {
+		return this.getAuthZ(Arrays.asList(subject), resources, Arrays.asList(actions), Arrays.asList(environment));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdk#getAuthZ(com.thalesgroup
-	 * .authzforce.sdk.core.schema.Subject, java.util.List,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Action,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
-	 */
-	public Responses getAuthZ(Subject subject, List<Resource> resource,
-			Action action, Environment environment) throws XacmlSdkException {
-		List<Action> tmpActionList = new ArrayList<Action>();
-		tmpActionList.add(action);
-
-		return getAuthZ(subject, resource, tmpActionList, environment);
+	public Responses getAuthZ(SubjectCategory subject, ResourceCategory resources, List<ActionCategory> actions,
+			EnvironmentCategory environment) throws XacmlSdkException {
+		return this.getAuthZ(Arrays.asList(subject), Arrays.asList(resources), actions, Arrays.asList(environment));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.thalesgroup.authzforce.sdk.xacml.utils.XacmlSdk#getAuthZ(com.thalesgroup
-	 * .authzforce.sdk.core.schema.Subject,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Resource, java.util.List,
-	 * com.thalesgroup.authzforce.sdk.core.schema.Environment)
-	 */
-	public Responses getAuthZ(Subject subject, Resource resource,
-			List<Action> action, Environment environment)
-			throws XacmlSdkException {
-		List<Resource> tmpResourceList = new ArrayList<Resource>();
-		tmpResourceList.add(resource);
-
-		return getAuthZ(subject, tmpResourceList, action, environment);
+	public Responses getAuthZ(SubjectCategory subject, ResourceCategory resources, ActionCategory actions,
+			List<EnvironmentCategory> environment) throws XacmlSdkException {
+		return this.getAuthZ(Arrays.asList(subject), Arrays.asList(resources), Arrays.asList(actions), environment);
 	}
 }
