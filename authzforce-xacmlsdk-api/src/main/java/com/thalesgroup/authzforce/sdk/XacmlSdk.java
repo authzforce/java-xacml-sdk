@@ -17,12 +17,11 @@ package com.thalesgroup.authzforce.sdk;
 
 import java.util.List;
 
-import com.thalesgroup.authzforce.sdk.core.schema.Action;
-import com.thalesgroup.authzforce.sdk.core.schema.Environment;
-import com.thalesgroup.authzforce.sdk.core.schema.Resource;
-import com.thalesgroup.authzforce.sdk.core.schema.Response;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
-import com.thalesgroup.authzforce.sdk.core.schema.Subject;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 
 public interface XacmlSdk {
@@ -43,10 +42,10 @@ public interface XacmlSdk {
 	 * @return
 	 * @throws XacmlSdkException
 	 */
-	public abstract Responses getAuthZ(List<Subject> subject,
-			List<Resource> resources, List<Action> actions,
-			Environment environment) throws XacmlSdkException;
-
+	public abstract Responses getAuthZ(SubjectCategory subject,
+			ResourceCategory resources, ActionCategory actions,
+			EnvironmentCategory environment) throws XacmlSdkException;
+	
 	/**
 	 * 
 	 * @param subject
@@ -56,46 +55,20 @@ public interface XacmlSdk {
 	 * @return
 	 * @throws XacmlSdkException
 	 */
-	public abstract Responses getAuthZ(Subject subject,
-			List<Resource> resources, List<Action> actions,
-			Environment environment) throws XacmlSdkException;
-
-	/**
-	 * 
-	 * @param subject
-	 * @param resource
-	 * @param action
-	 * @param environment
-	 * @return
-	 * @throws XacmlSdkException
-	 */
-	public abstract Response getAuthZ(Subject subject, Resource resource,
-			Action action, Environment environment) throws XacmlSdkException;
-
-	/**
-	 * 
-	 * @param subject
-	 * @param resource
-	 * @param action
-	 * @param environment
-	 * @return
-	 * @throws XacmlSdkException
-	 */
-	public abstract Responses getAuthZ(Subject subject,
-			List<Resource> resource, Action action, Environment environment)
-			throws XacmlSdkException;
-
-	/**
-	 * 
-	 * @param subject
-	 * @param resource
-	 * @param action
-	 * @param environment
-	 * @return
-	 * @throws XacmlSdkException
-	 */
-	public abstract Responses getAuthZ(Subject subject, Resource resource,
-			List<Action> action, Environment environment)
-			throws XacmlSdkException;
+	public abstract Responses getAuthZ(List<SubjectCategory> subject,
+			ResourceCategory resources, ActionCategory actions,
+			EnvironmentCategory environment) throws XacmlSdkException;
+	
+	public abstract Responses getAuthZ(SubjectCategory subject,
+			List<ResourceCategory> resources, ActionCategory actions,
+			EnvironmentCategory environment) throws XacmlSdkException;
+	
+	public abstract Responses getAuthZ(SubjectCategory subject,
+			ResourceCategory resources, List<ActionCategory> actions,
+			EnvironmentCategory environment) throws XacmlSdkException;
+	
+	public abstract Responses getAuthZ(SubjectCategory subject,
+			ResourceCategory resources, ActionCategory actions,
+			List<EnvironmentCategory> environment) throws XacmlSdkException;
 
 }
