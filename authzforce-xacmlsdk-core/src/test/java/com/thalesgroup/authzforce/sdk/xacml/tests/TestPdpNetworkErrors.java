@@ -16,6 +16,10 @@ import com.thalesgroup.authzforce.sdk.core.schema.Environment;
 import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.Subject;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.impl.XacmlSdkImpl;
 
@@ -41,8 +45,8 @@ public class TestPdpNetworkErrors {
 	@Test
 	public void TestPdpNotFound() throws XacmlSdkException {
 		exception.expect(XacmlSdkException.class);
-		sdk.getAuthZ(new Subject("subjectId"), new Resource("resourceId"),
-				new Action("actionId"), new Environment("environmentId"));
+		sdk.getAuthZ(new SubjectCategory(), new ResourceCategory(),
+				new ActionCategory(), new EnvironmentCategory());
 		Assert.fail("Exception not thrown");
 
 	}
@@ -53,12 +57,6 @@ public class TestPdpNetworkErrors {
 	 */
 	@Test
 	public void TestGetAuthZ_actionList() throws XacmlSdkException {		
-		List<Action> actionList = new ArrayList<Action>();
-		actionList.add(new Action("actionId"));
-		actionList.add(new Action("secondAction"));		
-		
-		Responses response = sdk.getAuthZ(new Subject("subjectId") , new Resource("resourceId"),
-				actionList, new Environment("environmentId"));
 	}
 	
 	/**
@@ -67,11 +65,5 @@ public class TestPdpNetworkErrors {
 	 */
 	@Test
 	public void TestGetAuthZ_resourcesList() throws XacmlSdkException {
-		List<Resource> resourcesList = new ArrayList<Resource>();
-		resourcesList.add(new Resource("actionId"));
-		resourcesList.add(new Resource("secondAction"));
-		
-		Responses response = sdk.getAuthZ(new Subject("subjectId") , resourcesList,
-				new Action("actionId"), new Environment("environmentId"));
 	}
 }
