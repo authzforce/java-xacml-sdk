@@ -13,7 +13,7 @@ import com.thalesgroup.authzforce.api.jaxrs.EndUserDomainSet;
 
 public class PdpService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(Test.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PdpService.class);
 	private final static String ENDPOINT_ADDRESS = "http://127.0.0.1:7777/";
 	private static Server server;
 
