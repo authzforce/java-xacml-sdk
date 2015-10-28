@@ -17,6 +17,11 @@ import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.Subject;
 import com.thalesgroup.authzforce.sdk.core.schema.XACMLAttributeId;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.Category;
+import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
+import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
 
@@ -45,29 +50,33 @@ public final class Utils {
 	 * 
 	 * @return
 	 */
-	public static Request createXacmlRequest(List<Subject> subjects, List<Resource> resources, List<Action> actions,
-			List<Environment> environments) {
+	public static Request createXacmlRequest(List<SubjectCategory> subjects, List<ResourceCategory> resources,
+			List<ActionCategory> actions, List<EnvironmentCategory> environments) {
 		Request xacmlRequest = new Request();
 
 		LOGGER.debug("Assembling Request...");
-
 		try {
-			for (Environment environment : environments) {
-				Utils.forgeEnvironment(environment);
+
+			for (SubjectCategory subject : subjects) {
+				Utils.check(subject);
 			}
-			for (Subject subject : subjects) {
-				Utils.forgeSubject(subject);
+			for (ResourceCategory resource : resources) {
+				Utils.check(resource);
 			}
-			for (Action action : actions) {
-				Utils.forgeAction(action);
+			for (ActionCategory action : actions) {
+				Utils.check(action);
 			}
-			for (Resource resource : resources) {
-				Utils.forgeResource(resource);
+			for (EnvironmentCategory environment : environments) {
+				Utils.check(environment);
 			}
-		} catch (XacmlSdkException e1) {
-			e1.printStackTrace();
-			LOGGER.error(e1.getLocalizedMessage());
+		} catch (XacmlSdkException e) {
+
 		}
+
+		environmentCategory.addAll(environments);
+		subjectCategory.addAll(subjects);
+		actionCategory.addAll(actions);
+		resourceCategory.addAll(resources);
 		xacmlRequest.getAttributes().addAll(subjectCategory);
 		xacmlRequest.getAttributes().addAll(resourceCategory);
 		xacmlRequest.getAttributes().addAll(actionCategory);
@@ -91,7 +100,11 @@ public final class Utils {
 		return xacmlRequest;
 	}
 
-	public static void forgeResource(Resource resource) throws XacmlSdkException {
+	private static void check(Category category) throws XacmlSdkException {
+
+	}
+
+	private static void forgeResource(Resource resource) throws XacmlSdkException {
 		if (resource != null) {
 			Attributes attr = new Attributes();
 			Attribute attrId = new Attribute();
@@ -133,7 +146,7 @@ public final class Utils {
 		}
 	}
 
-	public static void forgeSubject(Subject subject) throws XacmlSdkException {
+	private static void forgeSubject(Subject subject) throws XacmlSdkException {
 		if (subject != null) {
 			Attributes attr = new Attributes();
 			Attribute attrId = new Attribute();
@@ -175,7 +188,7 @@ public final class Utils {
 		}
 	}
 
-	public static void forgeAction(Action action) throws XacmlSdkException {
+	private static void forgeAction(Action action) throws XacmlSdkException {
 		if (action != null) {
 			Attributes attr = new Attributes();
 			Attribute attrId = new Attribute();
@@ -217,7 +230,7 @@ public final class Utils {
 		}
 	}
 
-	public static void forgeEnvironment(Environment environment) throws XacmlSdkException {
+	private static void forgeEnvironment(Environment environment) throws XacmlSdkException {
 		if (environment != null) {
 			Attributes attr = new Attributes();
 			Attribute attrId = new Attribute();
@@ -293,7 +306,8 @@ public final class Utils {
 	public static void logRawResponse(Response myResponse) {
 		StringWriter stringRequest = new StringWriter();
 		try {
-			JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Response.class).createMarshaller().marshal(myResponse, stringRequest);
+			JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Response.class).createMarshaller()
+					.marshal(myResponse, stringRequest);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			LOGGER.error(e.getLocalizedMessage());
