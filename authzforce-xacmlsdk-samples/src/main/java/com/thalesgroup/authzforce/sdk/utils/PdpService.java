@@ -1,4 +1,4 @@
-package com.thalesgroup.authzforce.sdk.main;
+package com.thalesgroup.authzforce.sdk.utils;
 
 import java.util.ArrayList;
 import java.util.List;
