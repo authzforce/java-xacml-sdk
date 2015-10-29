@@ -23,31 +23,30 @@ public class Net {
 	private MetadataMap<String, String> customHeaders;
 	private String domainId;
 	private URI serverEndpoint;
-	private WebClient client;
 	private EndUserDomainSet targetedDomain;
 
 	public Net(URI serverEndpoint, String domainId, MultivaluedMap<String, String> headers) {
 		this.serverEndpoint = serverEndpoint;
 		this.domainId = domainId;
 		this.customHeaders = new MetadataMap<String, String>(headers);
-		this.client = createClient();
-		this.targetedDomain = JAXRSClientFactory.fromClient(this.client, EndUserDomainSet.class);
+		this.targetedDomain = setupProxy();		
 	}
-	
-	private WebClient createClient() {
-		EndUserDomainSet proxy = JAXRSClientFactory.create(this.serverEndpoint, EndUserDomainSet.class);
-		WebClient webClient = WebClient.fromClient(WebClient.client(proxy));
-		if (null != this.customHeaders && this.customHeaders.size() > 0) {
-			webClient.headers(this.customHeaders);
-		}		
+
+	private EndUserDomainSet setupProxy() {
+		EndUserDomainSet proxy = JAXRSClientFactory.create(String.valueOf(this.serverEndpoint), EndUserDomainSet.class);
+		
+		LOGGER.debug("Adding custom headers {}", this.customHeaders.toString());
+		final ClientConfiguration clientConf = WebClient.getConfig(WebClient.client(proxy));
+		final HttpHeaderInterceptor headerInterceptor = new HttpHeaderInterceptor(this.customHeaders);
+		clientConf.getOutInterceptors().add(headerInterceptor);
+		
 		// Request/response logging (for debugging).
 		if (LOGGER.isDebugEnabled()) {
-			final ClientConfiguration clientConf = WebClient.getConfig(webClient);
 			clientConf.getInInterceptors().add(new LoggingInInterceptor());
 			clientConf.getOutInterceptors().add(new LoggingOutInterceptor());
 		}
-		
-		return webClient;
+
+		return proxy;
 	}
 
 	/*
@@ -66,8 +65,8 @@ public class Net {
 	public String toString() {
 
 		String networkHandler = "[ endpoint => " + this.serverEndpoint + ", domain => " + this.domainId;
-		if (client != null) {
-			networkHandler += ", headers => [" + client.getHeaders() + "]]";
+		if (WebClient.client(targetedDomain) != null) {
+			networkHandler += ", headers => [" + WebClient.client(targetedDomain).getHeaders() + "]]";
 		} else {
 			networkHandler += "]";
 		}

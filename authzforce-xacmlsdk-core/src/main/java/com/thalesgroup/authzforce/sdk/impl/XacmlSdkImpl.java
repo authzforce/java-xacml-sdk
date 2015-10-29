@@ -16,7 +16,6 @@
 package com.thalesgroup.authzforce.sdk.impl;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,12 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.thalesgroup.authzforce.sdk.XacmlSdk;
 import com.thalesgroup.authzforce.sdk.core.Net;
 import com.thalesgroup.authzforce.sdk.core.Utils;
-import com.thalesgroup.authzforce.sdk.core.schema.Action;
-import com.thalesgroup.authzforce.sdk.core.schema.Environment;
 import com.thalesgroup.authzforce.sdk.core.schema.Request;
-import com.thalesgroup.authzforce.sdk.core.schema.Resource;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
-import com.thalesgroup.authzforce.sdk.core.schema.Subject;
 import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
@@ -88,6 +83,8 @@ public class XacmlSdkImpl implements XacmlSdk {
 		} catch (javax.ws.rs.InternalServerErrorException e) {
 			throw new XacmlSdkException("HTTP 500: Internal Server Error", e);
 		} catch (javax.ws.rs.ServerErrorException e) {
+			throw new XacmlSdkException(e);
+		} catch (Exception e) {
 			throw new XacmlSdkException(e);
 		}
 		if (LOGGER.isDebugEnabled()) {
