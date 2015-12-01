@@ -33,8 +33,11 @@ import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
+import com.thalesgroup.authzforce.sdk.core.utils.ResponsesFactory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
+import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
 
+import net.sf.saxon.expr.instruct.ForEach;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 
 /**
@@ -63,58 +66,62 @@ public class XacmlSdkImpl implements XacmlSdk {
 	public XacmlSdkImpl(URI serverEndpoint, String domainId, MultivaluedMap<String, String> customHeaders) {
 		networkHandler = new Net(serverEndpoint, domainId, customHeaders);
 	}
-	
+
 	public XacmlSdkImpl(URI serverEndpoint, String domainId) {
 		networkHandler = new Net(serverEndpoint, domainId, null);
 	}
 
-	public Responses getAuthZ(List<SubjectCategory> subject, List<ResourceCategory> resources,
+	public ResponsesFactory getAuthZ(List<SubjectCategory> subject, List<ResourceCategory> resources,
 			List<ActionCategory> actions, List<EnvironmentCategory> environment) throws XacmlSdkException {
 		// XACML Request creation
-		Request request = Utils.createXacmlRequest(subject, resources, actions, environment);
-		Response rawResponse = null;
 		try {
-			LOGGER.debug("Calling PDP using network handler: {}", networkHandler);
-			rawResponse = networkHandler.getMyDomain().getPdp().requestPolicyDecision(request);
-		} catch (javax.ws.rs.NotFoundException e) {
-			throw new XacmlSdkException("HTTP 404: Authorization server not found", e);
-		} catch (javax.ws.rs.BadRequestException e) {
-			throw new XacmlSdkException("HTTP 400: Bad Request", e);
-		} catch (javax.ws.rs.InternalServerErrorException e) {
-			throw new XacmlSdkException("HTTP 500: Internal Server Error", e);
-		} catch (javax.ws.rs.ServerErrorException e) {
-			throw new XacmlSdkException(e);
-		} catch (Exception e) {
-			throw new XacmlSdkException(e);
-		}
-		if (LOGGER.isDebugEnabled()) {
-			Utils.logRawResponse(rawResponse);
-		}
+			final Request request = Utils.createXacmlRequest(subject, resources, actions, environment);
 
-		return Utils.extractResponse(rawResponse);
+			try {
+				LOGGER.debug("Calling PDP using network handler: {}", networkHandler);
+				final Response rawResponse = networkHandler.getMyDomain().getPdp().requestPolicyDecision(request);
+				if (LOGGER.isDebugEnabled()) {
+					Utils.logRawResponse(rawResponse);
+				}
+				return Utils.extractResponse(rawResponse);
+			} catch (javax.ws.rs.NotFoundException e) {
+				throw new XacmlSdkException("HTTP 404: Authorization server not found", e);
+			} catch (javax.ws.rs.BadRequestException e) {
+				throw new XacmlSdkException("HTTP 400: Bad Request", e);
+			} catch (javax.ws.rs.InternalServerErrorException e) {
+				throw new XacmlSdkException("HTTP 500: Internal Server Error", e);
+			} catch (javax.ws.rs.ServerErrorException e) {
+				throw new XacmlSdkException(e);
+			} catch (Exception e) {
+				throw new XacmlSdkException(e);
+			}
+		} catch (XacmlSdkException e) {
+			throw new XacmlSdkException(XacmlSdkExceptionCodes.fromValue(e.getMessage()));
+		}
 	}
-	
-	public Responses getAuthZ(SubjectCategory subject, ResourceCategory resources, ActionCategory actions,
+
+	public ResponsesFactory getAuthZ(SubjectCategory subject, ResourceCategory resources, ActionCategory actions,
 			EnvironmentCategory environment) throws XacmlSdkException {
-		return this.getAuthZ(Arrays.asList(subject), Arrays.asList(resources), Arrays.asList(actions), Arrays.asList(environment));
+		return this.getAuthZ(Arrays.asList(subject), Arrays.asList(resources), Arrays.asList(actions),
+				Arrays.asList(environment));
 	}
 
-	public Responses getAuthZ(List<SubjectCategory> subject, ResourceCategory resources, ActionCategory actions,
+	public ResponsesFactory getAuthZ(List<SubjectCategory> subject, ResourceCategory resources, ActionCategory actions,
 			EnvironmentCategory environment) throws XacmlSdkException {
 		return this.getAuthZ(subject, Arrays.asList(resources), Arrays.asList(actions), Arrays.asList(environment));
 	}
 
-	public Responses getAuthZ(SubjectCategory subject, List<ResourceCategory> resources, ActionCategory actions,
+	public ResponsesFactory getAuthZ(SubjectCategory subject, List<ResourceCategory> resources, ActionCategory actions,
 			EnvironmentCategory environment) throws XacmlSdkException {
 		return this.getAuthZ(Arrays.asList(subject), resources, Arrays.asList(actions), Arrays.asList(environment));
 	}
 
-	public Responses getAuthZ(SubjectCategory subject, ResourceCategory resources, List<ActionCategory> actions,
+	public ResponsesFactory getAuthZ(SubjectCategory subject, ResourceCategory resources, List<ActionCategory> actions,
 			EnvironmentCategory environment) throws XacmlSdkException {
 		return this.getAuthZ(Arrays.asList(subject), Arrays.asList(resources), actions, Arrays.asList(environment));
 	}
 
-	public Responses getAuthZ(SubjectCategory subject, ResourceCategory resources, ActionCategory actions,
+	public ResponsesFactory getAuthZ(SubjectCategory subject, ResourceCategory resources, ActionCategory actions,
 			List<EnvironmentCategory> environment) throws XacmlSdkException {
 		return this.getAuthZ(Arrays.asList(subject), Arrays.asList(resources), Arrays.asList(actions), environment);
 	}
