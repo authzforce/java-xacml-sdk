@@ -55,7 +55,7 @@ public class CustomHeadersRequest {
 			LOGGER.error(e.getCause().getLocalizedMessage());
 		}
 		if (responses != null) {
-			for (Response response : responses.getResponse()) {
+			for (Response response : responses.getResponses()) {
 				LOGGER.info(response.getAction() + " on " + response.getResourceId() + ": "
 						+ response.getDecision().value() + " for " + response.getSubject());
 			}
