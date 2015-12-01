@@ -38,6 +38,9 @@ public class XacmlSdkException extends Exception {
 		case MISSING_RESOURCE:
 			System.err.println(errorCode.value()+": You MUST put a RESOURCE into your request");			
 			break;
+		case CATEGORY_IS_NULL:
+			System.err.println(errorCode.value()+": You CANNOT have a null category");
+			break;
 		default:
 			System.err.print(errorCode.value()+": Error code unknown");
 			break;

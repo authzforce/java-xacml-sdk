@@ -21,7 +21,8 @@ public enum XacmlSdkExceptionCodes {
 	MISSING_SUBJECT("MissingSubject"), 
 	MISSING_RESOURCE("MissingResource"),
 	MISSING_ACTION("MissingAction"),
-	MISSING_ENVIRONMENT("MissingEnvironment");
+	MISSING_ENVIRONMENT("MissingEnvironment"),
+	CATEGORY_IS_NULL("NullCategory");
 	
 	private final String value;
 	
