@@ -29,7 +29,7 @@ import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.impl.XacmlSdkImpl;
-import com.thalesgroup.authzforce.sdk.utils.TestUtils;
+import com.thalesgroup.authzforce.sdk.tests.utils.Utils;
 import com.xebialabs.restito.server.StubServer;
 import com.xebialabs.restito.support.junit.NeedsServer;
 import com.xebialabs.restito.support.junit.ServerDependencyRule;
@@ -55,7 +55,7 @@ public class TestCalls {
 	public void setUp() throws FileNotFoundException, JAXBException {
 		if (serverDependency.isServerDependent()) {
 			server = new StubServer(StubServer.DEFAULT_PORT).run();
-			final String expectedResponse = TestUtils.printResponse(TestUtils.createResponse("src/test/resources/responses/simple-response.xml"));
+			final String expectedResponse = Utils.printResponse(Utils.createResponse("src/test/resources/responses/simple-response.xml"));
 			whenHttp(server).match(withPostBody()).then(ok(), stringContent(expectedResponse), contentType("application/xml"));
 		}
 	}

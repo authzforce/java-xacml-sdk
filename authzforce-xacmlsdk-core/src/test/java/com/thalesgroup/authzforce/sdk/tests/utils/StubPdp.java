@@ -1,4 +1,4 @@
-package com.thalesgroup.authzforce.sdk.utils;
+package com.thalesgroup.authzforce.sdk.tests.utils;
 
 import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
 import static com.xebialabs.restito.semantics.Action.contentType;
