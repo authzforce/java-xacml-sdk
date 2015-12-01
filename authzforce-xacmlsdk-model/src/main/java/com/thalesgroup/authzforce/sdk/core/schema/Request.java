@@ -22,6 +22,7 @@ import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 /**
  * @author romain.ferrari[AT]thalesgroup.com
@@ -40,15 +41,16 @@ public class Request extends oasis.names.tc.xacml._3_0.core.schema.wd_17.Request
 	 */
 	@Override
 	public String toString() {
-		StringWriter sw = new StringWriter();
+		StringWriter stringRequest = new StringWriter();
 		try {
-			JAXBContext.newInstance(Request.class).createMarshaller()
-					.marshal(this, sw);
+			Marshaller marshaller = JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Request.class).createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+			marshaller.marshal(this, stringRequest);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 
-		return sw.toString();
+		return stringRequest.toString();
 	}
 
 }
