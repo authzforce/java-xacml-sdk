@@ -18,45 +18,81 @@ package com.thalesgroup.authzforce.sdk.core.schema;
 import java.util.ArrayList;
 import java.util.List;
 
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.DecisionType;
-
-//import oasis.names.tc.xacml._2_0.context.schema.os.DecisionType;
 
 
 public class Response {
 
-	private List<String> resourceId = new ArrayList<String>();
-	private String action;
-	private String subject;
-	public String getSubject() {
-		return subject;
-	}
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-	public void setResourceId(List<String> resourceId) {
-		this.resourceId = resourceId;
-	}
+	private List<Attribute> attributes;
 	private DecisionType decision;
 	
-	public List<String> getResourceId() {
-		return resourceId;
+	public List<Attribute> getAttributes() {
+		if(null == attributes) {
+			this.attributes = new ArrayList<Attribute>();
+		}
+		return attributes;
+	}
+	public void setAttributes(List<Attribute> attributes) {
+		this.attributes = attributes;
+	}
+	public String getSubject() {
+		for (Attribute attribute : attributes) {
+			if(attribute.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
+				return String.valueOf(attribute.getAttributeValues().get(0).getContent().get(0));
+			}
+		}
+		return null;
+	}
+	public void setSubject(String subject) {
+		AttributeValueType attrValue = new AttributeValueType();
+		attrValue.getContent().add(subject);
+		Attribute attr = new Attribute();
+		attr.setAttributeId(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value());		
+		attr.getAttributeValues().add(attrValue);
+		
+		this.getAttributes().add(attr);
 	}
 	public void setResourceId(String resourceId) {
-		this.resourceId.add(resourceId);
+		AttributeValueType attrValue = new AttributeValueType();
+		attrValue.getContent().add(resourceId);
+		Attribute attr = new Attribute();
+		attr.setAttributeId(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value());		
+		attr.getAttributeValues().add(attrValue);
+		
+		this.getAttributes().add(attr);
+	}	
+	
+	public String getResourceId() {
+		for (Attribute attribute : attributes) {
+			if(attribute.getAttributeId().equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
+				return String.valueOf(attribute.getAttributeValues().get(0).getContent().get(0));
+			}
+		}
+		return null;
 	}
 	public String getAction() {
-		return action;
+		for (Attribute attribute : attributes) {
+			if(attribute.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
+				return String.valueOf(attribute.getAttributeValues().get(0).getContent().get(0));
+			}
+		}
+		return null;
 	}
 	public void setAction(String action) {
-		this.action = action;
+		AttributeValueType attrValue = new AttributeValueType();
+		attrValue.getContent().add(action);
+		Attribute attr = new Attribute();
+		attr.setAttributeId(XACMLAttributeId.XACML_ACTION_ACTION_ID.value());		
+		attr.getAttributeValues().add(attrValue);
+		
+		this.getAttributes().add(attr);
 	}
+	
 	public DecisionType getDecision() {
 		return decision;
 	}
 	public void setDecision(DecisionType decision) {
 		this.decision = decision;
 	}
-	
-	
 }
