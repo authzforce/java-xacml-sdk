@@ -28,7 +28,6 @@ import com.thalesgroup.authzforce.sdk.XacmlSdk;
 import com.thalesgroup.authzforce.sdk.core.Net;
 import com.thalesgroup.authzforce.sdk.core.Utils;
 import com.thalesgroup.authzforce.sdk.core.schema.Request;
-import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
@@ -37,7 +36,6 @@ import com.thalesgroup.authzforce.sdk.core.utils.ResponsesFactory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
 
-import net.sf.saxon.expr.instruct.ForEach;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 
 /**
