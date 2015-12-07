@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thalesgroup.authzforce.sdk.core.schema.Request;
-import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.Category;
 import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
@@ -125,9 +124,6 @@ public final class Utils {
 	public static ResponsesFactory extractResponse(Response myResponse) throws XacmlSdkException {
 
 		com.thalesgroup.authzforce.sdk.core.schema.Responses responses = new com.thalesgroup.authzforce.sdk.core.schema.Responses();
-		Attribute subject = new Attribute();
-		Attribute resource = new Attribute();
-		Attribute action = new Attribute();
 
 		for (Result result : myResponse.getResults()) {
 			com.thalesgroup.authzforce.sdk.core.schema.Response response = new com.thalesgroup.authzforce.sdk.core.schema.Response();
