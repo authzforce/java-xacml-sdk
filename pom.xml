@@ -29,7 +29,7 @@
 		<tag>HEAD</tag>
 		<url>https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk</url>
 	</scm>
-	<distributionManagement>		
+	<distributionManagement>
 	</distributionManagement>
 	<build>
 		<pluginManagement>
@@ -106,14 +106,19 @@
 			<!-- /JAXB Dependencies -->
 
 			<dependency>
-				<groupId>com.thalesgroup.authzforce</groupId>
-				<artifactId>authzforce-xacml-model</artifactId>
-				<version>3.0.3</version>
-			</dependency>			
+				<groupId>org.ow2.authzforce</groupId>
+				<artifactId>authzforce-ce-xacml-model</artifactId>
+				<version>3.3.7</version>
+			</dependency>
 			<dependency>
-				<groupId>com.thalesgroup.authzforce</groupId>
-				<artifactId>authzforce-rest-api-model</artifactId>
-				<version>4.3.0-SNAPSHOT</version>
+				<groupId>org.ow2.authzforce</groupId>
+				<artifactId>authzforce-ce-server-rest-service</artifactId>
+				<version>4.4.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ow2.authzforce</groupId>
+				<artifactId>authzforce-ce-rest-api-model</artifactId>
+				<version>4.3.0</version>
 			</dependency>
 
 			<dependency>

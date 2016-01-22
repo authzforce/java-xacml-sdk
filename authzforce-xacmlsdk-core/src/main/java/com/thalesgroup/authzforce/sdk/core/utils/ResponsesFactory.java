@@ -3,13 +3,13 @@ package com.thalesgroup.authzforce.sdk.core.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ow2.authzforce.xacml.identifiers.XACMLAttributeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thalesgroup.authzforce.sdk.core.schema.Attribute;
 import com.thalesgroup.authzforce.sdk.core.schema.Response;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
-import com.thalesgroup.authzforce.xacml._3_0.identifiers.XACMLAttributeId;
 
 public final class ResponsesFactory extends Responses {
 	
@@ -44,6 +44,7 @@ public final class ResponsesFactory extends Responses {
 					sortedResponses.getAttributes().addAll(response.getAttributes());
 					this.filterAttribute = String.valueOf(attr.getAttributeValues().get(0).getContent()); 
 				}
+				sortedResponses.setDecision(response.getDecision());
 			}
 			arrayFinal.add(sortedResponses);
 		}		

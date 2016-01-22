@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.StringWriter;
 import java.net.URL;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -11,8 +12,6 @@ import javax.xml.bind.Unmarshaller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
-
-import com.thalesgroup.authzforce.core.XACMLBindingUtils;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Request;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
@@ -50,7 +49,7 @@ public final class Utils {
 		}
 
 		LOGGER.debug("Request file to read: {}", requestFileURL);
-		Unmarshaller u = XACMLBindingUtils.createXacml3Unmarshaller();
+		Unmarshaller u = JAXBContext.newInstance(Request.class).createUnmarshaller();
 		Request request = (Request) u.unmarshal(requestFileURL);
 		return request;
 	}
@@ -60,7 +59,7 @@ public final class Utils {
 		StringWriter writer = new StringWriter();
 		try
 		{
-			Marshaller marshaller = XACMLBindingUtils.createXacml3Marshaller();
+			Marshaller marshaller = JAXBContext.newInstance(Request.class).createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 			marshaller.marshal(request, writer);
 		} catch (Exception e)
@@ -94,18 +93,18 @@ public final class Utils {
 		 */
 		URL responseFileURL = ResourceUtils.getURL(responseFileLocation);
 		LOGGER.debug("Response file to read: {}", responseFileURL);
-		Unmarshaller u = XACMLBindingUtils.createXacml3Unmarshaller();
+		Unmarshaller u = JAXBContext.newInstance(Request.class).createUnmarshaller();
 		Response response = (Response) u.unmarshal(responseFileURL);
 		LOGGER.debug("XACML Response: {}", Utils.printResponse(response));
 		return response;
 	}
-
+	
 	public static String printResponse(Response response)
 	{
 		StringWriter writer = new StringWriter();
 		try
 		{
-			Marshaller marshaller = XACMLBindingUtils.createXacml3Marshaller();
+			Marshaller marshaller = JAXBContext.newInstance(Request.class).createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 			marshaller.marshal(response, writer);
 		} catch (Exception e)

@@ -29,8 +29,8 @@
 
 		<!-- XACML Dependencies -->
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
-			<artifactId>authzforce-xacml-model</artifactId>
+			<groupId>org.ow2.authzforce</groupId>
+			<artifactId>authzforce-ce-xacml-model</artifactId>
 		</dependency>
 		<!-- /XACML Dependencies -->
 	</dependencies>

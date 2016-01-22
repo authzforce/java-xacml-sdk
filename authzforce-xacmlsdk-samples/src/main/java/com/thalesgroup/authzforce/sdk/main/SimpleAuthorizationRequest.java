@@ -18,9 +18,6 @@ import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.impl.XacmlSdkImpl;
 
-import oasis.names.tc.xacml._3_0.core.schema.wd_17.DecisionType;
-import oasis.names.tc.xacml._3_0.core.schema.wd_17.Result;
-
 public class SimpleAuthorizationRequest {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimpleAuthorizationRequest.class);
@@ -53,8 +50,8 @@ public class SimpleAuthorizationRequest {
 		}
 		if (null != responses) {
 			for (Response response : responses.getResponses()) {
-				LOGGER.info(response.getAction() + " on " + response.getResourceId() + ": "
-						+ response.getDecision().value() + " for " + response.getSubject());
+				LOGGER.info(response.getActionId() + " on " + response.getResourceId() + ": "
+						+ response.getDecision().value() + " for " + response.getSubjectId());
 			}
 		}
 	}

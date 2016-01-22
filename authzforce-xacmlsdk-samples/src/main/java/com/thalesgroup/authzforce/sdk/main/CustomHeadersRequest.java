@@ -56,8 +56,8 @@ public class CustomHeadersRequest {
 		}
 		if (responses != null) {
 			for (Response response : responses.getResponses()) {
-				LOGGER.info(response.getAction() + " on " + response.getResourceId() + ": "
-						+ response.getDecision().value() + " for " + response.getSubject());
+				LOGGER.info(response.getActionId() + " on " + response.getResourceId() + ": "
+						+ response.getDecision().value() + " for " + response.getSubjectId());
 			}
 		}
 	}

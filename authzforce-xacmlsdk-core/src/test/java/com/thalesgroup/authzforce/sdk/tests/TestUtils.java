@@ -46,6 +46,8 @@ public class TestUtils {
 		environmentCategory.addAttribute(new Environment("TestCreateXacmlRequest"));
 		final String actualRequest = Utils.createXacmlRequest(Arrays.asList(subjectCat), Arrays.asList(resourceCat), Arrays.asList(actionCategory), Arrays.asList(environmentCategory)).toString();
 		final String expectedRequest = com.thalesgroup.authzforce.sdk.tests.utils.Utils.printRequest(com.thalesgroup.authzforce.sdk.tests.utils.Utils.createRequest("src/test/resources/requests/simple-request.xml"));
+		LOGGER.debug("Actual Request: {}", actualRequest);
+		LOGGER.debug("Expected Request: {}", expectedRequest);
 		Assert.assertEquals(expectedRequest, actualRequest);
 	}
 	

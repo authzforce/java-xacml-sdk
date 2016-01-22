@@ -10,11 +10,9 @@ import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.impl.MetadataMap;
+import org.ow2.authzforce.rest.api.jaxrs.DomainResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.thalesgroup.authzforce.api.jaxrs.EndUserDomain;
-import com.thalesgroup.authzforce.api.jaxrs.EndUserDomainSet;
 
 public class Net {
 
@@ -23,7 +21,7 @@ public class Net {
 	private MetadataMap<String, String> customHeaders;
 	private String domainId;
 	private URI serverEndpoint;
-	private EndUserDomainSet targetedDomain;
+	private DomainResource targetedDomain;
 
 	public Net(URI serverEndpoint, String domainId, MultivaluedMap<String, String> headers) {
 		this.serverEndpoint = serverEndpoint;
@@ -32,8 +30,8 @@ public class Net {
 		this.targetedDomain = setupProxy();		
 	}
 
-	private EndUserDomainSet setupProxy() {
-		EndUserDomainSet proxy = JAXRSClientFactory.create(String.valueOf(this.serverEndpoint), EndUserDomainSet.class);
+	private DomainResource setupProxy() {
+		DomainResource proxy = JAXRSClientFactory.create(String.valueOf(this.serverEndpoint), DomainResource.class);
 		
 		LOGGER.debug("Adding custom headers {}", this.customHeaders.toString());
 		final ClientConfiguration clientConf = WebClient.getConfig(WebClient.client(proxy));
@@ -57,8 +55,8 @@ public class Net {
 		return customHeaders;
 	}
 
-	public EndUserDomain getMyDomain() {
-		return targetedDomain.getEndUserDomain(this.domainId);
+	public DomainResource getMyDomainResource() {
+		return targetedDomain;
 	}
 
 	@Override

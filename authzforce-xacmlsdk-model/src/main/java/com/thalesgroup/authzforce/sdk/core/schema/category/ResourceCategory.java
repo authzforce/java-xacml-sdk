@@ -1,6 +1,6 @@
 package com.thalesgroup.authzforce.sdk.core.schema.category;
 
-import com.thalesgroup.authzforce.xacml._3_0.identifiers.XACMLCategory;
+import org.ow2.authzforce.xacml.identifiers.XACMLCategory;
 
 public class ResourceCategory extends Category {
 	

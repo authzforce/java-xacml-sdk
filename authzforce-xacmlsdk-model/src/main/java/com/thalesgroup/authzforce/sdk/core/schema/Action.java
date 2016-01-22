@@ -17,28 +17,30 @@ package com.thalesgroup.authzforce.sdk.core.schema;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 
 public final class Action extends Attribute {
 
+	private static final XACMLAttributeId DEFDAULT_ATTRIBUTE_ID = XACMLAttributeId.XACML_ACTION_ACTION_ID;
+	private static final String DEFAULT_ISSUER = "xacml-sdk-5.0.0";
+
 	public Action(final String value) {
-		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)value), XACMLDatatypes.XACML_DATATYPE_STRING.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 
 	public Action(final int value) {
-		getInstance(String.valueOf(value),
-				XACMLDatatypes.XACML_DATATYPE_INTEGER);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)value), XACMLDatatypes.XACML_DATATYPE_INTEGER.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 	
 	public Action(final double value) {
-		getInstance(String.valueOf(value),
-				XACMLDatatypes.XACML_DATATYPE_DOUBLE);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)value), XACMLDatatypes.XACML_DATATYPE_DOUBLE.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 	
 	public Action(final boolean value) {
-		getInstance(value, XACMLDatatypes.XACML_DATATYPE_STRING);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)value), XACMLDatatypes.XACML_DATATYPE_STRING.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 
 	/**
@@ -46,17 +48,6 @@ public final class Action extends Attribute {
 	 * @param date /!\ WARNING: date format needs to be "YYY-MM-DD" /!\
 	 */
 	public Action(final Date date) {
-		getInstance(new SimpleDateFormat("YYY-MM-DD").format(date),
-				XACMLDatatypes.XACML_DATATYPE_DATE);
-	}
-
-	private void getInstance(final Object value, final XACMLDatatypes xacmlDatatype) {
-		AttributeValueType attrVal = new AttributeValueType();
-		attrVal.getContent().add((Serializable) value);
-		attrVal.setDataType(xacmlDatatype.value());
-
-		this.includeInResult = true;
-		this.setAttributeId(XACMLAttributeId.XACML_ACTION_ACTION_ID.value());
-		this.getAttributeValues().add(attrVal);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)new SimpleDateFormat("YYY-MM-DD").format(date)), XACMLDatatypes.XACML_DATATYPE_DATE.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 }

@@ -55,10 +55,10 @@ private static final Logger LOGGER = LoggerFactory.getLogger(MultipleDecisionPro
 		}
 		if(responses != null) {
 			for (Response response : responses.getResponses()) {
-				LOGGER.info(response.getAction() + " on "
+				LOGGER.info(response.getActionId() + " on "
 						+ response.getResourceId() + ": " 
 						+ response.getDecision().value() + " for " 
-						+ response.getSubject());
+						+ response.getSubjectId());
 			}
 		}
 	}

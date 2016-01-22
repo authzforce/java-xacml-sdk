@@ -1,13 +1,14 @@
 package com.thalesgroup.authzforce.sdk.core;
 
 import java.io.StringWriter;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.ow2.authzforce.xacml.identifiers.XACMLAttributeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,6 @@ import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.core.utils.ResponsesFactory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
-import com.thalesgroup.authzforce.xacml._3_0.identifiers.XACMLAttributeId;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attributes;
@@ -32,10 +32,10 @@ public final class Utils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
-	private static List<Attributes> resourceCategory = new LinkedList<Attributes>();
-	private static List<Attributes> actionCategory = new LinkedList<Attributes>();
-	private static List<Attributes> subjectCategory = new LinkedList<Attributes>();
-	private static List<Attributes> environmentCategory = new LinkedList<Attributes>();
+//	private static List<Attributes> resourceCategory = new LinkedList<Attributes>();
+//	private static List<Attributes> actionCategory = new LinkedList<Attributes>();
+//	private static List<Attributes> subjectCategory = new LinkedList<Attributes>();
+//	private static List<Attributes> environmentCategory = new LinkedList<Attributes>();
 
 	/**
 	 * 
@@ -50,7 +50,6 @@ public final class Utils {
 	 */
 	public static Request createXacmlRequest(List<SubjectCategory> subjects, List<ResourceCategory> resources,
 			List<ActionCategory> actions, List<EnvironmentCategory> environments) throws XacmlSdkException {
-		Request xacmlRequest = new Request();
 
 		if (null == subjects || null == resources || null == actions || null == environments) {
 			throw new XacmlSdkException(XacmlSdkExceptionCodes.CATEGORY_IS_NULL);
@@ -78,17 +77,19 @@ public final class Utils {
 			throw new XacmlSdkException(e);
 		}
 
-		environmentCategory.addAll(environments);
-		subjectCategory.addAll(subjects);
-		actionCategory.addAll(actions);
-		resourceCategory.addAll(resources);
-		xacmlRequest.getAttributes().addAll(subjectCategory);
-		xacmlRequest.getAttributes().addAll(resourceCategory);
-		xacmlRequest.getAttributes().addAll(actionCategory);
-		xacmlRequest.getAttributes().addAll(environmentCategory);
-
-		xacmlRequest.setCombinedDecision(false);
-		xacmlRequest.setReturnPolicyIdList(false);
+//		environmentCategory.addAll(environments);
+//		subjectCategory.addAll(subjects);
+//		actionCategory.addAll(actions);
+//		resourceCategory.addAll(resources);
+		List<Attributes> attributes = new ArrayList<Attributes>();
+		attributes.addAll(environments);
+		attributes.addAll(subjects);
+		attributes.addAll(actions);
+		attributes.addAll(resources);
+		boolean combinedDecision = false;
+		boolean returnPolicyIdList = false;
+		
+		final Request xacmlRequest = new Request(null, attributes, null, returnPolicyIdList, combinedDecision);
 
 		if (LOGGER.isDebugEnabled()) {
 			StringWriter stringRequest = new StringWriter();
@@ -135,11 +136,11 @@ public final class Utils {
 				for (Attribute attr : attrs.getAttributes()) {
 					if (attr.getAttributeId().equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
 						if (null != attr.getAttributeValues() && attr.getAttributeValues().size() > 0) {
-							response.setSubject(String.valueOf(attr.getAttributeValues().get(0).getContent()));
+							response.setSubjectId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
 						}
 					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
 						if (null != attr.getAttributeValues() && attr.getAttributeValues().size() > 0) {
-							response.setAction(String.valueOf(attr.getAttributeValues().get(0).getContent()));
+							response.setActionId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
 
 						}
 					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
@@ -149,8 +150,7 @@ public final class Utils {
 					}
 				}
 			}
-			// responses.getResponses().put(attr.getAttributeValues().get(0).getContent().toString(),
-			// response);
+
 			responses.getResponses().add(response);
 		}
 

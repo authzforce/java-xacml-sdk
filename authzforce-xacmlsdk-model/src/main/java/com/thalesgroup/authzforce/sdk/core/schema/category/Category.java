@@ -1,5 +1,8 @@
 package com.thalesgroup.authzforce.sdk.core.schema.category;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attributes;
 
@@ -10,7 +13,10 @@ public class Category extends Attributes {
 	 * @param attr
 	 */
 	public void addAttribute(final Attribute attr) {
-		this.getAttributes().add(attr);
+		List<Attribute> attrs = new ArrayList<Attribute>(this.getAttributes());
+		attrs.add(attr);
+		
+		this.attributes = attrs;
 	}
 	
 	/**
@@ -18,7 +24,9 @@ public class Category extends Attributes {
 	 * @param attr
 	 */
 	public void deleteAttribute(final Attribute attr) {
-		attributes.remove(attr);
+		List<Attribute> attrs = new ArrayList<Attribute>(this.getAttributes());
+		attrs.remove(attr);
+		this.attributes = attrs;
 	}
 	
 }

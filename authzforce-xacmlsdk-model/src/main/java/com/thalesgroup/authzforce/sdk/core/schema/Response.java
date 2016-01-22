@@ -18,7 +18,6 @@ package com.thalesgroup.authzforce.sdk.core.schema;
 import java.util.ArrayList;
 import java.util.List;
 
-import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.DecisionType;
 
 
@@ -36,7 +35,7 @@ public class Response {
 	public void setAttributes(List<Attribute> attributes) {
 		this.attributes = attributes;
 	}
-	public String getSubject() {
+	public String getSubjectId() {
 		for (Attribute attribute : attributes) {
 			if(attribute.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
 				return String.valueOf(attribute.getAttributeValues().get(0).getContent().get(0));
@@ -44,24 +43,20 @@ public class Response {
 		}
 		return null;
 	}
-	public void setSubject(String subject) {
-		AttributeValueType attrValue = new AttributeValueType();
-		attrValue.getContent().add(subject);
-		Attribute attr = new Attribute();
-		attr.setAttributeId(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value());		
-		attr.getAttributeValues().add(attrValue);
-		
+	public void setSubjectId(String subject) {
+		Attribute attr = new Subject(subject);
 		this.getAttributes().add(attr);
 	}
 	public void setResourceId(String resourceId) {
-		AttributeValueType attrValue = new AttributeValueType();
-		attrValue.getContent().add(resourceId);
-		Attribute attr = new Attribute();
-		attr.setAttributeId(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value());		
-		attr.getAttributeValues().add(attrValue);
-		
+		Attribute attr = new Resource(resourceId);
 		this.getAttributes().add(attr);
 	}	
+	
+	public void setActionId(String action) {
+		Attribute attr = new Action(action);
+		this.getAttributes().add(attr);
+	}
+	
 	
 	public String getResourceId() {
 		for (Attribute attribute : attributes) {
@@ -71,7 +66,7 @@ public class Response {
 		}
 		return null;
 	}
-	public String getAction() {
+	public String getActionId() {
 		for (Attribute attribute : attributes) {
 			if(attribute.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
 				return String.valueOf(attribute.getAttributeValues().get(0).getContent().get(0));
@@ -79,16 +74,7 @@ public class Response {
 		}
 		return null;
 	}
-	public void setAction(String action) {
-		AttributeValueType attrValue = new AttributeValueType();
-		attrValue.getContent().add(action);
-		Attribute attr = new Attribute();
-		attr.setAttributeId(XACMLAttributeId.XACML_ACTION_ACTION_ID.value());		
-		attr.getAttributeValues().add(attrValue);
-		
-		this.getAttributes().add(attr);
-	}
-	
+
 	public DecisionType getDecision() {
 		return decision;
 	}

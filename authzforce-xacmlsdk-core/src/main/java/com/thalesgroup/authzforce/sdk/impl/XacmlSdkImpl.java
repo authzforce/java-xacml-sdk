@@ -34,7 +34,6 @@ import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
 import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
 import com.thalesgroup.authzforce.sdk.core.utils.ResponsesFactory;
 import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
-import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkExceptionCodes;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 
@@ -77,7 +76,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 
 			try {
 				LOGGER.debug("Calling PDP using network handler: {}", networkHandler);
-				final Response rawResponse = networkHandler.getMyDomain().getPdp().requestPolicyDecision(request);
+				final Response rawResponse = networkHandler.getMyDomainResource().getPdpResource().requestPolicyDecision(request);
 				if (LOGGER.isDebugEnabled()) {
 					Utils.logRawResponse(rawResponse);
 				}
@@ -94,7 +93,7 @@ public class XacmlSdkImpl implements XacmlSdk {
 				throw new XacmlSdkException(e);
 			}
 		} catch (XacmlSdkException e) {
-			throw new XacmlSdkException(XacmlSdkExceptionCodes.fromValue(e.getMessage()));
+			throw new XacmlSdkException("Unknown problem while trying to reach the server.");
 		}
 	}
 

@@ -40,8 +40,8 @@
 
 		<!-- PDP Interface -->
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
-			<artifactId>authzforce-rest-api-model</artifactId>
+			<groupId>org.ow2.authzforce</groupId>
+			<artifactId>authzforce-ce-rest-api-model</artifactId>
 		</dependency>
 		<!-- /PDP Interface -->
 
@@ -84,9 +84,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
-			<artifactId>authzforce-rest-service</artifactId>
-			<version>4.1.3-OCW</version>
+				<groupId>org.ow2.authzforce</groupId>
+				<artifactId>authzforce-ce-server-rest-service</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<!-- /Test dependencies -->

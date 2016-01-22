@@ -19,10 +19,15 @@
 package com.thalesgroup.authzforce.sdk.core.schema;
 
 import java.io.StringWriter;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attributes;
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.MultiRequests;
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.RequestDefaults;
 
 /**
  * @author romain.ferrari[AT]thalesgroup.com
@@ -30,8 +35,12 @@ import javax.xml.bind.Marshaller;
  */
 public class Request extends oasis.names.tc.xacml._3_0.core.schema.wd_17.Request {
 	
-	public Request() {
+	protected Request() {
 		super();
+	}
+	
+	public Request(final RequestDefaults requestDefaults, final List<Attributes> attributes, final MultiRequests multiRequests, final boolean returnPolicyIdList, final boolean combinedDecision) {
+		super(requestDefaults, attributes, multiRequests, returnPolicyIdList, combinedDecision);
 	}
 	
 	/*
