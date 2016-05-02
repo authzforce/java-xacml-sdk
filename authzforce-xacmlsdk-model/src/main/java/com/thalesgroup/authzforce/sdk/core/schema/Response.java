@@ -35,7 +35,7 @@ public class Response {
 	public void setAttributes(List<Attribute> attributes) {
 		this.attributes = attributes;
 	}
-	public String getSubjectId() {
+	public String getSubjectId() {		
 		for (Attribute attribute : attributes) {
 			if(attribute.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
 				return String.valueOf(attribute.getAttributeValues().get(0).getContent().get(0));

@@ -7,10 +7,19 @@ import org.ow2.authzforce.xacml.identifiers.XACMLAttributeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.thalesgroup.authzforce.sdk.core.Utils;
 import com.thalesgroup.authzforce.sdk.core.schema.Attribute;
 import com.thalesgroup.authzforce.sdk.core.schema.Response;
 import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 
+/**
+ * 
+ * @author romain.ferrari[at]thalesgroup.com
+ * 
+ * Not Implemented yet. 
+ * This class will allow high level computation around xacml responses. Like sorting, grouping, etc...
+ *
+ */
 public final class ResponsesFactory extends Responses {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ResponsesFactory.class);
@@ -46,6 +55,7 @@ public final class ResponsesFactory extends Responses {
 				}
 				sortedResponses.setDecision(response.getDecision());
 			}
+			
 			arrayFinal.add(sortedResponses);
 		}		
 		
