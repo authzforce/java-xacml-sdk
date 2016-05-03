@@ -24,7 +24,7 @@ public class HttpHeaderInterceptor extends AbstractPhaseInterceptor<Message> {
 	}
 
 	public void handleMessage(Message message) throws Fault {
-		System.out.println("HTTP HEADER INTERCEPTOR");
+		//System.out.println("HTTP HEADER INTERCEPTOR");
 		try {
 			((MetadataMap<String, String>) message.get(Message.PROTOCOL_HEADERS)).putAll(headers);
 		} catch (Exception ce) {
