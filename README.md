@@ -5,6 +5,8 @@
 
 Quick Start
 -----------
+In the mean time, to use the library, you have to build it from source. 
+To do this follow the instructions below.
 
 ### Prerequisites
 * [Git](https://git-scm.org)
@@ -15,7 +17,7 @@ Clone this repository, install dependencies with mvn.
 
 ```bash
 git clone https://foyer.dev.theresis.org/authzforce/xacmlsdk.git && cd xacmlsdk
-mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+mvn compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 ```
 
 Install the package within your own maven repository.
@@ -24,12 +26,11 @@ mvn install
 ````
 
 You can start using it inside your java project by adding the dependency to your pom file
-
 ```xml
 <dependency>
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk-core</artifactId>
-	<version>5.0.0</version>
+	<version>5.0.0-SNAPSHOT</version>
 </dependency>
 ````
 
