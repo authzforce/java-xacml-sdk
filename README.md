@@ -1,25 +1,62 @@
 # XACML SDK
-
+[![License badge](https://img.shields.io/badge/license-GPL-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 [![Build Status](https://jenkins.dev.theresis.org/jenkins/buildStatus/icon?job=authzforce-xacmlsdk)](https://jenkins.dev.theresis.org/jenkins/job/authzforce-xacmlsdk/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/350fb29478014aec81bd6e28067e1355)](https://www.codacy.com/app/romain-ferrari/xacmlsdk?utm_source=tuleap.ow2.org&amp;utm_medium=referral&amp;utm_content=plugins/git/authzforce/xacmlsdk&amp;utm_campaign=Badge_Grade)
 
-# Components
+Quick Start
+-----------
 
-## Core
+### Prerequisites
+* [Git](https://git-scm.org)
+* [Maven](https://maven.apache.org/)
+
+### Setup
+Clone this repository, install dependencies with mvn.
+
+```bash
+git clone https://foyer.dev.theresis.org/authzforce/xacmlsdk.git && cd xacmlsdk
+mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+```
+
+Install the package within your own maven repository.
+```bash
+mvn install
+````
+
+You can start using it inside your java project by adding the dependency to your pom file
+
+```xml
+<dependency>
+	<groupId>com.thalesgroup.authzforce</groupId>
+	<artifactId>xacml-sdk-core</artifactId>
+	<version>5.0.0</version>
+</dependency>
+````
+
+Development
+-----------
+For more information on contributing to AuthZForce, see `CONTRIBUTING.md`.
+
+FAQ
+-----------
 TODO
 
-## API
-TODO
+License
+-------
+```
+AuthZForce CE-XACML SDK - Software Development Kit for AuthZForce authorization server
+Copyright (c) 2016 Thales Services
 
-## Common
-TODO
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-## Model
-TODO
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-## Sample
-TODO
-
-# HOW TO
-
-# FAQ
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/.
+```
