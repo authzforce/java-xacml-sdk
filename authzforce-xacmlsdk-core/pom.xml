@@ -41,7 +41,7 @@
 		<!-- PDP Interface -->
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>authzforce-ce-rest-api-model</artifactId>
+			<artifactId>${artifactId.prefix}-rest-api-model</artifactId>
 		</dependency>
 		<!-- /PDP Interface -->
 
@@ -85,7 +85,7 @@
 
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>authzforce-ce-server-rest-service</artifactId>
+			<artifactId>${artifactId.prefix}-server-rest-service</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<!-- /Test dependencies -->

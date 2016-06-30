@@ -30,7 +30,7 @@
 		<!-- XACML Dependencies -->
 		<dependency>
 			<groupId>org.ow2.authzforce</groupId>
-			<artifactId>authzforce-ce-xacml-model</artifactId>
+			<artifactId>${artifactId.prefix}-xacml-model</artifactId>
 		</dependency>
 		<!-- /XACML Dependencies -->
 	</dependencies>

@@ -110,18 +110,18 @@
 			<!-- /JAXB Dependencies -->
 
 			<dependency>
-				<groupId>${project.parent.groupId}</groupId>
-				<artifactId>authzforce-ce-xacml-model</artifactId>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${artifactId.prefix}-xacml-model</artifactId>
 				<version>3.3.7</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
-				<artifactId>authzforce-ce-server-rest-service</artifactId>
+				<artifactId>${artifactId.prefix}-server-rest-service</artifactId>
 				<version>4.4.1</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
-				<artifactId>authzforce-ce-rest-api-model</artifactId>
+				<artifactId>${artifactId.prefix}-rest-api-model</artifactId>
 				<version>4.3.0</version>
 			</dependency>
 
