@@ -47,7 +47,7 @@
 	<logger name="com.sun.xacml" additivity="false" level="WARN">
 		<appender-ref ref="stdout" />
 	</logger>
-	<logger name="com.thalesgroup" additivity="false" level="DEBUG">
+	<logger name="com.thalesgroup" additivity="false" level="INFO">
 		<appender-ref ref="stdout" />
 	</logger>
     <!-- HTTP/JAX-RS/SOAP request/response debugging -->
@@ -57,7 +57,7 @@
 	<!-- <logger name="org.apache.cxf" additivity="false" level="WARN"> <appender-ref ref="error" /> </logger> -->
 	<!-- <logger name="org.apache.http" additivity="false" level="DEBUG"> <appender-ref ref="error" /> </logger> <logger name="org.apache.http.wire" 
 		level="ERROR"> <appender-ref ref="error" /> </logger> -->
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="stdout" />
 	</root>
 </configuration>
