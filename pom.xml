@@ -28,10 +28,10 @@
 		<module>./xacml-sdk-distribution</module>
 	</modules>
 	<scm>
-		<connection>scm:git:https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk.git</connection>
-		<developerConnection>scm:git:https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk.git</developerConnection>
+		<connection>scm:git:${git.url.base}/xacmlsdk.git</connection>
+		<developerConnection>scm:git:${git.url.base}/xacmlsdk.git</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk</url>
+		<url>${git.url.base}/xacmlsdk</url>
 	</scm>
 	<distributionManagement>
 	</distributionManagement>
