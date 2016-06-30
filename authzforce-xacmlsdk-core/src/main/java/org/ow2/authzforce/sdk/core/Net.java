@@ -1,4 +1,4 @@
-package com.thalesgroup.authzforce.sdk.core;
+package org.ow2.authzforce.sdk.core;
 
 import java.net.URI;
 

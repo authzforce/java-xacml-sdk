@@ -1,16 +1,15 @@
-package com.thalesgroup.authzforce.sdk.core.utils;
+package org.ow2.authzforce.sdk.core.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ow2.authzforce.sdk.core.Utils;
+import org.ow2.authzforce.sdk.core.schema.Attribute;
+import org.ow2.authzforce.sdk.core.schema.Response;
+import org.ow2.authzforce.sdk.core.schema.Responses;
 import org.ow2.authzforce.xacml.identifiers.XACMLAttributeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.thalesgroup.authzforce.sdk.core.Utils;
-import com.thalesgroup.authzforce.sdk.core.schema.Attribute;
-import com.thalesgroup.authzforce.sdk.core.schema.Response;
-import com.thalesgroup.authzforce.sdk.core.schema.Responses;
 
 /**
  * 

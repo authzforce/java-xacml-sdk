@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.thalesgroup.authzforce.sdk.impl;
+package org.ow2.authzforce.sdk.impl;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -21,19 +21,18 @@ import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.ow2.authzforce.sdk.XacmlSdk;
+import org.ow2.authzforce.sdk.core.Net;
+import org.ow2.authzforce.sdk.core.Utils;
+import org.ow2.authzforce.sdk.core.schema.Request;
+import org.ow2.authzforce.sdk.core.schema.category.ActionCategory;
+import org.ow2.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import org.ow2.authzforce.sdk.core.schema.category.ResourceCategory;
+import org.ow2.authzforce.sdk.core.schema.category.SubjectCategory;
+import org.ow2.authzforce.sdk.core.utils.ResponsesFactory;
+import org.ow2.authzforce.sdk.exceptions.XacmlSdkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.thalesgroup.authzforce.sdk.XacmlSdk;
-import com.thalesgroup.authzforce.sdk.core.Net;
-import com.thalesgroup.authzforce.sdk.core.Utils;
-import com.thalesgroup.authzforce.sdk.core.schema.Request;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
-import com.thalesgroup.authzforce.sdk.core.utils.ResponsesFactory;
-import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 

@@ -16,7 +16,7 @@
 /**
  * 
  */
-package com.thalesgroup.authzforce.sdk.core.schema;
+package org.ow2.authzforce.sdk.core.schema;
 
 import java.io.StringWriter;
 import java.util.List;

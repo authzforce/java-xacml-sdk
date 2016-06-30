@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.thalesgroup.authzforce.sdk.exceptions;
+package org.ow2.authzforce.sdk.exceptions;
 
 public class XacmlSdkException extends Exception {
 

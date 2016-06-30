@@ -13,16 +13,16 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.thalesgroup.authzforce.sdk;
+package org.ow2.authzforce.sdk;
 
 import java.util.List;
 
-import com.thalesgroup.authzforce.sdk.core.schema.Responses;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
-import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
+import org.ow2.authzforce.sdk.core.schema.Responses;
+import org.ow2.authzforce.sdk.core.schema.category.ActionCategory;
+import org.ow2.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import org.ow2.authzforce.sdk.core.schema.category.ResourceCategory;
+import org.ow2.authzforce.sdk.core.schema.category.SubjectCategory;
+import org.ow2.authzforce.sdk.exceptions.XacmlSdkException;
 
 public interface XacmlSdk {
 

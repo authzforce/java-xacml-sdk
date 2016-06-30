@@ -1,4 +1,4 @@
-package com.thalesgroup.authzforce.sdk.core.schema.category;
+package org.ow2.authzforce.sdk.core.schema.category;
 
 import java.util.ArrayList;
 import java.util.List;

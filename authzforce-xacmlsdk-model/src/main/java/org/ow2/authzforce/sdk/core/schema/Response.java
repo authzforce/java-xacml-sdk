@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.thalesgroup.authzforce.sdk.core.schema;
+package org.ow2.authzforce.sdk.core.schema;
 
 import java.util.ArrayList;
 import java.util.List;

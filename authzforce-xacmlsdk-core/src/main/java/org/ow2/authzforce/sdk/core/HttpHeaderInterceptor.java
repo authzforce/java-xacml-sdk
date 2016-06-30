@@ -1,4 +1,4 @@
-package com.thalesgroup.authzforce.sdk.core;
+package org.ow2.authzforce.sdk.core;
 
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.jaxrs.impl.MetadataMap;

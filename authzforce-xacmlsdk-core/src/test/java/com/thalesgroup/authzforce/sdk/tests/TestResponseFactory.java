@@ -6,13 +6,12 @@ import javax.xml.bind.JAXBException;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.ow2.authzforce.sdk.core.Utils;
+import org.ow2.authzforce.sdk.core.schema.Response;
+import org.ow2.authzforce.sdk.core.schema.Responses;
+import org.ow2.authzforce.sdk.exceptions.XacmlSdkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.thalesgroup.authzforce.sdk.core.Utils;
-import com.thalesgroup.authzforce.sdk.core.schema.Response;
-import com.thalesgroup.authzforce.sdk.core.schema.Responses;
-import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 
 public class TestResponseFactory {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestResponseFactory.class);

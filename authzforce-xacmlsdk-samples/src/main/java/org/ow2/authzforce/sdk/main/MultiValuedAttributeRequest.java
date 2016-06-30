@@ -1,27 +1,24 @@
-package com.thalesgroup.authzforce.sdk.main;
+package org.ow2.authzforce.sdk.main;
 
 import java.net.URI;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import org.ow2.authzforce.sdk.core.schema.Action;
+import org.ow2.authzforce.sdk.core.schema.Environment;
+import org.ow2.authzforce.sdk.core.schema.Resource;
+import org.ow2.authzforce.sdk.core.schema.Response;
+import org.ow2.authzforce.sdk.core.schema.Responses;
+import org.ow2.authzforce.sdk.core.schema.Subject;
+import org.ow2.authzforce.sdk.core.schema.category.ActionCategory;
+import org.ow2.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import org.ow2.authzforce.sdk.core.schema.category.ResourceCategory;
+import org.ow2.authzforce.sdk.core.schema.category.SubjectCategory;
+import org.ow2.authzforce.sdk.exceptions.XacmlSdkException;
+import org.ow2.authzforce.sdk.impl.XacmlSdkImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thalesgroup.authzforce.sdk.core.schema.Action;
-import com.thalesgroup.authzforce.sdk.core.schema.Environment;
-import com.thalesgroup.authzforce.sdk.core.schema.Resource;
-import com.thalesgroup.authzforce.sdk.core.schema.Response;
-import com.thalesgroup.authzforce.sdk.core.schema.Responses;
-import com.thalesgroup.authzforce.sdk.core.schema.Subject;
-import com.thalesgroup.authzforce.sdk.core.schema.XACMLAttributeId;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
-import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
-import com.thalesgroup.authzforce.sdk.impl.XacmlSdkImpl;
+import com.thalesgroup.authzforce.xacml._3_0.identifiers.XACMLAttributeId;
 
 public class MultiValuedAttributeRequest {
 
