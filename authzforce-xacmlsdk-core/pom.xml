@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.thalesgroup.authzforce</groupId>
+		<groupId>org.ow2.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
 		<version>5.0.0-SNAPSHOT</version>
 	</parent>
@@ -29,18 +29,18 @@
 
 		<!-- XACML Dependencies -->
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>xacml-sdk-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>xacml-sdk-common</artifactId>
 		</dependency>
 		<!-- /XACML Dependencies -->
 
 		<!-- PDP Interface -->
 		<dependency>
-			<groupId>org.ow2.authzforce</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>authzforce-ce-rest-api-model</artifactId>
 		</dependency>
 		<!-- /PDP Interface -->
@@ -84,7 +84,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.ow2.authzforce</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>authzforce-ce-server-rest-service</artifactId>
 			<scope>test</scope>
 		</dependency>
