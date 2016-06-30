@@ -3,13 +3,10 @@ package org.ow2.authzforce.sdk.core.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ow2.authzforce.sdk.core.Utils;
 import org.ow2.authzforce.sdk.core.schema.Attribute;
 import org.ow2.authzforce.sdk.core.schema.Response;
 import org.ow2.authzforce.sdk.core.schema.Responses;
 import org.ow2.authzforce.xacml.identifiers.XACMLAttributeId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -20,8 +17,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public final class ResponsesFactory extends Responses {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ResponsesFactory.class);
 	
 	private String filterAttribute;
 	
@@ -42,7 +37,7 @@ public final class ResponsesFactory extends Responses {
 	}
 	
 	private Responses getResponseGroupBy(XACMLAttributeId id2GroupBy) {
-		this.filterAttribute = id2GroupBy.value();
+		this.setFilterAttribute(id2GroupBy.value());
 		Response sortedResponses = new Response();
 		Responses responses = new Responses();
 		List<Response> arrayFinal = new ArrayList<Response>();
@@ -50,7 +45,7 @@ public final class ResponsesFactory extends Responses {
 			for (Attribute attr : response.getAttributes()) {
 				if(attr.getAttributeId().equals(id2GroupBy.value())) {
 					sortedResponses.getAttributes().addAll(response.getAttributes());
-					this.filterAttribute = String.valueOf(attr.getAttributeValues().get(0).getContent()); 
+					this.setFilterAttribute(String.valueOf(attr.getAttributeValues().get(0).getContent())); 
 				}
 				sortedResponses.setDecision(response.getDecision());
 			}
@@ -61,5 +56,13 @@ public final class ResponsesFactory extends Responses {
 		responses.setResponses(arrayFinal);
 		
 		return responses;
+	}
+
+	public String getFilterAttribute() {
+		return filterAttribute;
+	}
+
+	public void setFilterAttribute(String filterAttribute) {
+		this.filterAttribute = filterAttribute;
 	}
 }

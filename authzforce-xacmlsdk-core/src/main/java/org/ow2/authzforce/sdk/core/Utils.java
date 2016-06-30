@@ -31,11 +31,6 @@ public final class Utils {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
 
-//	private static List<Attributes> resourceCategory = new LinkedList<Attributes>();
-//	private static List<Attributes> actionCategory = new LinkedList<Attributes>();
-//	private static List<Attributes> subjectCategory = new LinkedList<Attributes>();
-//	private static List<Attributes> environmentCategory = new LinkedList<Attributes>();
-
 	/**
 	 * 
 	 * @param subjects
@@ -76,10 +71,6 @@ public final class Utils {
 			throw new XacmlSdkException(e);
 		}
 
-//		environmentCategory.addAll(environments);
-//		subjectCategory.addAll(subjects);
-//		actionCategory.addAll(actions);
-//		resourceCategory.addAll(resources);
 		List<Attributes> attributes = new ArrayList<Attributes>();
 		attributes.addAll(environments);
 		attributes.addAll(subjects);
@@ -142,10 +133,8 @@ public final class Utils {
 							response.setActionId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
 
 						}
-					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value())) {
-						if (null != attr.getAttributeValues() && attr.getAttributeValues().size() > 0) {
-							response.setResourceId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
-						}
+					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value()) && null != attr.getAttributeValues() && attr.getAttributeValues().size() > 0) {
+						response.setResourceId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
 					}
 				}
 			}
@@ -159,7 +148,7 @@ public final class Utils {
 	public static void logRawResponse(Response myResponse) {
 		StringWriter stringRequest = new StringWriter();
 		try {
-			JAXBContext.newInstance(oasis.names.tc.xacml._3_0.core.schema.wd_17.Response.class).createMarshaller()
+			JAXBContext.newInstance(Response.class).createMarshaller()
 					.marshal(myResponse, stringRequest);
 		} catch (JAXBException e) {
 			e.printStackTrace();
