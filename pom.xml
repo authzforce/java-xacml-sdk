@@ -64,7 +64,7 @@
 					<configuration>
 						<compilerVersion>1.7</compilerVersion>
 					</configuration>
-				</plugin>
+				</plugin>				
 			</plugins>
 		</pluginManagement>
 	</build>
