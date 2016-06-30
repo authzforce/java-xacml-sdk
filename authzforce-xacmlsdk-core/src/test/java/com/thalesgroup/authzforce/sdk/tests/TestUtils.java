@@ -9,21 +9,20 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.ow2.authzforce.sdk.core.Utils;
+import org.ow2.authzforce.sdk.core.schema.Action;
+import org.ow2.authzforce.sdk.core.schema.Environment;
+import org.ow2.authzforce.sdk.core.schema.Resource;
+import org.ow2.authzforce.sdk.core.schema.Responses;
+import org.ow2.authzforce.sdk.core.schema.Subject;
+import org.ow2.authzforce.sdk.core.schema.category.ActionCategory;
+import org.ow2.authzforce.sdk.core.schema.category.EnvironmentCategory;
+import org.ow2.authzforce.sdk.core.schema.category.ResourceCategory;
+import org.ow2.authzforce.sdk.core.schema.category.SubjectCategory;
+import org.ow2.authzforce.sdk.core.utils.ResponsesFactory;
+import org.ow2.authzforce.sdk.exceptions.XacmlSdkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.thalesgroup.authzforce.sdk.core.Utils;
-import com.thalesgroup.authzforce.sdk.core.schema.Action;
-import com.thalesgroup.authzforce.sdk.core.schema.Environment;
-import com.thalesgroup.authzforce.sdk.core.schema.Resource;
-import com.thalesgroup.authzforce.sdk.core.schema.Responses;
-import com.thalesgroup.authzforce.sdk.core.schema.Subject;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ActionCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.EnvironmentCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.ResourceCategory;
-import com.thalesgroup.authzforce.sdk.core.schema.category.SubjectCategory;
-import com.thalesgroup.authzforce.sdk.core.utils.ResponsesFactory;
-import com.thalesgroup.authzforce.sdk.exceptions.XacmlSdkException;
 
 public class TestUtils {
 	

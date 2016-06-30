@@ -1,6 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.ow2.authzforce</groupId>
+		<artifactId>authzforce-ce-parent</artifactId>
+		<version>3.3.7</version>
+	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
@@ -9,8 +14,7 @@
 		<cxf.version>3.1.6</cxf.version>
 		<jaxb.version>2.2</jaxb.version>
 	</properties>
-	<inceptionYear>2013</inceptionYear>
-	<groupId>com.thalesgroup.authzforce</groupId>
+	<inceptionYear>2013</inceptionYear>	
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
 	<version>5.0.0-SNAPSHOT</version>
@@ -24,10 +28,10 @@
 		<module>./xacml-sdk-distribution</module>
 	</modules>
 	<scm>
-		<connection>scm:git:https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk.git</connection>
-		<developerConnection>scm:git:https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk.git</developerConnection>
+		<connection>scm:git:${git.url.base}/xacmlsdk.git</connection>
+		<developerConnection>scm:git:${git.url.base}/xacmlsdk.git</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://tuleap.ow2.org/plugins/git/authzforce/xacmlsdk</url>
+		<url>${git.url.base}/xacmlsdk</url>
 	</scm>
 	<distributionManagement>
 	</distributionManagement>
@@ -64,7 +68,7 @@
 					<configuration>
 						<compilerVersion>1.7</compilerVersion>
 					</configuration>
-				</plugin>				
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -106,38 +110,38 @@
 			<!-- /JAXB Dependencies -->
 
 			<dependency>
-				<groupId>org.ow2.authzforce</groupId>
-				<artifactId>authzforce-ce-xacml-model</artifactId>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${artifactId.prefix}-xacml-model</artifactId>
 				<version>3.3.7</version>
 			</dependency>
 			<dependency>
-				<groupId>org.ow2.authzforce</groupId>
-				<artifactId>authzforce-ce-server-rest-service</artifactId>
+				<groupId>${project.parent.groupId}</groupId>
+				<artifactId>${artifactId.prefix}-server-rest-service</artifactId>
 				<version>4.4.1</version>
 			</dependency>
 			<dependency>
-				<groupId>org.ow2.authzforce</groupId>
-				<artifactId>authzforce-ce-rest-api-model</artifactId>
+				<groupId>${project.parent.groupId}</groupId>
+				<artifactId>${artifactId.prefix}-rest-api-model</artifactId>
 				<version>4.3.0</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.thalesgroup.authzforce</groupId>
+				<groupId>${project.parent.groupId}</groupId>
 				<artifactId>xacml-sdk-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.thalesgroup.authzforce</groupId>
+				<groupId>${project.parent.groupId}</groupId>
 				<artifactId>xacml-sdk-model</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.thalesgroup.authzforce</groupId>
+				<groupId>${project.parent.groupId}</groupId>
 				<artifactId>xacml-sdk-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.thalesgroup.authzforce</groupId>
+				<groupId>${project.parent.groupId}</groupId>
 				<artifactId>xacml-sdk-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
