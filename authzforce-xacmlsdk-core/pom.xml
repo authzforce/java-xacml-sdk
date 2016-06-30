@@ -99,6 +99,50 @@
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-pmd-plugin</artifactId>
+						<version>3.5</version>
+						<!-- target JDK already set by parent project's maven.compiler.target 
+							property -->
+						<configuration>
+							<verbose>true</verbose>
+							<excludeRoots>
+								<excludeRoot>target/generated-sources</excludeRoot>
+								<excludeRoot>target/generated-test-sources</excludeRoot>
+							</excludeRoots>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>check</goal>
+									<goal>cpd-check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>findbugs-maven-plugin</artifactId>
+						<version>3.0.2</version>
+						<configuration>
+							<!-- Enables analysis which takes more memory but finds more bugs. 
+								If you run out of memory, changes the value of the effort element to 'Low'. -->
+							<effort>Max</effort>
+							<!-- Reports all bugs (other values are medium and max) -->
+							<threshold>Low</threshold>
+							<failOnError>true</failOnError>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<version>2.12.4</version>
 						<executions>
