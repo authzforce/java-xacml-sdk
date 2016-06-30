@@ -1,4 +1,5 @@
-# XACML SDK
+XACML SDK
+=========
 [![License badge](https://img.shields.io/badge/license-GPL-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 [![Build Status](https://jenkins.dev.theresis.org/jenkins/buildStatus/icon?job=authzforce-xacmlsdk)](https://jenkins.dev.theresis.org/jenkins/job/authzforce-xacmlsdk/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/350fb29478014aec81bd6e28067e1355)](https://www.codacy.com/app/romain-ferrari/xacmlsdk?utm_source=tuleap.ow2.org&amp;utm_medium=referral&amp;utm_content=plugins/git/authzforce/xacmlsdk&amp;utm_campaign=Badge_Grade)
@@ -61,3 +62,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/.
 ```
+
+References
+-----------
+* OASIS XACML 3.0: http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html
