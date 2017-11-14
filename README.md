@@ -1,6 +1,6 @@
 XACML SDK
 =========
-[![License badge](https://img.shields.io/badge/license-GPL-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/350fb29478014aec81bd6e28067e1355)](https://www.codacy.com/app/romain-ferrari/xacmlsdk?utm_source=tuleap.ow2.org&amp;utm_medium=referral&amp;utm_content=plugins/git/authzforce/xacmlsdk&amp;utm_campaign=Badge_Grade)
 
 Quick Start
