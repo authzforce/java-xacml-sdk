@@ -16,7 +16,7 @@ To do this follow the instructions below.
 Clone this repository, install dependencies with mvn.
 
 ```bash
-git clone https://github.com/authzforce/xacmlsdk.git && cd xacmlsdk
+git clone https://github.com/authzforce/xacml-sdk.git && cd xacmlsdk
 mvn compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 ```
 
