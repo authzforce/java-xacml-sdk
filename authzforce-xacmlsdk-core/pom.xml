@@ -124,7 +124,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>findbugs-maven-plugin</artifactId>
-						<version>3.0.2</version>
+						<version>3.0.4</version>
 						<configuration>
 							<!-- Enables analysis which takes more memory but finds more bugs. 
 								If you run out of memory, changes the value of the effort element to 'Low'. -->
