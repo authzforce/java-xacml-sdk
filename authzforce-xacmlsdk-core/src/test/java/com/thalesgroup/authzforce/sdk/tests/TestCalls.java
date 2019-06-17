@@ -1,18 +1,9 @@
 package com.thalesgroup.authzforce.sdk.tests;
 
-import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
-import static com.xebialabs.restito.builder.verify.VerifyHttp.verifyHttp;
-import static com.xebialabs.restito.semantics.Action.contentType;
-import static com.xebialabs.restito.semantics.Action.ok;
-import static com.xebialabs.restito.semantics.Action.stringContent;
-import static com.xebialabs.restito.semantics.Condition.withHeader;
-import static com.xebialabs.restito.semantics.Condition.withPostBody;
-
-import java.io.FileNotFoundException;
-import java.net.URI;
-
-import javax.xml.bind.JAXBException;
-
+import com.thalesgroup.authzforce.sdk.tests.utils.Utils;
+import com.xebialabs.restito.server.StubServer;
+import com.xebialabs.restito.support.junit.NeedsServer;
+import com.xebialabs.restito.support.junit.ServerDependencyRule;
 import org.apache.cxf.jaxrs.impl.MetadataMap;
 import org.junit.After;
 import org.junit.Assert;
@@ -29,10 +20,20 @@ import org.ow2.authzforce.sdk.impl.XacmlSdkImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thalesgroup.authzforce.sdk.tests.utils.Utils;
-import com.xebialabs.restito.server.StubServer;
-import com.xebialabs.restito.support.junit.NeedsServer;
-import com.xebialabs.restito.support.junit.ServerDependencyRule;
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
+import java.net.URI;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
+import static com.xebialabs.restito.builder.verify.VerifyHttp.verifyHttp;
+import static com.xebialabs.restito.semantics.Action.contentType;
+import static com.xebialabs.restito.semantics.Action.ok;
+import static com.xebialabs.restito.semantics.Action.stringContent;
+import static com.xebialabs.restito.semantics.Condition.matchesUri;
+import static com.xebialabs.restito.semantics.Condition.withHeader;
+import static com.xebialabs.restito.semantics.Condition.withPostBody;
 
 public class TestCalls {
 
@@ -101,5 +102,18 @@ public class TestCalls {
 		XacmlSdkImpl sdk = new XacmlSdkImpl(URI.create(ENDPOINT_ADDRESS), USER_DOMAIN, headers);
 		sdk.getAuthZ(new SubjectCategory(), new ResourceCategory(), new ActionCategory(), new EnvironmentCategory());
 		verifyHttp(server).once(withHeader(TEST_HEADER_KEY));
+	}
+
+	@Test
+	@NeedsServer
+	public void TestDomainIdTranslation() throws XacmlSdkException {
+		LOGGER.info("Testing domainID translation functionality");
+		String serverResponse = new Scanner(ClassLoader.getSystemResourceAsStream("responses/domainIdTranslation-response.xml")).useDelimiter("eof").next();
+		whenHttp(server).match(matchesUri(Pattern.compile("/domains"))).then(ok(), stringContent(serverResponse), contentType("application/xml"));
+
+		XacmlSdkImpl sdk = new XacmlSdkImpl(URI.create(ENDPOINT_ADDRESS), "domainAlias", null, true);
+		sdk.getAuthZ(new SubjectCategory(), new ResourceCategory(), new ActionCategory(), new EnvironmentCategory());
+		verifyHttp(server).once(matchesUri(Pattern.compile("/domains")));
+		verifyHttp(server).once(withPostBody());
 	}
 }
