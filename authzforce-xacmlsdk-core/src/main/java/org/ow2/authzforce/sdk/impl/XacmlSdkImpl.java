@@ -15,12 +15,7 @@
  */
 package org.ow2.authzforce.sdk.impl;
 
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.ws.rs.core.MultivaluedMap;
-
+import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
 import org.ow2.authzforce.sdk.XacmlSdk;
 import org.ow2.authzforce.sdk.core.Net;
 import org.ow2.authzforce.sdk.core.Utils;
@@ -34,7 +29,10 @@ import org.ow2.authzforce.sdk.exceptions.XacmlSdkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import oasis.names.tc.xacml._3_0.core.schema.wd_17.Response;
+import javax.ws.rs.core.MultivaluedMap;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This Library is about XACML and XML Processing tools to make the developers'
@@ -53,24 +51,27 @@ public class XacmlSdkImpl implements XacmlSdk {
 	/**
 	 * This constructor is multi tenant enabled. The final endpoint will be
 	 * something like: http://serverEndpoint/domains/{domainId}/pdp
-	 * 
-	 * @param serverEndpoint
+	 *  @param serverEndpoint
 	 *            is the PDP endpoint
-	 * @param domainId
-	 *            is the domain that you belong to
+	 * @param domainId the UUID of the target domain (or domain alias if doDomainIdTranslation is true)
+	 * @param doDomainIdTranslation if set to true domainId will be taken as an alias instead of UUID
 	 */
-	public XacmlSdkImpl(URI serverEndpoint, String domainId, MultivaluedMap<String, String> customHeaders) {
-		networkHandler = new Net(serverEndpoint, domainId, customHeaders);
+	public XacmlSdkImpl(URI serverEndpoint, String domainId, MultivaluedMap<String, String> customHeaders, boolean doDomainIdTranslation) {
+		networkHandler = new Net(serverEndpoint, domainId, customHeaders, doDomainIdTranslation);
 	}
 
+	public XacmlSdkImpl(URI serverEndpoint, String domainId, MultivaluedMap<String, String> customHeaders) {
+		this(serverEndpoint, domainId, customHeaders, false);
+	}
+
+
 	public XacmlSdkImpl(URI serverEndpoint, String domainId) {
-		networkHandler = new Net(serverEndpoint, domainId, null);
+		networkHandler = new Net(serverEndpoint, domainId, null, false);
 	}
 
 	public ResponsesFactory getAuthZ(List<SubjectCategory> subject, List<ResourceCategory> resources,
 			List<ActionCategory> actions, List<EnvironmentCategory> environment) throws XacmlSdkException {
 		// XACML Request creation
-		try {
 			final Request request = Utils.createXacmlRequest(subject, resources, actions, environment);
 
 			try {
@@ -91,9 +92,6 @@ public class XacmlSdkImpl implements XacmlSdk {
 			} catch (Exception e) {
 				throw new XacmlSdkException(e);
 			}
-		} catch (XacmlSdkException e) {
-			throw new XacmlSdkException("Unknown problem while trying to reach the server.");
-		}
 	}
 
 	public ResponsesFactory getAuthZ(SubjectCategory subject, ResourceCategory resources, ActionCategory actions,
