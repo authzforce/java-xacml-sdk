@@ -11,6 +11,7 @@ import org.ow2.authzforce.sdk.core.schema.Resource;
 import org.ow2.authzforce.sdk.core.schema.Response;
 import org.ow2.authzforce.sdk.core.schema.Responses;
 import org.ow2.authzforce.sdk.core.schema.Subject;
+import org.ow2.authzforce.sdk.core.schema.SubjectRequestTime;
 import org.ow2.authzforce.sdk.core.schema.category.ActionCategory;
 import org.ow2.authzforce.sdk.core.schema.category.EnvironmentCategory;
 import org.ow2.authzforce.sdk.core.schema.category.ResourceCategory;
@@ -21,10 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBException;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 
 public class TestUtils {
 	
@@ -50,6 +53,33 @@ public class TestUtils {
 		LOGGER.debug("Actual Request: {}", actualRequest);
 		LOGGER.debug("Expected Request: {}", expectedRequest);
 		Assert.assertEquals(expectedRequest, actualRequest);
+	}
+
+	@Test
+	public void TestCreateXhtmlRequestAttributeConstructors() throws XacmlSdkException {
+		ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+		PrintStream originalErr = System.err;
+		System.setErr(new PrintStream(errContent));
+
+		LOGGER.info("Testing Request creation");
+		subjectCat.addAttribute(new Subject(1));
+		subjectCat.addAttribute(new Subject(1D));
+		subjectCat.addAttribute(new Subject(true));
+		subjectCat.addAttribute(new SubjectRequestTime(1));
+		resourceCat.addAttribute(new Resource(1D));
+		resourceCat.addAttribute(new Resource(true));
+		actionCategory.addAttribute(new Action(1));
+		actionCategory.addAttribute(new Action(1D));
+		actionCategory.addAttribute(new Action(true));
+		actionCategory.addAttribute(new Action(new Date()));
+		environmentCategory.addAttribute(new Environment(1));
+		environmentCategory.addAttribute(new Environment(1D));
+		environmentCategory.addAttribute(new Environment(true));
+		final String actualRequest = Utils.createXacmlRequest(Arrays.asList(subjectCat), Arrays.asList(resourceCat), Arrays.asList(actionCategory), Arrays.asList(environmentCategory)).toString();
+		Assert.assertNotNull(actualRequest);
+		System.setErr(originalErr);
+		LOGGER.debug(errContent.toString());
+		Assert.assertFalse("Should not have thrown SAXException2", errContent.toString().contains("SAXException2"));
 	}
 	
 	@Test

@@ -32,15 +32,15 @@ public final class Subject extends Attribute {
 	}
 
 	public Subject(final int value) {
-		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)value), XACMLDatatypes.XACML_DATATYPE_INTEGER.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)String.valueOf(value)), XACMLDatatypes.XACML_DATATYPE_INTEGER.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
-	
+
 	public Subject(final double value) {
-		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)value), XACMLDatatypes.XACML_DATATYPE_DOUBLE.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)String.valueOf(value)), XACMLDatatypes.XACML_DATATYPE_DOUBLE.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
-	
+
 	public Subject(final boolean value) {
-		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)value), XACMLDatatypes.XACML_DATATYPE_STRING.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)String.valueOf(value)), XACMLDatatypes.XACML_DATATYPE_STRING.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 
 	/**
