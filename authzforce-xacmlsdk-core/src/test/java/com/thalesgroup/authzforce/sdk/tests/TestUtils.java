@@ -6,13 +6,17 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.ow2.authzforce.sdk.core.Utils;
 import org.ow2.authzforce.sdk.core.schema.Action;
+import org.ow2.authzforce.sdk.core.schema.Attribute;
 import org.ow2.authzforce.sdk.core.schema.Environment;
+import org.ow2.authzforce.sdk.core.schema.Request;
 import org.ow2.authzforce.sdk.core.schema.Resource;
 import org.ow2.authzforce.sdk.core.schema.Response;
 import org.ow2.authzforce.sdk.core.schema.Responses;
 import org.ow2.authzforce.sdk.core.schema.Subject;
+import org.ow2.authzforce.sdk.core.schema.SubjectKey;
 import org.ow2.authzforce.sdk.core.schema.SubjectRequestTime;
 import org.ow2.authzforce.sdk.core.schema.category.ActionCategory;
+import org.ow2.authzforce.sdk.core.schema.category.Category;
 import org.ow2.authzforce.sdk.core.schema.category.EnvironmentCategory;
 import org.ow2.authzforce.sdk.core.schema.category.ResourceCategory;
 import org.ow2.authzforce.sdk.core.schema.category.SubjectCategory;
@@ -25,9 +29,11 @@ import javax.xml.bind.JAXBException;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class TestUtils {
 	
@@ -54,6 +60,28 @@ public class TestUtils {
 		LOGGER.debug("Expected Request: {}", expectedRequest);
 		Assert.assertEquals(expectedRequest, actualRequest);
 	}
+
+    @Test
+    public void TestCreateXacmlRequestMultipleAttributes() throws FileNotFoundException, JAXBException, XacmlSdkException {
+        LOGGER.info("Testing Request creation");
+        Date now = new Date();
+		List<Attribute> expectedAttributes=new ArrayList<>();
+		expectedAttributes.add(new Subject("TestCreateXacmlRequest"));
+		expectedAttributes.add(new SubjectRequestTime(now));
+		expectedAttributes.add(new SubjectKey("aPublicKeyGoesHere"));
+		for (Attribute attribute : expectedAttributes) {
+			subjectCat.addAttribute(attribute);
+		}
+
+        final Request actualRequest = Utils.createXacmlRequest(Arrays.asList(subjectCat), Arrays.asList(resourceCat), Arrays.asList(actionCategory), Arrays.asList(environmentCategory));
+        LOGGER.info(actualRequest.toString());
+
+		List<oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute> actualAttributes = ((Category)actualRequest.getAttributes().get(1)).getAttributes();
+
+		for (int i = 0; i < expectedAttributes.size(); i++) {
+			Assert.assertEquals(expectedAttributes.get(i).toString(),expectedAttributes.get(i).getAttributeValues(), actualAttributes.get(i).getAttributeValues());
+		}
+    }
 
 	@Test
 	public void TestCreateXhtmlRequestAttributeConstructors() throws XacmlSdkException {
