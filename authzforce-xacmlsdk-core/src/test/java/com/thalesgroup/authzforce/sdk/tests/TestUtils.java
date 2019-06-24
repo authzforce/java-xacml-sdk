@@ -1,10 +1,5 @@
 package com.thalesgroup.authzforce.sdk.tests;
 
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-
-import javax.xml.bind.JAXBException;
-
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,6 +8,7 @@ import org.ow2.authzforce.sdk.core.Utils;
 import org.ow2.authzforce.sdk.core.schema.Action;
 import org.ow2.authzforce.sdk.core.schema.Environment;
 import org.ow2.authzforce.sdk.core.schema.Resource;
+import org.ow2.authzforce.sdk.core.schema.Response;
 import org.ow2.authzforce.sdk.core.schema.Responses;
 import org.ow2.authzforce.sdk.core.schema.Subject;
 import org.ow2.authzforce.sdk.core.schema.category.ActionCategory;
@@ -23,6 +19,12 @@ import org.ow2.authzforce.sdk.core.utils.ResponsesFactory;
 import org.ow2.authzforce.sdk.exceptions.XacmlSdkException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class TestUtils {
 	
@@ -66,6 +68,11 @@ public class TestUtils {
 		LOGGER.info("Testing extractResponse with only one response");
 		ResponsesFactory actualResponse = Utils.extractResponse(com.thalesgroup.authzforce.sdk.tests.utils.Utils.createResponse("src/test/resources/responses/TestExtractResponseWithOneResponse.xml"));
 		Assert.assertEquals(1, actualResponse.getResponses().size());
+		Response response = actualResponse.getResponses().get(0);
+		//note that Collections to String return as [value] instead of just value
+		Assert.assertEquals(Collections.singletonList("http://www.opencloudware.org").toString(), response.getResourceId());
+		Assert.assertEquals(Collections.singletonList("ThalesId").toString(), response.getSubjectId());
+		Assert.assertEquals(Collections.singletonList("HEAD").toString(), response.getActionId());
 	}
 	
 	@Test
