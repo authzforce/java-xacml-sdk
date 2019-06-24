@@ -34,20 +34,16 @@ public final class Environment extends Attribute {
 	public Environment(final int value) {
 		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)String.valueOf(value)), XACMLDatatypes.XACML_DATATYPE_INTEGER.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
-	
+
 	public Environment(final double value) {
 		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)String.valueOf(value)), XACMLDatatypes.XACML_DATATYPE_DOUBLE.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
-	
+
 	public Environment(final boolean value) {
 		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)String.valueOf(value)), XACMLDatatypes.XACML_DATATYPE_STRING.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 
-	/**
-	 * 
-	 * @param date /!\ WARNING: date format needs to be "YYY-MM-DD" /!\
-	 */
 	public Environment(final Date date) {
-		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)new SimpleDateFormat("YYY-MM-DD").format(date)), XACMLDatatypes.XACML_DATATYPE_DATE.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
+		super(Arrays.asList(new AttributeValueType(Arrays.asList((Serializable)new SimpleDateFormat(DATE_FORMAT).format(date)), XACMLDatatypes.XACML_DATATYPE_DATE.value(), null)), DEFDAULT_ATTRIBUTE_ID.value(), DEFAULT_ISSUER, true);
 	}
 }

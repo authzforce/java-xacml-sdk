@@ -24,7 +24,6 @@ import java.util.Date;
 
 public final class SubjectRequestTime extends Attribute {
 
-    public static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final XACMLAttributeId DEFDAULT_ATTRIBUTE_ID = XACMLAttributeId.XACML_SUBJECT_REQUEST_TIME;
     private static final String DEFAULT_ISSUER = "xacml-sdk-5.0.0";
 

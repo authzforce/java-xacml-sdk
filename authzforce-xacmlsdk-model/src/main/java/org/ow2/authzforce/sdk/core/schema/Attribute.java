@@ -5,7 +5,9 @@ import java.util.List;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.AttributeValueType;
 
 public class Attribute extends oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute {
-	
+
+	protected static final String DATE_FORMAT = "yyyy-MM-dd";
+
 	public Attribute(final List<AttributeValueType> attributeValues, final String attributeId, final String issuer, final boolean includeInResult) {
 		super(attributeValues, attributeId, issuer, includeInResult);
 	}
@@ -20,4 +22,7 @@ public class Attribute extends oasis.names.tc.xacml._3_0.core.schema.wd_17.Attri
 		super.setAttributeId(value);
 	}
 
+	public static String getDateFormat() {
+		return DATE_FORMAT;
+	}
 }
