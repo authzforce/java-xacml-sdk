@@ -126,7 +126,7 @@ public final class Utils {
 				for (Attribute attr : attrs.getAttributes()) {
 					if (attr.getAttributeId().equals(XACMLAttributeId.XACML_RESOURCE_RESOURCE_ID.value())) {
 						if (null != attr.getAttributeValues() && attr.getAttributeValues().size() > 0) {
-							response.setSubjectId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
+							response.setResourceId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
 						}
 					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_ACTION_ACTION_ID.value())) {
 						if (null != attr.getAttributeValues() && attr.getAttributeValues().size() > 0) {
@@ -134,7 +134,7 @@ public final class Utils {
 
 						}
 					} else if (attr.getAttributeId().equals(XACMLAttributeId.XACML_SUBJECT_SUBJECT_ID.value()) && null != attr.getAttributeValues() && attr.getAttributeValues().size() > 0) {
-						response.setResourceId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
+						response.setSubjectId(String.valueOf(attr.getAttributeValues().get(0).getContent()));
 					}
 				}
 			}
