@@ -1,10 +1,10 @@
 package org.ow2.authzforce.sdk.core.schema.category;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attribute;
 import oasis.names.tc.xacml._3_0.core.schema.wd_17.Attributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Category extends Attributes {
 	
@@ -13,7 +13,7 @@ public class Category extends Attributes {
 	 * @param attr
 	 */
 	public void addAttribute(final Attribute attr) {
-		List<Attribute> attrs = new ArrayList<Attribute>(this.getAttributes());
+		List<Attribute> attrs = new ArrayList<Attribute>(this.attributes == null ? super.getAttributes() : this.attributes);
 		attrs.add(attr);
 		
 		this.attributes = attrs;
@@ -24,9 +24,22 @@ public class Category extends Attributes {
 	 * @param attr
 	 */
 	public void deleteAttribute(final Attribute attr) {
-		List<Attribute> attrs = new ArrayList<Attribute>(this.getAttributes());
+		List<Attribute> attrs = new ArrayList<Attribute>(this.attributes == null ? super.getAttributes() : this.attributes);
 		attrs.remove(attr);
 		this.attributes = attrs;
 	}
-	
+
+	/**
+	 * This bypasses {@link #getAttributes()} logic that checks against a transient list.
+	 * <br/>
+	 * This is useful because the normal {@link #getAttributes()} in combination with {@link #deleteAttribute(Attribute)}
+	 * or {@link #addAttribute(Attribute)}
+	 * would result in an inconsistent state {@code (attributes_RO != attributes)}.
+	 *
+	 * @return the attributes directly from {@link #attributes} list (i.e. not from {@link #attributes_RO})
+	 */
+	@Override
+	public List<Attribute> getAttributes() {
+		return this.attributes;
+	}
 }
