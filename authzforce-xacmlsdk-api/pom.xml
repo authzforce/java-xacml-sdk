@@ -18,6 +18,16 @@
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>xacml-sdk-common</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.ow2.authzforce</groupId>
+            <artifactId>authzforce-ce-atom-model</artifactId>
+            <version>3.3.7</version>
+        </dependency>
+		<dependency>
+			<groupId>org.ow2.authzforce</groupId>
+			<artifactId>authzforce-ce-rest-api-model</artifactId>
+			<version>4.3.0</version>
+		</dependency>
 		<!-- /XACML Dependencies -->
 	</dependencies>
 </project>
