@@ -11,7 +11,7 @@
 		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
 		<jdom.version>2.0.5</jdom.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<cxf.version>3.1.6</cxf.version>
+		<cxf.version>3.2.5</cxf.version>
 		<jaxb.version>2.2</jaxb.version>
 	</properties>
 	<inceptionYear>2013</inceptionYear>
@@ -113,7 +113,7 @@
 			<dependency>
 				<groupId>javax.ws.rs</groupId>
 				<artifactId>javax.ws.rs-api</artifactId>
-				<version>2.0</version>
+				<version>2.1</version>
 			</dependency>
 			<!-- /JAXB Dependencies -->
 

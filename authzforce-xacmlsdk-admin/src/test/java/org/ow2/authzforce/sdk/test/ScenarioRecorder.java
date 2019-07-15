@@ -22,6 +22,7 @@ import java.util.List;
 import static com.github.tomakehurst.wiremock.client.WireMock.recordSpec;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
+@Ignore
 public class ScenarioRecorder {
     public static final int PORT = 6666;
     public static final String ENDPOINT_ADDRESS = "http://127.0.0.1:" + PORT + "/";
