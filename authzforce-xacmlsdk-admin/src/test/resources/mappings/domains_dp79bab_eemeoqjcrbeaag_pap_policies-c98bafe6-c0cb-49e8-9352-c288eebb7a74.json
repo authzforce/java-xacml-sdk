@@ -1,0 +1,19 @@
+{
+  "id" : "c98bafe6-c0cb-49e8-9352-c288eebb7a74",
+  "name" : "domains_dp79bab_eemeoqjcrbeaag_pap_policies",
+  "request" : {
+    "url" : "/domains/dP79Bab_EemeoQJCrBEAAg/pap/policies",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><resources xmlns=\"http://authzforce.github.io/rest-api-model/xmlns/authz/5\" xmlns:ns2=\"http://www.w3.org/2005/Atom\" xmlns:ns3=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" xmlns:ns4=\"http://authzforce.github.io/core/xmlns/pdp/6.0\" xmlns:ns5=\"http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6\"><ns2:link rel=\"item\" href=\"root\"/></resources>",
+    "headers" : {
+      "Date" : "Mon, 15 Jul 2019 12:52:52 GMT",
+      "Content-Type" : "application/xml"
+    }
+  },
+  "uuid" : "c98bafe6-c0cb-49e8-9352-c288eebb7a74",
+  "persistent" : true,
+  "insertionIndex" : 20
+}

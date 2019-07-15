@@ -14,7 +14,7 @@
 		<cxf.version>3.1.6</cxf.version>
 		<jaxb.version>2.2</jaxb.version>
 	</properties>
-	<inceptionYear>2013</inceptionYear>	
+	<inceptionYear>2013</inceptionYear>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
 	<version>5.0.0-SNAPSHOT</version>
@@ -25,6 +25,7 @@
 		<module>./authzforce-xacmlsdk-common</module>
 		<module>./authzforce-xacmlsdk-api</module>
 		<module>./authzforce-xacmlsdk-core</module>
+		<module>./authzforce-xacmlsdk-admin</module>
 		<module>./xacml-sdk-distribution</module>
 	</modules>
 	<scm>
