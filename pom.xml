@@ -23,8 +23,9 @@
 	<modules>
 		<module>./authzforce-xacmlsdk-model</module>
 		<module>./authzforce-xacmlsdk-common</module>
-		<module>./authzforce-xacmlsdk-api</module>
+		<module>./authzforce-xacmlsdk-pdp-api</module>
 		<module>./authzforce-xacmlsdk-core</module>
+		<module>./authzforce-xacmlsdk-pap-api</module>
 		<module>./authzforce-xacmlsdk-admin</module>
 		<module>./xacml-sdk-distribution</module>
 	</modules>
@@ -77,6 +78,11 @@
 	</build>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-features-logging</artifactId>
+				<version>3.3.2</version>
+			</dependency>
 			<dependency>
 				<groupId>com.github.zafarkhaja</groupId>
 				<artifactId>java-semver</artifactId>
@@ -151,6 +157,16 @@
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
 				<artifactId>xacml-sdk-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.parent.groupId}</groupId>
+				<artifactId>xacml-sdk-pap-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.parent.groupId}</groupId>
+				<artifactId>xacml-sdk-admin</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

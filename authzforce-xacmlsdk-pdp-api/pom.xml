@@ -11,7 +11,7 @@
 	</properties>
 	<inceptionYear>2013</inceptionYear>
 	<artifactId>xacml-sdk-api</artifactId>
-	<name>AuthZForce :: XACML SDK :: API</name>
+	<name>AuthZForce :: XACML SDK :: PDP API</name>
 	<dependencies>
 		<!-- XACML Dependencies -->
 		<dependency>
