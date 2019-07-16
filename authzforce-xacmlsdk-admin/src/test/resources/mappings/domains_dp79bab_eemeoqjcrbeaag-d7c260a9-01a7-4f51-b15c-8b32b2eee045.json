@@ -1,0 +1,19 @@
+{
+  "id" : "d7c260a9-01a7-4f51-b15c-8b32b2eee045",
+  "name" : "domains_dp79bab_eemeoqjcrbeaag",
+  "request" : {
+    "url" : "/domains/dP79Bab_EemeoQJCrBEAAg",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><domain xmlns=\"http://authzforce.github.io/rest-api-model/xmlns/authz/5\" xmlns:ns2=\"http://www.w3.org/2005/Atom\" xmlns:ns3=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" xmlns:ns4=\"http://authzforce.github.io/core/xmlns/pdp/6.0\" xmlns:ns5=\"http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6\"><properties externalId=\"myTestDomain1\"><description>test domain</description></properties><childResources><ns2:link rel=\"item\" href=\"/properties\" title=\"Domain properties\"/><ns2:link rel=\"item\" href=\"/pap\" title=\"Policy Administration Point\"/><ns2:link rel=\"http://docs.oasis-open.org/ns/xacml/relation/pdp\" href=\"/pdp\" title=\"Policy Decision Point\"/></childResources></domain>",
+    "headers" : {
+      "Date" : "Mon, 15 Jul 2019 12:52:52 GMT",
+      "Content-Type" : "application/xml"
+    }
+  },
+  "uuid" : "d7c260a9-01a7-4f51-b15c-8b32b2eee045",
+  "persistent" : true,
+  "insertionIndex" : 19
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>xacml-sdk</artifactId>
+        <groupId>org.ow2.authzforce</groupId>
+        <version>5.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>xacml-sdk-pap-api</artifactId>
+    <name>AuthZForce :: XACML SDK :: PAP API</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>xacml-sdk-core</artifactId>
+        </dependency>
+    </dependencies>
+</project>

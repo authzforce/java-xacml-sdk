@@ -1,0 +1,22 @@
+{
+  "id" : "88b2a7a0-3f53-4084-9334-f61152dbf1db",
+  "name" : "domains_dp79bab_eemeoqjcrbeaag_pap_policies",
+  "request" : {
+    "url" : "/domains/dP79Bab_EemeoQJCrBEAAg/pap/policies",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalToXml" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><PolicySet xmlns=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" PolicySetId=\"myTestPolicy\" Version=\"1.0.0\" PolicyCombiningAlgId=\"urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit\" MaxDelegationDepth=\"10\"><Description>Test policy</Description><Target/></PolicySet>"
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ns2:link xmlns=\"http://authzforce.github.io/rest-api-model/xmlns/authz/5\" xmlns:ns2=\"http://www.w3.org/2005/Atom\" xmlns:ns3=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" xmlns:ns4=\"http://authzforce.github.io/core/xmlns/pdp/6.0\" xmlns:ns5=\"http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6\" rel=\"item\" href=\"myTestPolicy/1.0.0\" title=\"Policy 'myTestPolicy' v1.0.0\"/>",
+    "headers" : {
+      "Date" : "Mon, 15 Jul 2019 12:52:52 GMT",
+      "Content-Type" : "application/xml"
+    }
+  },
+  "uuid" : "88b2a7a0-3f53-4084-9334-f61152dbf1db",
+  "persistent" : true,
+  "insertionIndex" : 21
+}

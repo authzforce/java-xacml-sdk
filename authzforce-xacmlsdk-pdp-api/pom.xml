@@ -11,12 +11,22 @@
 	</properties>
 	<inceptionYear>2013</inceptionYear>
 	<artifactId>xacml-sdk-api</artifactId>
-	<name>AuthZForce :: XACML SDK :: API</name>
+	<name>AuthZForce :: XACML SDK :: PDP API</name>
 	<dependencies>
 		<!-- XACML Dependencies -->
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>xacml-sdk-common</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.ow2.authzforce</groupId>
+            <artifactId>authzforce-ce-atom-model</artifactId>
+            <version>7.5.1</version>
+        </dependency>
+		<dependency>
+			<groupId>org.ow2.authzforce</groupId>
+			<artifactId>authzforce-ce-rest-api-model</artifactId>
+			<version>5.7.0</version>
 		</dependency>
 		<!-- /XACML Dependencies -->
 	</dependencies>
