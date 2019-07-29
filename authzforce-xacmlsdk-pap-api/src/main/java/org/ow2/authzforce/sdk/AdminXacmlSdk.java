@@ -25,4 +25,6 @@ public interface AdminXacmlSdk {
     void deletePolicy(String domain, String version, String policyID) throws XacmlSdkException;
 
     PolicySet createSimplePolicy(String domain, String policyID, String description, List<Object> data) throws XacmlSdkException;
+
+    List<PolicySet> getPolicies(String domain, String policyID) throws XacmlSdkException;
 }
