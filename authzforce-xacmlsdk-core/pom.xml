@@ -7,8 +7,8 @@
 		<version>5.0.0-SNAPSHOT</version>
 	</parent>
 	<inceptionYear>2013</inceptionYear>
-	<artifactId>xacml-sdk-core</artifactId>
-	<name>AuthZForce :: XACML SDK :: CORE</name>
+	<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
+	<name>AuthZForce :: XACML SDK :: PDP IMPL :: REST</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
@@ -34,7 +34,7 @@
 		<!-- XACML Dependencies -->
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>xacml-sdk-api</artifactId>
+			<artifactId>xacml-sdk-pdp-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>

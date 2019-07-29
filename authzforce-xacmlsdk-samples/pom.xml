@@ -23,7 +23,7 @@
 		<!-- XACML Dependencies -->
 		<dependency>
 			<groupId>org.ow2.authzforce</groupId>
-			<artifactId>xacml-sdk-core</artifactId>
+			<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
 			<version>5.0.0-SNAPSHOT</version>
 		</dependency>
 		<!-- /XACML Dependencies -->

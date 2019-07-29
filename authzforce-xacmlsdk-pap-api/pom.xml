@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>xacml-sdk-core</artifactId>
+            <artifactId>xacml-sdk-pdp-api</artifactId>
         </dependency>
     </dependencies>
 </project>

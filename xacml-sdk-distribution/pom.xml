@@ -13,11 +13,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>xacml-sdk-core</artifactId>
+			<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>xacml-sdk-admin</artifactId>
+			<artifactId>xacml-sdk-pap-rest-impl</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

@@ -29,7 +29,7 @@ You can start using it inside your java project by adding the dependency to your
 ```xml
 <dependency>
 	<groupId>com.thalesgroup.authzforce</groupId>
-	<artifactId>xacml-sdk-core</artifactId>
+	<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
 	<version>5.0.0-SNAPSHOT</version>
 </dependency>
 ````
