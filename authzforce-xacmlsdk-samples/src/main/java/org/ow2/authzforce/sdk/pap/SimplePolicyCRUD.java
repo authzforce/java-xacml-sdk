@@ -5,6 +5,7 @@ import oasis.names.tc.xacml._3_0.core.schema.wd_17.PolicySet;
 import org.ow2.authzforce.rest.api.xmlns.DomainProperties;
 import org.ow2.authzforce.sdk.AdminXacmlSdk;
 import org.ow2.authzforce.sdk.impl.AdminXacmlSdkImpl;
+import org.ow2.authzforce.sdk.utils.ServerSetup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3._2005.atom.Link;
@@ -17,11 +18,11 @@ import java.util.List;
 public class SimplePolicyCRUD {
     private static final Logger log = LoggerFactory.getLogger(SimplePolicyCRUD.class);
 
-    private static final String ENDPOINT_ADDRESS = "http://127.0.0.1:8080/authzforce-ce";
     private static final String DOMAIN = "myTestDomain1";
 
     public static void main(String[] args) throws Exception {
-        AdminXacmlSdk client = new AdminXacmlSdkImpl(URI.create(ENDPOINT_ADDRESS));
+        URI baseURL = ServerSetup.getRootURL(ServerSetup.getServer());
+        AdminXacmlSdk client = new AdminXacmlSdkImpl(baseURL);
 
         log.warn("***********domain CRUD operations***********");
         log.error("(C)reate");
