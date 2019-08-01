@@ -39,8 +39,8 @@ public class SimplePolicyCRUD {
 
         log.error("(U)pdate");
         client.addDomain("test domain", DOMAIN);
-
-        log.error("(D)elete... lets leave it till the end, if we delete the domain now we cant to policy CRUD on it");
+        
+        // Delete of domain deferred to end of test (cannot do CRUD operations on missing domain)
 
         log.warn("***********policy CRUD operations***********");
         log.error("(C)reate");
@@ -70,6 +70,7 @@ public class SimplePolicyCRUD {
         client.addPolicy(newDomainID, set);
         log.error("(D)elete");
         client.deletePolicy(newDomainID, null, "myTestPolicy");
+        
         client.deleteDomain(newDomainID);
     }
 }
