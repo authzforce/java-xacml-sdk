@@ -140,13 +140,40 @@ public class AdminXacmlSdkImpl implements AdminXacmlSdk {
         if (getPoliciesNames(domain).stream().anyMatch(link -> link.getHref().contains(policyID))) {
             PolicySet existingSet = getPolicyVersionResource(domain, "", policyID).getPolicyVersion();
             if (existingSet != null) {
-                String version = Version.valueOf(existingSet.getVersion()).incrementPatchVersion().toString();
-                LOG.warn("Policy {} already exists for domain {}! Creating new version. Was {} now {}", policyID, domain, version, existingSet.getVersion());
-                return new PolicySet(description, existingSet.getPolicyIssuer(), existingSet.getPolicySetDefaults(), existingSet.getTarget(), data, existingSet.getObligationExpressions(), existingSet.getAdviceExpressions(), policyID, version, existingSet.getPolicyCombiningAlgId(), existingSet.getMaxDelegationDepth());
+                String newVersion = Version.valueOf(existingSet.getVersion()).incrementPatchVersion().toString();
+                LOG.warn("Policy {} already exists for domain {}! Creating new version. Was {} now {}", policyID, domain, existingSet.getVersion(), newVersion);
+                return new PolicySet(description, existingSet.getPolicyIssuer(), existingSet.getPolicySetDefaults(), existingSet.getTarget(), data, existingSet.getObligationExpressions(), existingSet.getAdviceExpressions(), policyID, newVersion, existingSet.getPolicyCombiningAlgId(), existingSet.getMaxDelegationDepth());
             }
         }
         String DENY_UNLESS_PERMIT = "urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit";//TODO should we depend on core just for this?
         return new PolicySet(description, null, null, new Target(null), data, null, null, policyID, Version.forIntegers(1).toString(), DENY_UNLESS_PERMIT, BigInteger.TEN);
+    }
+
+    @Override
+    public List<PolicySet> getPolicies(String domain, String policyID) throws XacmlSdkException {
+        LOG.info("Getting policies for domain {} policyID {}", domain, policyID);
+        List<PolicySet> policies = new ArrayList<>();
+        if (policyID == null || policyID.isEmpty()) {
+            LOG.warn("No policy ID specified, will try all (this is expensive so might take a while...)");
+            getPoliciesNames(domain).forEach(policy -> {
+                adminNetworkHandler.getDomainResource(domain).getPapResource().getPoliciesResource().getPolicyResource(policy.getHref()).getPolicyVersions().getLinks().forEach(version -> {
+                    try {
+                        policies.add(getPolicy(domain, version.getHref(), policy.getHref()));
+                    } catch (XacmlSdkException e) {
+                        e.printStackTrace();
+                    }
+                });
+            });
+        } else {
+            adminNetworkHandler.getDomainResource(domain).getPapResource().getPoliciesResource().getPolicyResource(policyID).getPolicyVersions().getLinks().forEach(version -> {
+                try {
+                    policies.add(getPolicy(domain, version.getHref(), policyID));
+                } catch (XacmlSdkException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        return policies;
     }
 
     private PolicyVersionResource getPolicyVersionResource(String domain, String version, String policyID) throws XacmlSdkException {

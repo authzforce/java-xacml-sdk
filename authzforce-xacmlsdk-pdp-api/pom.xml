@@ -10,7 +10,7 @@
 		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>		
 	</properties>
 	<inceptionYear>2013</inceptionYear>
-	<artifactId>xacml-sdk-api</artifactId>
+	<artifactId>xacml-sdk-pdp-api</artifactId>
 	<name>AuthZForce :: XACML SDK :: PDP API</name>
 	<dependencies>
 		<!-- XACML Dependencies -->

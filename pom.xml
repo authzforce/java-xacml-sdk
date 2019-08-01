@@ -28,6 +28,7 @@
 		<module>./authzforce-xacmlsdk-pap-api</module>
 		<module>./authzforce-xacmlsdk-admin</module>
 		<module>./xacml-sdk-distribution</module>
+		<module>authzforce-xacmlsdk-samples</module>
 	</modules>
 	<scm>
 		<connection>scm:git:${git.url.base}/xacmlsdk.git</connection>
@@ -78,6 +79,11 @@
 	</build>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers</artifactId>
+				<version>1.11.3</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-rt-features-logging</artifactId>
@@ -151,12 +157,12 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
-				<artifactId>xacml-sdk-api</artifactId>
+				<artifactId>xacml-sdk-pdp-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
-				<artifactId>xacml-sdk-core</artifactId>
+				<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -166,7 +172,7 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.parent.groupId}</groupId>
-				<artifactId>xacml-sdk-admin</artifactId>
+				<artifactId>xacml-sdk-pap-rest-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

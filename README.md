@@ -3,6 +3,8 @@ XACML SDK
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/350fb29478014aec81bd6e28067e1355)](https://www.codacy.com/app/romain-ferrari/xacmlsdk?utm_source=tuleap.ow2.org&amp;utm_medium=referral&amp;utm_content=plugins/git/authzforce/xacmlsdk&amp;utm_campaign=Badge_Grade)
 
+Includes both the [Policy Decision Point (PDP)](https://authzforce-ce-fiware.readthedocs.io/en/latest/UserAndProgrammersGuide.html#policy-decision-api) and the [Policy Administration Point (PAP)](https://authzforce-ce-fiware.readthedocs.io/en/latest/UserAndProgrammersGuide.html#policy-administration-api) client SDKs
+
 Quick Start
 -----------
 In the mean time, to use the library, you have to build it from source. 
@@ -29,10 +31,44 @@ You can start using it inside your java project by adding the dependency to your
 ```xml
 <dependency>
 	<groupId>com.thalesgroup.authzforce</groupId>
-	<artifactId>xacml-sdk-core</artifactId>
+	<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
 	<version>5.0.0-SNAPSHOT</version>
 </dependency>
 ````
+for PDP actions
+
+or
+
+```xml
+<dependency>
+	<groupId>com.thalesgroup.authzforce</groupId>
+	<artifactId>xacml-sdk-pap-rest-impl</artifactId>
+	<version>5.0.0-SNAPSHOT</version>
+</dependency>
+````
+for PAP actions
+
+PDP vs PAP
+----------
+
+The PDP provides an API for getting authorization decisions computed by a XACML-compliant access control engine. It supports the following actions
+
+* `getAuthz` to get the computed decision
+
+see the [PDP samples](authzforce-xacmlsdk-samples/src/main/java/org/ow2/authzforce/sdk/main) for usage examples
+
+The PAP provides API for managing XACML policies to be handled by the Authorization Service PDP. It supports the following actions
+
+* `getDomains` to list all domains in the access control engine
+* `getDomain` to get details on a given domain
+* `addDomain` to add a new domain
+* `deleteDomain` to remove a domain
+* `getPolicy` to get details on a policy set
+* `addPolicy` to add a policy set to a domain
+* `deletePolicy` to delete a policy set from a domain
+* `createSimplePolicy` to create (without saving to a domain, i.e. in memory only) a basic policy set based on the root policy. Intended to be used in conjunction with `addPolicy`
+
+see the [PAP samples](authzforce-xacmlsdk-samples/src/main/java/org/ow2/authzforce/sdk/pap) for usage examples
 
 Development
 -----------
