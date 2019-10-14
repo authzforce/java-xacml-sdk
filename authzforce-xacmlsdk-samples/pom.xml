@@ -6,11 +6,6 @@
 		<jdom.version>2.0.5</jdom.version>
 		<slf4j.version>1.6.6</slf4j.version>
     </properties>
-    <parent>
-        <artifactId>xacml-sdk</artifactId>
-        <groupId>org.ow2.authzforce</groupId>
-        <version>5.0.0</version>
-    </parent>
 
 	<inceptionYear>2013</inceptionYear>
 	<groupId>org.ow2.authzforce</groupId>
