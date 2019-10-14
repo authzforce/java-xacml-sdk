@@ -10,7 +10,7 @@
 	<inceptionYear>2013</inceptionYear>
 	<groupId>org.ow2.authzforce</groupId>
 	<artifactId>xacml-sdk-samples</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.0.0</version>
 	<name>AuthZForce :: XACML SDK :: SAMPLES</name>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<dependencies>
@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>org.ow2.authzforce</groupId>
 			<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
-			<version>5.0.0-SNAPSHOT</version>
+			<version>5.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -47,13 +47,13 @@
 		<dependency>
 			<groupId>org.ow2.authzforce</groupId>
 			<artifactId>xacml-sdk-pap-api</artifactId>
-			<version>5.0.0-SNAPSHOT</version>
+			<version>5.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.ow2.authzforce</groupId>
 			<artifactId>xacml-sdk-pap-rest-impl</artifactId>
-			<version>5.0.0-SNAPSHOT</version>
+			<version>5.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
