@@ -33,13 +33,7 @@ public final class Utils {
 
 	/**
 	 * 
-	 * @param subjects
-	 * @param resources
-	 * @param actions
-	 * @param environment
-	 * @return
-	 * 
-	 * @return
+	 * @return a properly formed XACML request
 	 * @throws XacmlSdkException
 	 */
 	public static Request createXacmlRequest(List<SubjectCategory> subjects, List<ResourceCategory> resources,
@@ -108,8 +102,6 @@ public final class Utils {
 	 * This method take a XACML Response and convert it to a Responses object
 	 * easy to use in the SDK
 	 * 
-	 * @param myResponse
-	 * @return
 	 * @throws XacmlSdkException 
 	 */
 	public static ResponsesFactory extractResponse(Response myResponse) throws XacmlSdkException {
