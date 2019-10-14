@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+	<Result>
+		<Decision>Permit</Decision>
+		<Attributes
+			Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+			<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+				IncludeInResult="true">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">thales</AttributeValue>
+			</Attribute>
+		</Attributes>
+		<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+			<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+				IncludeInResult="true">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">http://www.opencloudware.org</AttributeValue>
+			</Attribute>
+		</Attributes>
+		<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+			<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+				IncludeInResult="true">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">HEAD</AttributeValue>
+			</Attribute>
+		</Attributes>
+	</Result>	
+	<Result>
+		<Decision>Deny</Decision>
+		<Attributes
+			Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+			<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+				IncludeInResult="true">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">sagem</AttributeValue>
+			</Attribute>
+		</Attributes>
+		<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+			<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+				IncludeInResult="true">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">http://www.thalesgroup.com</AttributeValue>
+			</Attribute>
+		</Attributes>
+		<Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+			<Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+				IncludeInResult="true">
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">HEAD</AttributeValue>
+			</Attribute>
+		</Attributes>
+	</Result>
+</Response>

@@ -5,3 +5,7 @@
 *.tar.gz
 *.jar
 *dependency-reduced-pom.xml
+**/*.pmd
+**/*.pmdruleset.xml
+.idea/
+*.iml

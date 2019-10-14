@@ -6,18 +6,11 @@
     <format>dir</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
-  <moduleSets>
-    <moduleSet>
-    
-      <useAllReactorProjects>true</useAllReactorProjects>
-      
+  <dependencySets>
+    <dependencySet>
       <includes>
-        <include>com.thalesgroup.authzforce:xacml-sdk-core</include>
+        <include>*:jar</include>
       </includes>
-      <binaries>
-        <outputDirectory>/</outputDirectory>
-        <unpack>false</unpack>
-      </binaries>
-    </moduleSet>
-  </moduleSets>
+    </dependencySet>
+  </dependencySets>
 </assembly>

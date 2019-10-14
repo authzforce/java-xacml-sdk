@@ -1,0 +1,22 @@
+{
+  "id" : "fe256081-99b1-4925-a787-9a35d57c3834",
+  "name" : "domains",
+  "request" : {
+    "url" : "/domains",
+    "method" : "POST",
+    "bodyPatterns" : [ {
+      "equalToXml" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><domainProperties xmlns=\"http://authzforce.github.io/rest-api-model/xmlns/authz/5\" xmlns:ns2=\"http://www.w3.org/2005/Atom\" externalId=\"myTestDomain1\"><description>test domain</description></domainProperties>"
+    } ]
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ns2:link xmlns=\"http://authzforce.github.io/rest-api-model/xmlns/authz/5\" xmlns:ns2=\"http://www.w3.org/2005/Atom\" xmlns:ns3=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" xmlns:ns4=\"http://authzforce.github.io/core/xmlns/pdp/6.0\" xmlns:ns5=\"http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6\" rel=\"item\" href=\"dP79Bab_EemeoQJCrBEAAg\" title=\"dP79Bab_EemeoQJCrBEAAg\"/>",
+    "headers" : {
+      "Date" : "Mon, 15 Jul 2019 12:52:52 GMT",
+      "Content-Type" : "application/xml"
+    }
+  },
+  "uuid" : "fe256081-99b1-4925-a787-9a35d57c3834",
+  "persistent" : true,
+  "insertionIndex" : 18
+}

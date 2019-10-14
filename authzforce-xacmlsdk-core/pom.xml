@@ -1,21 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.thalesgroup.authzforce</groupId>
+    <parent>
+		<groupId>org.ow2.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
-		<version>4.0.1</version>
+		<version>5.0.0</version>
 	</parent>
 	<inceptionYear>2013</inceptionYear>
-	<artifactId>xacml-sdk-core</artifactId>
-	<name>AuthZForce :: XACML SDK :: CORE</name>
+	<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
+	<name>AuthZForce :: XACML SDK :: PDP IMPL :: REST</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<copyrightOwner>Thales Services - ThereSIS</copyrightOwner>
-	</properties>	
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-features-logging</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -23,107 +27,185 @@
 		</dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
-			<artifactId>javax.ws.rs-api</artifactId>			
+			<artifactId>javax.ws.rs-api</artifactId>
 		</dependency>
 
 		<!-- XACML Dependencies -->
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
-			<artifactId>xacml-sdk-api</artifactId>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>xacml-sdk-pdp-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
+			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>xacml-sdk-common</artifactId>
 		</dependency>
 		<!-- /XACML Dependencies -->
 
 		<!-- PDP Interface -->
 		<dependency>
-			<groupId>com.thalesgroup.authzforce</groupId>
-			<artifactId>authzforce-rest-api-model</artifactId>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>${artifactId.prefix}-rest-api-model</artifactId>
 		</dependency>
 		<!-- /PDP Interface -->
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>com.xebialabs.restito</groupId>
+			<artifactId>restito</artifactId>
+			<version>0.7</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.1.6.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.1.6.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<!-- For loading XML schemas with OASIS catalog (CatalogManager) -->
+			<groupId>xml-resolver</groupId>
+			<artifactId>xml-resolver</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.0-b01</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>${artifactId.prefix}-server-rest-service</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- /Test dependencies -->
 	</dependencies>
-	<build>
-		<plugins>			
-			<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>gmaven-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>execute</goal>
-						</goals>
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-pmd-plugin</artifactId>
+						<version>3.5</version>
+						<!-- target JDK already set by parent project's maven.compiler.target 
+							property -->
 						<configuration>
-							<source>
-								import java.util.Date
-								import java.text.MessageFormat
-								def
-								vartimestamp = MessageFormat.format("{0,date,yyyy}", new Date())
-								project.properties['currentYear'] = vartimestamp
-							</source>
+							<verbose>true</verbose>
+							<excludeRoots>
+								<excludeRoot>target/generated-sources</excludeRoot>
+								<excludeRoot>target/generated-test-sources</excludeRoot>
+							</excludeRoots>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<!-- Thales's license Headers -->
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<version>1.9.0</version>
-				<configuration>
-					<!-- Template location -->
-					<header>src/main/resources/fileHeader.apache2.txt</header>
-					<properties>
-						<!-- Values to be substituted in template -->
-						<h_inceptionYear>${project.inceptionYear}</h_inceptionYear>
-						<h_currentYear>${currentYear}</h_currentYear>
-						<h_copyrightOwner>${copyrightOwner}</h_copyrightOwner>
-					</properties>
-					<strictCheck>true</strictCheck>
-					<excludes>
-						<exclude>**/*.html</exclude>
-						<exclude>**/*.xml</exclude>
-						<exclude>**/*.txt</exclude>
-						<exclude>**/*.ec</exclude>
-						<exclude>**/*.log</exclude>
-						<exclude>**/*.css</exclude>
-						<exclude>**/*.js</exclude>
-						<exclude>**/*.jsp</exclude>
-						<exclude>**/*.md</exclude>
-						<exclude>**/*.properties</exclude>
-						<exclude>**/*.gitignore</exclude>
-						<exclude>src/test/**</exclude>
-						<exclude>src/main/resources/**</exclude>
-					</excludes>
-					<includes>
-						<include>src/main/java/com/thalesgroup/**</include>
-					</includes>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>format</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.4</version>
-				<executions>
-					<execution>
-						<id>default</id>
-						<phase>compile</phase>
-						<!-- <goals> -->
-						<!-- <goal>compile</goal> -->
-						<!-- <goal>test-compile</goal> -->
-						<!-- </goals> -->
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>check</goal>
+									<goal>cpd-check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>findbugs-maven-plugin</artifactId>
+						<version>3.0.4</version>
+						<configuration>
+							<!-- Enables analysis which takes more memory but finds more bugs. 
+								If you run out of memory, changes the value of the effort element to 'Low'. -->
+							<effort>Max</effort>
+							<!-- Reports all bugs (other values are medium and max) -->
+							<threshold>Low</threshold>
+							<failOnError>true</failOnError>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.12.4</version>
+						<executions>
+							<execution>
+								<id>default-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<excludes>
+								<exclude>**/TestPerformance.java</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>aspectj-maven-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>default</id>
+								<phase>compile</phase>
+								<!-- <goals> -->
+								<!-- <goal>compile</goal> -->
+								<!-- <goal>test-compile</goal> -->
+								<!-- </goals> -->
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>performance-tests</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.12.4</version>
+						<executions>
+							<execution>
+								<id>default-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<includes>
+								<include>**/TestPerformance.java</include>
+							</includes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>

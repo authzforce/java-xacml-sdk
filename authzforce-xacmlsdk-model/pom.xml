@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.thalesgroup.authzforce</groupId>
+		<groupId>org.ow2.authzforce</groupId>
 		<artifactId>xacml-sdk</artifactId>
-		<version>4.0.1</version>
+		<version>5.0.0</version>
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,16 +25,11 @@
 			<artifactId>jdom2</artifactId>
 			<version>${jdom.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xerces</artifactId>
-			<version>2.4.0</version>
-		</dependency>		
 
 		<!-- XACML Dependencies -->
 		<dependency>
-			<groupId>com.thalesgroup.authzforce.core</groupId>
-			<artifactId>authzforce-model</artifactId>
+			<groupId>org.ow2.authzforce</groupId>
+			<artifactId>${artifactId.prefix}-xacml-model</artifactId>
 		</dependency>
 		<!-- /XACML Dependencies -->
 	</dependencies>
