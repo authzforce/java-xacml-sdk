@@ -16,7 +16,7 @@
 	<inceptionYear>2013</inceptionYear>
 	<artifactId>xacml-sdk</artifactId>
 	<name>AuthZForce :: XACML SDK</name>
-	<version>5.0.0</version>
+	<version>5.0.1-SNAPSHOT</version>
 	<description>SDK allowing to create Xacml request and parse responses</description>
 	<packaging>pom</packaging>
 	<modules>
