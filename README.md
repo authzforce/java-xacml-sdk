@@ -1,15 +1,18 @@
 XACML SDK
 =========
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/350fb29478014aec81bd6e28067e1355)](https://www.codacy.com/app/romain-ferrari/xacmlsdk?utm_source=tuleap.ow2.org&amp;utm_medium=referral&amp;utm_content=plugins/git/authzforce/xacmlsdk&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/350fb29478014aec81bd6e28067e1355)](https://www.codacy.com/manual/romain-ferrari/java-xacml-sdk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=authzforce/java-xacml-sdk&amp;utm_campaign=Badge_Grade)
 
 Includes both the [Policy Decision Point (PDP)](https://authzforce-ce-fiware.readthedocs.io/en/latest/UserAndProgrammersGuide.html#policy-decision-api) and the [Policy Administration Point (PAP)](https://authzforce-ce-fiware.readthedocs.io/en/latest/UserAndProgrammersGuide.html#policy-administration-api) client SDKs
 
 Quick Start
 -----------
-In the mean time, to use the library, you have to build it from source. 
-To do this follow the instructions below.
+This artifact is regularly released to maven central. Just add it to your dependencies in your pom file.
+You can use the examples from authzforce-xacmlsdk-samples directory to start with.
 
+Build it from sources
+-----------
+If you want to build it from sources please follow these instructions
 ### Prerequisites
 * [Git](https://git-scm.org)
 * [Maven](https://maven.apache.org/)
@@ -18,8 +21,8 @@ To do this follow the instructions below.
 Clone this repository, install dependencies with mvn.
 
 ```bash
-git clone https://github.com/authzforce/xacml-sdk.git && cd xacmlsdk
-mvn compile -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+git clone https://github.com/authzforce/java-xacml-sdk.git && cd java-xacml-sdk
+mvn compile 
 ```
 
 Install the package within your own maven repository.
@@ -27,12 +30,14 @@ Install the package within your own maven repository.
 mvn install
 ````
 
+User Guide
+-----------
 You can start using it inside your java project by adding the dependency to your pom file
 ```xml
 <dependency>
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk-pdp-rest-impl</artifactId>
-	<version>5.0.0-SNAPSHOT</version>
+	<version>5.0.0</version>
 </dependency>
 ````
 for PDP actions
@@ -43,7 +48,7 @@ or
 <dependency>
 	<groupId>com.thalesgroup.authzforce</groupId>
 	<artifactId>xacml-sdk-pap-rest-impl</artifactId>
-	<version>5.0.0-SNAPSHOT</version>
+	<version>5.0.0</version>
 </dependency>
 ````
 for PAP actions
@@ -55,7 +60,7 @@ The PDP provides an API for getting authorization decisions computed by a XACML-
 
 * `getAuthz` to get the computed decision
 
-see the [PDP samples](authzforce-xacmlsdk-samples/src/main/java/org/ow2/authzforce/sdk/main) for usage examples
+see the [PDP samples](authzforce-xacmlsdk-samples/src/main/java/org/ow2/authzforce/sdk/pdp) for usage examples
 
 The PAP provides API for managing XACML policies to be handled by the Authorization Service PDP. It supports the following actions
 
@@ -72,7 +77,7 @@ see the [PAP samples](authzforce-xacmlsdk-samples/src/main/java/org/ow2/authzfor
 
 Development
 -----------
-For more information on contributing to AuthZForce, see `CONTRIBUTING.md`.
+For more information on contributing to Authzforce, see `CONTRIBUTING.md`.
 
 FAQ
 -----------
