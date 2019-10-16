@@ -1,7 +1,7 @@
 XACML SDK
 =========
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/350fb29478014aec81bd6e28067e1355)](https://www.codacy.com/manual/romain-ferrari/java-xacml-sdk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=authzforce/java-xacml-sdk&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1e79b358b0df477c9775624035698db5)](https://www.codacy.com/manual/romain-ferrari/java-xacml-sdk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=authzforce/java-xacml-sdk&amp;utm_campaign=Badge_Grade)
 
 Includes both the [Policy Decision Point (PDP)](https://authzforce-ce-fiware.readthedocs.io/en/latest/UserAndProgrammersGuide.html#policy-decision-api) and the [Policy Administration Point (PAP)](https://authzforce-ce-fiware.readthedocs.io/en/latest/UserAndProgrammersGuide.html#policy-administration-api) client SDKs
 
