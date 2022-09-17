@@ -55,7 +55,7 @@ The PDP provides an API for getting authorization decisions computed by a XACML-
 
 * `getAuthz` to get the computed decision
 
-see the [PDP samples](authzforce-xacmlsdk-samples/src/main/java/org/ow2/authzforce/sdk/main) for usage examples
+see the [PDP samples](authzforce-xacmlsdk-samples/src/main/java/org/ow2/authzforce/sdk/pdp) for usage examples
 
 The PAP provides API for managing XACML policies to be handled by the Authorization Service PDP. It supports the following actions
 
