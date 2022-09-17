@@ -20,7 +20,7 @@ public class ServerSetup {
     }
 
     public static URI getRootURL(GenericContainer server) {
-        return UriBuilder.fromUri("authzforce-ce")
+        return UriBuilder.fromUri("/authzforce-ce")
                 .scheme("http")
                 .host(server.getContainerIpAddress())
                 .port(server.getMappedPort(PORT))
